@@ -138,14 +138,14 @@ export default function AboutPage() {
             <h2 className="font-bold text-[44px] text-white leading-[54px] capitalize">
               The Problem We Couldn't Ignore
             </h2>
-            <ul className="flex flex-col gap-3 list-disc pl-6 text-white">
-              <li className="text-[16px] leading-[24px]">Coaching is effective — but fundamentally unscalable.</li>
-              <li className="text-[16px] leading-[24px]">Most sports technology measures outcomes, not movement.</li>
-              <li className="text-[16px] leading-[24px]">Hardware-first systems are expensive and limited to clubs.</li>
+            <ul className="list-disc text-white" style={{ paddingLeft: 0 }}>
+              <li className="ms-6 text-[16px] leading-[24px] mb-0">Coaching is effective — but fundamentally unscalable.</li>
+              <li className="ms-6 text-[16px] leading-[24px] mb-0">Most sports technology measures outcomes, not movement.</li>
+              <li className="ms-6 text-[16px] leading-[24px]">Hardware-first systems are expensive and limited to clubs.</li>
             </ul>
             {/* Quote */}
-            <div className="bg-[#1f2225] border-l-2 border-white flex items-center justify-center px-10 py-8">
-              <p className="font-normal italic text-white text-[22px] leading-normal">
+            <div className="bg-[#1f2225] border-l-2 border-solid border-white flex items-center justify-center px-[40px] py-[32px]">
+              <p className="flex-1 font-normal italic text-white text-[22px] leading-normal">
                 There is no mass pathway from beginner to confident athlete. We're building one.
               </p>
             </div>

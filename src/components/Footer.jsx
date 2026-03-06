@@ -71,18 +71,19 @@ export function Footer({ onHeightChange }) {
         {/* Top divider */}
         <div className="w-full h-px bg-white/[0.08]" />
 
-        {/* Ticker — alternating bold / light weight */}
-        <div className="hidden lg:flex py-3 w-full items-center justify-center overflow-hidden">
+        {/* Ticker — infinite scrolling, alternating bold/light, seamless -50% loop */}
+        <div className="hidden lg:block w-full overflow-hidden py-3">
           <p
-            className="whitespace-nowrap text-[48px] uppercase leading-none tracking-tight"
+            className="animate-ticker text-[48px] uppercase leading-none tracking-tight inline-block whitespace-nowrap"
             style={{ color: "#3c3e41" }}
           >
-            <span className="font-black">Benchmark Sports&nbsp;&nbsp;</span>
-            <span className="font-light">/&nbsp;&nbsp;Benchmark Sports&nbsp;&nbsp;</span>
-            <span className="font-black">/&nbsp;&nbsp;Benchmark Sports&nbsp;&nbsp;</span>
-            <span className="font-light">/&nbsp;&nbsp;Benchmark Sports&nbsp;&nbsp;</span>
-            <span className="font-black">/&nbsp;&nbsp;Benchmark Sports&nbsp;&nbsp;</span>
-            <span className="font-light">/&nbsp;&nbsp;</span>
+            {/* 6 identical units — at -50% (after unit 3) the view matches the start */}
+            {[0,1,2,3,4,5].map((i) => (
+              <span key={i}>
+                <span className="font-black">Benchmark Sports&nbsp;&nbsp;</span>
+                <span className="font-light">/&nbsp;&nbsp;Benchmark Sports&nbsp;&nbsp;/&nbsp;&nbsp;</span>
+              </span>
+            ))}
           </p>
         </div>
 
