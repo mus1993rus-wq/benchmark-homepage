@@ -1,10 +1,6 @@
 import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-// Footer рендериться в main.jsx поза обгорткою z-index:1.
-// onHeightChange — колбек для передачі висоти у батьківський компонент,
-// щоб встановити margin-bottom на обгортці (margin не перехоплює кліки,
-// тому кліки в цій зоні проходять прямо до футера).
 export function Footer({ onHeightChange }) {
   const footerRef = useRef(null);
 
@@ -31,9 +27,9 @@ export function Footer({ onHeightChange }) {
       }}
     >
       {/* Main footer content */}
-      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between px-8 lg:px-[240px] pt-8 lg:pt-[80px] pb-8 lg:pb-[80px] gap-8 lg:gap-0">
+      <div className="flex items-start justify-between px-8 lg:px-[240px] pt-8 lg:pt-[80px] pb-8 lg:pb-[64px]">
         {/* Brand column */}
-        <div className="flex flex-col gap-5 lg:w-[440px]">
+        <div className="flex flex-col gap-5 w-[440px]">
           <img
             src="/images/logo-footer.svg"
             alt="benchmark SPORTS"
@@ -45,7 +41,7 @@ export function Footer({ onHeightChange }) {
         </div>
 
         {/* Link columns */}
-        <div className="flex gap-8 lg:gap-10 text-base leading-6 text-[#818181] font-normal">
+        <div className="flex gap-10 text-base leading-6 text-[#818181] font-normal">
           <div className="flex flex-col gap-2 w-[120px]">
             <p className="opacity-30">Sports</p>
             <Link to="/golf" className="hover:text-white transition-colors">Golf</Link>
@@ -71,13 +67,29 @@ export function Footer({ onHeightChange }) {
       </div>
 
       {/* Bottom bar */}
-      <div className="bg-[#171a1c] flex flex-col items-center overflow-hidden py-4 w-full">
+      <div className="flex flex-col items-center gap-4 py-4 w-full overflow-hidden">
+        {/* Top divider */}
+        <div className="w-full h-px bg-white/[0.08]" />
+
+        {/* Ticker — alternating bold / light weight */}
         <div className="hidden lg:flex py-3 w-full items-center justify-center overflow-hidden">
-          <p className="animate-ticker text-[rgba(255,255,255,0.08)] text-[48px] font-black uppercase whitespace-nowrap leading-none tracking-tight">
-            Benchmark Sports&nbsp;&nbsp;/&nbsp;&nbsp;Benchmark Sports&nbsp;&nbsp;/&nbsp;&nbsp;Benchmark Sports&nbsp;&nbsp;/&nbsp;&nbsp;Benchmark Sports&nbsp;&nbsp;/&nbsp;&nbsp;Benchmark Sports&nbsp;&nbsp;/&nbsp;&nbsp;
+          <p
+            className="whitespace-nowrap text-[48px] uppercase leading-none tracking-tight"
+            style={{ color: "#3c3e41" }}
+          >
+            <span className="font-black">Benchmark Sports&nbsp;&nbsp;</span>
+            <span className="font-light">/&nbsp;&nbsp;Benchmark Sports&nbsp;&nbsp;</span>
+            <span className="font-black">/&nbsp;&nbsp;Benchmark Sports&nbsp;&nbsp;</span>
+            <span className="font-light">/&nbsp;&nbsp;Benchmark Sports&nbsp;&nbsp;</span>
+            <span className="font-black">/&nbsp;&nbsp;Benchmark Sports&nbsp;&nbsp;</span>
+            <span className="font-light">/&nbsp;&nbsp;</span>
           </p>
         </div>
-        <div className="hidden lg:block w-full h-px bg-white/[0.08]" />
+
+        {/* Bottom divider */}
+        <div className="w-full h-px bg-white/[0.08]" />
+
+        {/* Copyright */}
         <div className="flex items-center justify-between py-3 w-full px-8 lg:px-[240px]">
           <p className="text-white/50 text-sm leading-[18px] font-normal">
             2026 © Benchmark Sports. All rights reserved.

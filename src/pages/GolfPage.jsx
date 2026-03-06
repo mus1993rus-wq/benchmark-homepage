@@ -174,10 +174,11 @@ const phoneScreens = [
 export default function GolfPage() {
   return (
     <div className="min-h-screen font-sans antialiased">
-      <AnnouncementBar />
+      <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+        <AnnouncementBar />
 
-      {/* Hero */}
-      <div className="relative h-[780px] overflow-hidden">
+        {/* Hero */}
+        <div className="relative overflow-hidden" style={{ flex: 1 }}>
         <img
           src="/images/golf-hero-bg.png"
           alt="Benchmark Golf"
@@ -209,6 +210,7 @@ export default function GolfPage() {
             </div>
           </div>
         </div>
+      </div>
       </div>
 
       {/* Dark section */}

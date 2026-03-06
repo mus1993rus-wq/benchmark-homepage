@@ -4,10 +4,11 @@ import { Header } from "../components/Header";
 export default function PadelPage() {
   return (
     <div className="min-h-screen font-sans antialiased">
-      <AnnouncementBar />
+      <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+        <AnnouncementBar />
 
-      {/* Hero */}
-      <div className="relative overflow-hidden" style={{ height: "780px" }}>
+        {/* Hero */}
+        <div className="relative overflow-hidden" style={{ flex: 1 }}>
         <img
           src="/images/padel-hero.png"
           alt="Benchmark Padel"
@@ -50,6 +51,7 @@ export default function PadelPage() {
             </p>
           </div>
         </div>
+      </div>
       </div>
 
     </div>

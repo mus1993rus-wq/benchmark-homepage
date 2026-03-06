@@ -39,7 +39,6 @@ function App() {
           position: "relative",
           zIndex: 1,
           overflow: "clip",
-          boxShadow: "0 20px 120px rgba(0,0,0,0.3)",
           marginBottom: footerHeight,
         }}
       >
