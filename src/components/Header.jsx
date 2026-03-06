@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const sportsItems = [
@@ -21,10 +21,29 @@ const navLinks = [
 export function Header() {
   const [sportsOpen, setSportsOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // Separate "mounted" state so we can animate in/out
+  const [dropdownMounted, setDropdownMounted] = useState(false);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  // Open: mount first, then trigger visible (animate in)
+  // Close: trigger invisible (animate out), then unmount after transition
+  useEffect(() => {
+    let timeout;
+    if (sportsOpen) {
+      setDropdownMounted(true);
+      // Small delay to allow mount before starting transition
+      timeout = setTimeout(() => setDropdownVisible(true), 10);
+    } else {
+      setDropdownVisible(false);
+      // Wait for animation out to finish before unmounting
+      timeout = setTimeout(() => setDropdownMounted(false), 400);
+    }
+    return () => clearTimeout(timeout);
+  }, [sportsOpen]);
 
   return (
     <>
-      {/* ─── Mobile Header (normal flow, pushes hero down) ─────────────────── */}
+      {/* ─── Mobile Header ─────────────────────────────────────────────────── */}
       <div className="lg:hidden bg-white border-b border-[#e6e6e6] flex items-center justify-between px-4 h-[78px] relative z-20">
         <button
           onClick={() => setMobileMenuOpen(true)}
@@ -81,33 +100,48 @@ export function Header() {
         </>
       )}
 
-      {/* ─── Desktop Overlay — закривається по кліку поза меню ──────────────── */}
-      {sportsOpen && (
-        <div
-          className="hidden lg:block fixed inset-0 z-20 backdrop-blur-[12px] bg-black/25"
-          onClick={() => setSportsOpen(false)}
-        />
-      )}
+      {/* ─── Desktop Backdrop overlay ──────────────────────────────────────── */}
+      <div
+        className="hidden lg:block fixed inset-0 z-20"
+        style={{
+          backdropFilter: dropdownVisible ? "blur(12px)" : "blur(0px)",
+          background: dropdownVisible ? "rgba(0,0,0,0.25)" : "rgba(0,0,0,0)",
+          opacity: dropdownVisible ? 1 : 0,
+          pointerEvents: dropdownMounted ? "auto" : "none",
+          transition: "opacity 0.35s cubic-bezier(0.4,0,0.2,1), backdrop-filter 0.35s cubic-bezier(0.4,0,0.2,1)",
+        }}
+        onClick={() => setSportsOpen(false)}
+      />
 
       {/* ─── Desktop Header + Sports Dropdown ───────────────────────────────── */}
       <div
-        className={`hidden lg:block w-full absolute top-0 left-0 z-30 transition-colors duration-300 ${sportsOpen ? "bg-white" : ""}`}
+        className="hidden lg:block w-full absolute top-0 left-0 z-30"
+        style={{
+          background: sportsOpen ? "#ffffff" : "transparent",
+          transition: "background 0.35s cubic-bezier(0.4,0,0.2,1)",
+        }}
       >
-        <header
-          className="w-full flex items-center"
-          style={!sportsOpen ? { background: "linear-gradient(to bottom, rgba(23,26,29,0.2), rgba(0,0,0,0))" } : {}}
-        >
-          <div className="w-full flex items-center justify-between px-[240px] py-[40px] pb-[48px] gap-[80px]">
+        <header className="w-full flex items-center">
+          <div
+            className="w-full flex items-center justify-between px-[240px] py-[40px] pb-[48px] gap-[80px]"
+            style={!sportsOpen ? { background: "linear-gradient(to bottom, rgba(23,26,29,0.2), rgba(0,0,0,0))" } : {}}
+          >
+            {/* Left nav */}
             <nav className="flex items-center gap-16 justify-end flex-1">
               <div className="relative">
                 <button
-                  className={`nav-link font-bold text-base whitespace-nowrap transition-colors duration-300 flex items-center gap-1 ${sportsOpen ? "text-black hover:text-black/70" : "text-white hover:text-white/80"}`}
+                  className={`nav-link font-bold text-base whitespace-nowrap flex items-center gap-1 ${sportsOpen ? "text-black" : "text-white"}`}
+                  style={{ transition: "color 0.3s cubic-bezier(0.4,0,0.2,1)" }}
                   onClick={() => setSportsOpen(!sportsOpen)}
                 >
                   Sports
                   <svg
                     width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
-                    className={`transition-transform duration-300 opacity-70 ${sportsOpen ? "rotate-180" : "rotate-0"}`}
+                    className="opacity-70"
+                    style={{
+                      transform: sportsOpen ? "rotate(180deg)" : "rotate(0deg)",
+                      transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1)",
+                    }}
                   >
                     <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
                   </svg>
@@ -115,31 +149,40 @@ export function Header() {
               </div>
               <Link
                 to="/about"
-                className={`nav-link font-bold text-base whitespace-nowrap transition-colors duration-300 ${sportsOpen ? "text-black hover:text-black/70" : "text-white hover:text-white/80"}`}
+                className={`nav-link font-bold text-base whitespace-nowrap ${sportsOpen ? "text-black hover:text-black/70" : "text-white hover:text-white/80"}`}
+                style={{ transition: "color 0.3s cubic-bezier(0.4,0,0.2,1)" }}
               >
                 About Us
               </Link>
             </nav>
 
+            {/* Logo */}
             <Link to="/" className="shrink-0">
               <img
                 src="/images/logo.svg"
                 alt="benchmark SPORTS"
-                className={`transition-all duration-300 ${sportsOpen ? "brightness-0" : ""}`}
-                style={{ height: '40px', width: '157.5px' }}
+                style={{
+                  height: '40px',
+                  width: '157.5px',
+                  filter: sportsOpen ? "brightness(0)" : "none",
+                  transition: "filter 0.3s cubic-bezier(0.4,0,0.2,1)",
+                }}
               />
             </Link>
 
+            {/* Right nav */}
             <nav className="flex items-center gap-16 flex-1">
               <Link
                 to="/careers"
-                className={`nav-link font-bold text-base whitespace-nowrap transition-colors duration-300 ${sportsOpen ? "text-black hover:text-black/70" : "text-white hover:text-white/80"}`}
+                className={`nav-link font-bold text-base whitespace-nowrap ${sportsOpen ? "text-black hover:text-black/70" : "text-white hover:text-white/80"}`}
+                style={{ transition: "color 0.3s cubic-bezier(0.4,0,0.2,1)" }}
               >
                 Careers
               </Link>
               <Link
                 to="/contact"
-                className={`nav-link font-bold text-base whitespace-nowrap transition-colors duration-300 ${sportsOpen ? "text-black hover:text-black/70" : "text-white hover:text-white/80"}`}
+                className={`nav-link font-bold text-base whitespace-nowrap ${sportsOpen ? "text-black hover:text-black/70" : "text-white hover:text-white/80"}`}
+                style={{ transition: "color 0.3s cubic-bezier(0.4,0,0.2,1)" }}
               >
                 Contacts
               </Link>
@@ -147,39 +190,49 @@ export function Header() {
           </div>
         </header>
 
-        {/* Sports картки — плавна анімація через max-height + opacity */}
-        <div
-          className={`w-full bg-white overflow-hidden transition-all duration-300 ease-out ${
-            sportsOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
-          }`}
-        >
-          <div className="pb-[60px]">
-            <div className="flex gap-[16px] items-center mx-auto w-[1200px] h-[380px]">
-              {sportsItems.map((sport) => (
-                <Link
-                  key={sport.to}
-                  to={sport.to}
-                  className="relative flex-1 h-full rounded-[8px] overflow-hidden block img-zoom"
-                  onClick={() => setSportsOpen(false)}
-                >
-                  <img src={sport.image} alt={sport.label} className="absolute inset-0 w-full h-full object-cover" />
-                  <div className="absolute inset-0 rounded-[8px] bg-gradient-to-b from-transparent to-[rgba(35,35,35,0.6)]" />
-                  {sport.comingSoon && (
-                    <div className="absolute top-3 left-3 bg-[#30393e] backdrop-blur-[24px] px-3 py-1.5 rounded">
-                      <span className="font-bold text-[16px] text-[#ffc32c] leading-5">Coming soon</span>
+        {/* ─── Sports Dropdown — translateY + opacity + stagger ─────────────── */}
+        {dropdownMounted && (
+          <div
+            className="w-full bg-white overflow-hidden"
+            style={{
+              opacity: dropdownVisible ? 1 : 0,
+              transform: dropdownVisible ? "translateY(0)" : "translateY(-16px)",
+              transition: "opacity 0.35s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.4,0,0.2,1)",
+            }}
+          >
+            <div className="pb-[60px]">
+              <div className="flex gap-[16px] items-center mx-auto w-[1200px] h-[380px]">
+                {sportsItems.map((sport, i) => (
+                  <Link
+                    key={sport.to}
+                    to={sport.to}
+                    className="relative flex-1 h-full rounded-[8px] overflow-hidden block img-zoom"
+                    onClick={() => setSportsOpen(false)}
+                    style={{
+                      opacity: dropdownVisible ? 1 : 0,
+                      transform: dropdownVisible ? "translateY(0)" : "translateY(24px)",
+                      transition: `opacity 0.4s cubic-bezier(0.4,0,0.2,1) ${i * 60}ms, transform 0.4s cubic-bezier(0.4,0,0.2,1) ${i * 60}ms`,
+                    }}
+                  >
+                    <img src={sport.image} alt={sport.label} className="absolute inset-0 w-full h-full object-cover" />
+                    <div className="absolute inset-0 rounded-[8px] bg-gradient-to-b from-transparent to-[rgba(35,35,35,0.6)]" />
+                    {sport.comingSoon && (
+                      <div className="absolute top-3 left-3 bg-[#30393e] backdrop-blur-[24px] px-3 py-1.5 rounded">
+                        <span className="font-bold text-[16px] text-[#ffc32c] leading-5">Coming soon</span>
+                      </div>
+                    )}
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <div className="flex flex-col gap-3 text-white">
+                        <p className="font-bold text-[24px] leading-7">{sport.label}</p>
+                        <p className="font-normal text-[16px] leading-6">{sport.desc}</p>
+                      </div>
                     </div>
-                  )}
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <div className="flex flex-col gap-3 text-white">
-                      <p className="font-bold text-[24px] leading-7">{sport.label}</p>
-                      <p className="font-normal text-[16px] leading-6">{sport.desc}</p>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );

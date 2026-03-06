@@ -95,7 +95,8 @@ export function Footer() {
         Прозорий: через нього видно портальний футер знизу.
         Завдяки цьому контент можна "доскролити" щоб відкрити футер.
       */}
-      <div style={{ height }} aria-hidden="true" />
+      {/* pointer-events:none — прозорий spacer не перехоплює кліки, вони проходять до портального футера */}
+      <div style={{ height, pointerEvents: "none" }} aria-hidden="true" />
 
       {/*
         Portal рендерить футер напряму в document.body —
