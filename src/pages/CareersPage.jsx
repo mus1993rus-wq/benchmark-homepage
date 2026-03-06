@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
 
 function toSlug(title) {
   return title
@@ -130,7 +129,6 @@ export default function CareersPage() {
         </div>
       </div>
 
-      <Footer />
     </div>
   );
 }

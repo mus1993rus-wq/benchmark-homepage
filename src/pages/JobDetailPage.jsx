@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
 
 function toSlug(title) {
   return title
@@ -351,7 +350,6 @@ export default function JobDetailPage() {
         </div>
       </div>
 
-      <Footer />
     </div>
   );
 }

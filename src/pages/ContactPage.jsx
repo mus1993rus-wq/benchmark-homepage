@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -130,7 +129,6 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <Footer />
     </div>
   );
 }

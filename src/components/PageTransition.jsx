@@ -1,5 +1,5 @@
 import { createContext, useContext, useCallback, useEffect, useRef, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const TransitionCtx = createContext({ transitionTo: () => {} });
 
@@ -8,28 +8,32 @@ export function useTransitionTo() {
 }
 
 // Фази: idle → coverIn → covered → coverOut → idle
+//   coverIn  (480ms): overlay заїжджає справа наліво (translateX 100% → 0%)
+//   covered   (60ms): навігація + scrollTo(0,0)
+//   coverOut (520ms): overlay виїжджає вліво (translateX 0% → -100%)
 function useTransitionState() {
   const [phase, setPhase] = useState("idle");
   const navigate = useNavigate();
   const pendingRef = useRef(null);
 
-  const transitionTo = useCallback((to) => {
-    if (phase !== "idle") return;
-    pendingRef.current = to;
-    setPhase("coverIn");
-  }, [phase]);
+  const transitionTo = useCallback(
+    (to) => {
+      if (phase !== "idle") return;
+      pendingRef.current = to;
+      setPhase("coverIn");
+    },
+    [phase]
+  );
 
   useEffect(() => {
     let t;
     if (phase === "coverIn") {
-      // Завіса накрила екран → navigateємо
       t = setTimeout(() => {
         navigate(pendingRef.current);
         window.scrollTo(0, 0);
         setPhase("covered");
       }, 480);
     } else if (phase === "covered") {
-      // Новий контент завантажено → відкриваємо
       t = setTimeout(() => setPhase("coverOut"), 60);
     } else if (phase === "coverOut") {
       t = setTimeout(() => setPhase("idle"), 520);
@@ -40,13 +44,40 @@ function useTransitionState() {
   return { phase, transitionTo };
 }
 
-// Overlay — темна завіса що заїжджає/виїжджає
+// Overlay — темна завіса
+//
+// Проблема попередньої версії: overlay монтувався вже на translateX(0%),
+// тому CSS transition не мав "з чого" анімувати → завіса просто з'являлась.
+//
+// Рішення (патерн як у Header dropdown):
+//   1. Монтуємо елемент у стартовій позиції translateX(100%) — поза екраном справа
+//   2. Через 10ms ставимо animIn=true → transform → translateX(0%)
+//      CSS transition бачить зміну і програє slide-in анімацію
+//   3. На фазі coverOut: animIn=false → translateX(-100%) → slide-out вліво
 function Overlay({ phase }) {
+  const [animIn, setAnimIn] = useState(false);
+
+  useEffect(() => {
+    if (phase === "coverIn") {
+      const t = setTimeout(() => setAnimIn(true), 10);
+      return () => clearTimeout(t);
+    }
+    if (phase === "covered") {
+      setAnimIn(true);
+    }
+    if (phase === "idle") {
+      setAnimIn(false);
+    }
+  }, [phase]);
+
   if (phase === "idle") return null;
 
-  const entering = phase === "coverIn";
-  const covering = phase === "covered";
-  const exiting  = phase === "coverOut";
+  const translateX =
+    phase === "coverOut"
+      ? "-100%"
+      : animIn
+      ? "0%"
+      : "100%";
 
   return (
     <div
@@ -56,18 +87,9 @@ function Overlay({ phase }) {
         inset: 0,
         zIndex: 9999,
         background: "#0f1010",
-        // Вхід: заїжджає справа наліво (translateX 100% → 0%)
-        // Вихід: виїжджає вліво (translateX 0% → -100%)
-        transform: entering
-          ? "translateX(0%)"
-          : covering
-          ? "translateX(0%)"
-          : "translateX(-100%)",
-        transition: entering || exiting
-          ? "transform 0.52s cubic-bezier(0.87, 0, 0.13, 1)"
-          : "none",
-        // Початкова позиція для entering — справа
-        ...(entering && { transform: "translateX(0%)" }),
+        transform: `translateX(${translateX})`,
+        transition: "transform 0.52s cubic-bezier(0.87, 0, 0.13, 1)",
+        willChange: "transform",
       }}
     />
   );
@@ -77,8 +99,6 @@ function Overlay({ phase }) {
 export function PageTransitionProvider({ children }) {
   const { phase, transitionTo } = useTransitionState();
 
-  // Глобальний перехват кліків через capture phase —
-  // спрацьовує ДО React Router's onClick, блокуємо миттєву навігацію
   useEffect(() => {
     const handleClick = (e) => {
       const link = e.target.closest("a[href]");
@@ -87,16 +107,15 @@ export function PageTransitionProvider({ children }) {
       const href = link.getAttribute("href");
       if (!href) return;
 
-      // Ігноруємо зовнішні, якірні посилання та target="_blank"
       if (
         href.startsWith("http") ||
         href.startsWith("//") ||
         href.startsWith("#") ||
         href.startsWith("mailto") ||
         link.hasAttribute("target")
-      ) return;
+      )
+        return;
 
-      // Не перехоплюємо, якщо вже йде анімація
       if (phase !== "idle") {
         e.preventDefault();
         e.stopPropagation();
@@ -104,12 +123,10 @@ export function PageTransitionProvider({ children }) {
       }
 
       e.preventDefault();
-      e.stopPropagation(); // блокуємо React Router від миттєвої навігації
-
+      e.stopPropagation();
       transitionTo(href);
     };
 
-    // capture: true — перехоплюємо до React event system
     document.addEventListener("click", handleClick, true);
     return () => document.removeEventListener("click", handleClick, true);
   }, [phase, transitionTo]);

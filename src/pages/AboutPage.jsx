@@ -1,6 +1,5 @@
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
 
 // CheckItem for dark backgrounds (white text)
 function CheckItemDark({ title, desc }) {
@@ -334,7 +333,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Footer />
     </div>
   );
 }

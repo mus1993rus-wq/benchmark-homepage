@@ -1,6 +1,5 @@
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
 
 export default function TennisPage() {
   return (
@@ -53,7 +52,6 @@ export default function TennisPage() {
         </div>
       </div>
 
-      <Footer />
     </div>
   );
 }

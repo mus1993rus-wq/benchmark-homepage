@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
 
 // ─── Hero Section ─────────────────────────────────────────────────────────────
 function HeroSection() {
@@ -552,7 +551,6 @@ export default function HomePage() {
       <SportsProductsSection />
       <ComparisonSection />
       <ProcessSection />
-      <Footer />
     </div>
   );
 }

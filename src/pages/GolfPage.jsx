@@ -1,6 +1,5 @@
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
 
 function CheckItem({ title, desc }) {
   return (
@@ -412,7 +411,6 @@ export default function GolfPage() {
         </div>
       </section>
 
-      <Footer />
     </div>
   );
 }

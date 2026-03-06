@@ -1,24 +1,24 @@
-import { useRef, useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export function Footer() {
+// Footer рендериться в main.jsx поза обгорткою z-index:1.
+// onHeightChange — колбек для передачі висоти у батьківський компонент,
+// щоб встановити margin-bottom на обгортці (margin не перехоплює кліки,
+// тому кліки в цій зоні проходять прямо до футера).
+export function Footer({ onHeightChange }) {
   const footerRef = useRef(null);
-  const [height, setHeight] = useState(420);
 
   useEffect(() => {
     const measure = () => {
-      if (footerRef.current) {
-        setHeight(footerRef.current.offsetHeight);
-      }
+      if (footerRef.current) onHeightChange?.(footerRef.current.offsetHeight);
     };
     measure();
     const ro = new ResizeObserver(measure);
     if (footerRef.current) ro.observe(footerRef.current);
     return () => ro.disconnect();
-  }, []);
+  }, [onHeightChange]);
 
-  const footerContent = (
+  return (
     <footer
       ref={footerRef}
       className="bg-[#1f2225] border-t border-white/[0.08] w-full"
@@ -27,7 +27,6 @@ export function Footer() {
         bottom: 0,
         left: 0,
         right: 0,
-        // z-index: 0 у кореневому stacking context — під обгорткою z-index:1
         zIndex: 0,
       }}
     >
@@ -86,26 +85,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  );
-
-  return (
-    <>
-      {/*
-        Spacer — займає місце футера в потоці.
-        Прозорий: через нього видно портальний футер знизу.
-        Завдяки цьому контент можна "доскролити" щоб відкрити футер.
-      */}
-      {/* pointer-events:none — прозорий spacer не перехоплює кліки, вони проходять до портального футера */}
-      <div style={{ height, pointerEvents: "none" }} aria-hidden="true" />
-
-      {/*
-        Portal рендерить футер напряму в document.body —
-        ПОЗА стекінг-контекстом z-index:1 (обгортка в main.jsx).
-        В кореневому контексті: footer z-index:0 < wrapper z-index:1
-        → контент ЗАВЖДИ перекриває футер під час скролу.
-        → футер видно ТІЛЬКИ коли прозорий spacer досягає viewport.
-      */}
-      {createPortal(footerContent, document.body)}
-    </>
   );
 }
