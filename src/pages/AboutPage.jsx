@@ -35,7 +35,7 @@ function CheckItem({ title, desc }) {
   );
 }
 
-function CollectionCard({ img, title, desc }) {
+function CollectionCard({ img, img2, img2Style, title, desc }) {
   return (
     <div className="flex-1 relative rounded-[8px] overflow-hidden h-full">
       <img
@@ -43,8 +43,18 @@ function CollectionCard({ img, title, desc }) {
         alt={title}
         className="absolute inset-0 w-full h-full object-cover"
       />
+      {img2 && (
+        <div className="absolute inset-0 overflow-hidden">
+          <img
+            src={img2}
+            alt=""
+            className="absolute max-w-none"
+            style={img2Style}
+          />
+        </div>
+      )}
       <div
-        className="absolute bottom-0 left-0 right-0 px-[24px] py-[24px] rounded-[8px]"
+        className="absolute bottom-0 left-0 right-0 px-[24px] py-[32px] rounded-[8px]"
         style={{
           background:
             "linear-gradient(to bottom, rgba(35,35,35,0) 0%, rgba(35,35,35,0.6) 100%)",
@@ -181,6 +191,8 @@ export default function AboutPage() {
             <div className="h-[400px] lg:h-full">
               <CollectionCard
                 img="/images/about-approach-3.png"
+                img2="/images/about-approach-3b.png"
+                img2Style={{ height: "101.48%", left: "-8.34%", top: "-0.75%", width: "116.67%" }}
                 title="Platform, Not Product"
                 desc="One core engine. Multiple sports. Consistent experience."
               />
@@ -288,7 +300,7 @@ export default function AboutPage() {
                     <p className="font-bold text-[24px] text-white leading-[28px]">
                       {member.name}
                     </p>
-                    <p className="font-normal text-[#818181] text-[16px] leading-[22px]">
+                    <p className="font-normal text-[#717171] text-[16px] leading-[22px]">
                       {member.role}
                     </p>
                   </div>
@@ -299,26 +311,27 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
+          {/* Team note — directly below the team cards */}
+          <p className="font-bold text-[18px] lg:text-[24px] text-white leading-[26px] lg:leading-[28px] text-center max-w-[770px] mx-auto mt-10 lg:mt-12">
+            And 20 team members across engineering, product, and ops, operating with speed, taste, and extreme ownership.
+          </p>
         </div>
       </section>
 
       {/* How We Build Section — dark bg */}
       <section className="bg-[#171a1c] py-12 lg:py-20 px-4 lg:px-6 border-t border-white/[0.08]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="text-center mb-10 lg:mb-12 flex flex-col gap-4">
-            <p className="font-bold text-[18px] lg:text-[24px] text-white leading-[26px] lg:leading-[28px] text-center max-w-[770px] mx-auto">
-              And 20 team members across engineering, product, and ops, operating with speed, taste, and extreme ownership.
-            </p>
+          <div className="text-center mb-10 lg:mb-12">
             <h2 className="font-bold text-[32px] lg:text-[48px] text-white leading-[40px] lg:leading-[62px]">
               How We Build
             </h2>
           </div>
           <div className="bg-[#1f2225] rounded-[8px] grid grid-cols-2 lg:flex">
             {[
-              { label: "Speed over bureaucracy", icon: "/images/about-build-icon-1.svg" },
-              { label: "Product obsession", icon: "/images/about-build-icon-2.svg" },
-              { label: "Long-term thinking", icon: "/images/about-build-icon-3.svg" },
-              { label: "Measurable outcomes", icon: "/images/about-build-icon-4.svg" },
+              { label: "Speed over bureaucracy", icon: "/images/about-build-icon-1.png" },
+              { label: "Product obsession", icon: "/images/about-build-icon-2.png" },
+              { label: "Long-term thinking", icon: "/images/about-build-icon-3.png" },
+              { label: "Measurable outcomes", icon: "/images/about-build-icon-4.png" },
             ].map((item, i) => (
               <div
                 key={item.label}

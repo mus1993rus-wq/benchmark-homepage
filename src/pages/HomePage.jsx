@@ -133,15 +133,15 @@ function StatsSection() {
 function CollectionSection() {
   const cards = [
     {
-      title: "Movement First",
-      desc: "We measure how you move — not just where the ball goes.",
+      title: "One platform. Many sports.",
+      desc: "Same training experience across golf, tennis, padel, cricket and more.",
       image: (
         <img src="/images/home-card-1.png" alt="" className="absolute inset-0 w-full h-full object-cover" />
       ),
     },
     {
-      title: "Structured Progression",
-      desc: "Every session builds on the last. No random drills.",
+      title: "Train anywhere. Learn from every rep.",
+      desc: "Use your phone to capture motion, find patterns, and get clear next steps.",
       image: (
         <div className="absolute inset-0 overflow-hidden">
           <img
@@ -154,8 +154,8 @@ function CollectionSection() {
       ),
     },
     {
-      title: "Platform, Not Product",
-      desc: "One core engine. Multiple sports. Consistent experience.",
+      title: 'Built to scale, not to \u201ccoach harder\u201d.',
+      desc: "Coaching becomes a product: consistent, measurable, always improving.",
       image: (
         <>
           <div className="absolute inset-0 overflow-hidden">
