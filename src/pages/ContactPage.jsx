@@ -23,7 +23,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen font-sans antialiased">
+    <div className="min-h-screen font-sans antialiased bg-[#171b1d]">
       <AnnouncementBar />
 
       {/* Header */}
