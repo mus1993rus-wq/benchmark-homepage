@@ -174,7 +174,7 @@ const phoneScreens = [
 
 export default function GolfPage() {
   return (
-    <div className="min-h-screen font-sans antialiased bg-white">
+    <div className="min-h-screen font-sans antialiased">
       <AnnouncementBar />
 
       {/* Hero */}

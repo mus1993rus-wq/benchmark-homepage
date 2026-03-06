@@ -76,7 +76,7 @@ function ProblemDiagram() {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen font-sans antialiased bg-white">
+    <div className="min-h-screen font-sans antialiased">
       <AnnouncementBar />
 
       {/* Hero */}

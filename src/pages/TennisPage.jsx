@@ -4,7 +4,7 @@ import { Footer } from "../components/Footer";
 
 export default function TennisPage() {
   return (
-    <div className="min-h-screen font-sans antialiased bg-white">
+    <div className="min-h-screen font-sans antialiased">
       <AnnouncementBar />
 
       {/* Hero */}
