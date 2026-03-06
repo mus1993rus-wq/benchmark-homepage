@@ -27,9 +27,9 @@ export function Footer({ onHeightChange }) {
       }}
     >
       {/* Main footer content */}
-      <div className="flex items-start justify-between px-8 lg:px-[240px] pt-8 lg:pt-[80px] pb-8 lg:pb-[64px]">
+      <div className="flex flex-col lg:flex-row items-start justify-between px-8 lg:px-[240px] pt-8 lg:pt-[80px] pb-8 lg:pb-[64px] gap-8 lg:gap-0">
         {/* Brand column */}
-        <div className="flex flex-col gap-5 w-[440px]">
+        <div className="flex flex-col gap-5 lg:w-[440px]">
           <img
             src="/images/logo-footer.svg"
             alt="benchmark SPORTS"
@@ -41,7 +41,7 @@ export function Footer({ onHeightChange }) {
         </div>
 
         {/* Link columns */}
-        <div className="flex gap-10 text-base leading-6 text-[#818181] font-normal">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 text-base leading-6 text-[#818181] font-normal">
           <div className="flex flex-col gap-2 w-[120px]">
             <p className="opacity-30">Sports</p>
             <Link to="/golf" className="hover:text-white transition-colors">Golf</Link>

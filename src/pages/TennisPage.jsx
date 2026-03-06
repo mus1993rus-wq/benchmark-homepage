@@ -36,10 +36,10 @@ export default function TennisPage() {
                   Coming soon
                 </span>
               </div>
-              <h1 className="font-extrabold text-[64px] leading-[80px] uppercase text-white text-center">
+              <h1 className="font-extrabold text-[32px] leading-[40px] lg:text-[64px] lg:leading-[80px] uppercase text-white text-center">
                 Benchmark Tennis
               </h1>
-              <p className="font-bold text-[24px] leading-[28px] text-white text-center">
+              <p className="font-bold text-[18px] leading-[26px] lg:text-[24px] lg:leading-[28px] text-white text-center">
                 AI technique coaching for tennis. Built for real-time swing,
                 positioning, and placement feedback
               </p>

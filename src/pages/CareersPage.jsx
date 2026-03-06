@@ -85,15 +85,15 @@ export default function CareersPage() {
       <AnnouncementBar />
 
       {/* Header */}
-      <div className="relative h-[140px]">
+      <div className="relative h-[78px] lg:h-[140px]">
         <Header />
       </div>
 
       {/* Main content */}
-      <div className="flex flex-col items-center px-6 pt-[60px] pb-24">
+      <div className="flex flex-col items-center px-4 lg:px-6 pt-[40px] lg:pt-[60px] pb-24">
         {/* Title */}
-        <div className="text-center mb-16 w-full max-w-[1135px]">
-          <h1 className="text-white font-bold text-[48px] leading-[62px] capitalize mb-4">
+        <div className="text-center mb-10 lg:mb-16 w-full max-w-[1135px]">
+          <h1 className="text-white font-bold text-[32px] lg:text-[48px] leading-[40px] lg:leading-[62px] capitalize mb-4">
             Careers
           </h1>
           <p className="text-white text-base leading-6 font-normal">

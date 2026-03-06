@@ -79,7 +79,7 @@ export default function AboutPage() {
       <AnnouncementBar />
 
       {/* Hero */}
-      <div className="relative h-[880px] overflow-hidden">
+      <div className="relative min-h-[480px] lg:h-[880px] overflow-hidden">
         <img
           src="/images/about-hero-bg.png"
           alt="About Benchmark Sports"
@@ -93,9 +93,9 @@ export default function AboutPage() {
           }}
         />
         <Header />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-6">
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-4 lg:px-6">
           <div className="max-w-[849px] flex flex-col gap-4 items-center">
-            <h1 className="text-white font-extrabold text-[64px] leading-[80px] uppercase">
+            <h1 className="text-white font-extrabold text-[32px] leading-[40px] lg:text-[64px] lg:leading-[80px] uppercase">
               Building the future of technique training.
             </h1>
             <p className="text-white text-[16px] leading-[24px] font-normal">
@@ -106,17 +106,17 @@ export default function AboutPage() {
       </div>
 
       {/* Mission Section — dark bg */}
-      <section className="bg-[#171a1c] py-24 px-6 relative overflow-hidden">
+      <section className="bg-[#171a1c] py-16 lg:py-24 px-4 lg:px-6 relative overflow-hidden">
         <div className="max-w-[1200px] mx-auto flex flex-col items-center relative z-10">
-          {/* Watermark */}
+          {/* Watermark - hidden on mobile for cleanliness */}
           <p
-            className="text-white text-[144px] font-extrabold uppercase leading-none text-center select-none absolute top-0 left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none"
+            className="hidden lg:block text-white text-[144px] font-extrabold uppercase leading-none text-center select-none absolute top-0 left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none"
             style={{ opacity: "0.03" }}
           >
             Our Mission
           </p>
           <div className="max-w-[800px] text-center pt-8 relative z-10">
-            <div className="font-bold text-[18px] text-white leading-[20px]">
+            <div className="font-bold text-[16px] lg:text-[18px] text-white leading-[28px] lg:leading-[20px]">
               <p className="mb-0">Traditional technique coaching works — but it doesn't scale.</p>
               <p className="mb-0">It's expensive. It's time-bound. It's location-dependent.</p>
               <p className="mb-4"></p>
@@ -131,11 +131,11 @@ export default function AboutPage() {
       </section>
 
       {/* Problem Section — dark bg */}
-      <section className="bg-[#171a1c] py-20 px-6 border-t border-white/[0.08]">
-        <div className="max-w-[1200px] mx-auto flex gap-16 items-center">
+      <section className="bg-[#171a1c] py-12 lg:py-20 px-4 lg:px-6 border-t border-white/[0.08]">
+        <div className="max-w-[1200px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
           {/* Left: text */}
           <div className="flex-1 flex flex-col gap-8">
-            <h2 className="font-bold text-[44px] text-white leading-[54px] capitalize">
+            <h2 className="font-bold text-[32px] lg:text-[44px] text-white leading-[40px] lg:leading-[54px] capitalize">
               The Problem We Couldn't Ignore
             </h2>
             <ul className="list-disc text-white" style={{ paddingLeft: 0 }}>
@@ -144,57 +144,65 @@ export default function AboutPage() {
               <li className="ms-6 text-[16px] leading-[24px]">Hardware-first systems are expensive and limited to clubs.</li>
             </ul>
             {/* Quote */}
-            <div className="bg-[#1f2225] border-l-2 border-solid border-white flex items-center justify-center px-[40px] py-[32px]">
-              <p className="flex-1 font-normal italic text-white text-[22px] leading-normal">
+            <div className="bg-[#1f2225] border-l-2 border-solid border-white flex items-center justify-center px-[24px] lg:px-[40px] py-[24px] lg:py-[32px]">
+              <p className="flex-1 font-normal italic text-white text-[18px] lg:text-[22px] leading-normal">
                 There is no mass pathway from beginner to confident athlete. We're building one.
               </p>
             </div>
           </div>
-          {/* Right: diagram */}
-          <ProblemDiagram />
+          {/* Right: diagram — hidden on mobile */}
+          <div className="hidden lg:block">
+            <ProblemDiagram />
+          </div>
         </div>
       </section>
 
       {/* Our Approach — white bg */}
-      <section className="bg-white py-20 px-6">
+      <section className="bg-white py-12 lg:py-20 px-4 lg:px-6">
         <div className="max-w-[1200px] mx-auto">
-          <h2 className="font-bold text-black text-[48px] leading-[62px] capitalize text-center mb-14">
+          <h2 className="font-bold text-black text-[32px] lg:text-[48px] leading-[40px] lg:leading-[62px] capitalize text-center mb-10 lg:mb-14">
             Our Approach
           </h2>
-          <div className="flex gap-6 h-[480px]">
-            <CollectionCard
-              img="/images/about-approach-1.png"
-              title="Movement First"
-              desc="We measure how you move — not just where the ball goes."
-            />
-            <CollectionCard
-              img="/images/about-approach-2.png"
-              title="Structured Progression"
-              desc="Every session builds on the last. No random drills."
-            />
-            <CollectionCard
-              img="/images/about-approach-3.png"
-              title="Platform, Not Product"
-              desc="One core engine. Multiple sports. Consistent experience."
-            />
+          <div className="flex flex-col lg:flex-row gap-6 lg:h-[480px]">
+            <div className="h-[400px] lg:h-full">
+              <CollectionCard
+                img="/images/about-approach-1.png"
+                title="Movement First"
+                desc="We measure how you move — not just where the ball goes."
+              />
+            </div>
+            <div className="h-[400px] lg:h-full">
+              <CollectionCard
+                img="/images/about-approach-2.png"
+                title="Structured Progression"
+                desc="Every session builds on the last. No random drills."
+              />
+            </div>
+            <div className="h-[400px] lg:h-full">
+              <CollectionCard
+                img="/images/about-approach-3.png"
+                title="Platform, Not Product"
+                desc="One core engine. Multiple sports. Consistent experience."
+              />
+            </div>
           </div>
         </div>
       </section>
 
       {/* Engine Section — white bg */}
-      <section className="bg-white py-20 px-6">
-        <div className="max-w-[1200px] mx-auto flex gap-16 items-center">
-          {/* Left: image */}
-          <div className="flex-1 h-[538px] rounded-[4px] overflow-hidden">
+      <section className="bg-white py-12 lg:py-20 px-4 lg:px-6">
+        <div className="max-w-[1200px] mx-auto flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
+          {/* Image */}
+          <div className="w-full lg:flex-1 h-[300px] lg:h-[538px] rounded-[4px] overflow-hidden">
             <img
               src="/images/about-analyze.png"
               alt="The Benchmark Engine"
               className="w-full h-full object-cover"
             />
           </div>
-          {/* Right: content */}
-          <div className="flex-1 flex flex-col gap-8">
-            <h2 className="text-[44px] font-bold text-black leading-[54px] capitalize">
+          {/* Content */}
+          <div className="w-full lg:flex-1 flex flex-col gap-8">
+            <h2 className="text-[32px] lg:text-[44px] font-bold text-black leading-[40px] lg:leading-[54px] capitalize">
               The Benchmark Engine
             </h2>
             <div className="flex flex-col gap-6">
@@ -232,17 +240,17 @@ export default function AboutPage() {
       </section>
 
       {/* Team Section — dark bg */}
-      <section className="bg-[#171a1c] py-20 px-6">
+      <section className="bg-[#171a1c] py-12 lg:py-20 px-4 lg:px-6">
         <div className="max-w-[1200px] mx-auto">
-          <div className="text-center mb-16 flex flex-col gap-4">
-            <h2 className="text-[48px] font-bold text-white leading-[62px]">
+          <div className="text-center mb-10 lg:mb-16 flex flex-col gap-4">
+            <h2 className="text-[32px] lg:text-[48px] font-bold text-white leading-[40px] lg:leading-[62px]">
               The Team Behind Benchmark
             </h2>
             <p className="text-[16px] font-normal text-white leading-[24px]">
               Lean team. Extreme talent bar. Built to work fast.
             </p>
           </div>
-          <div className="flex gap-[34px] items-stretch">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-[34px] items-stretch">
             {[
               {
                 img: "/images/team-daniel.png",
@@ -295,17 +303,17 @@ export default function AboutPage() {
       </section>
 
       {/* How We Build Section — dark bg */}
-      <section className="bg-[#171a1c] py-20 px-6 border-t border-white/[0.08]">
+      <section className="bg-[#171a1c] py-12 lg:py-20 px-4 lg:px-6 border-t border-white/[0.08]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="text-center mb-12 flex flex-col gap-4">
-            <p className="font-bold text-[24px] text-white leading-[28px] text-center max-w-[770px] mx-auto">
+          <div className="text-center mb-10 lg:mb-12 flex flex-col gap-4">
+            <p className="font-bold text-[18px] lg:text-[24px] text-white leading-[26px] lg:leading-[28px] text-center max-w-[770px] mx-auto">
               And 20 team members across engineering, product, and ops, operating with speed, taste, and extreme ownership.
             </p>
-            <h2 className="font-bold text-[48px] text-white leading-[62px]">
+            <h2 className="font-bold text-[32px] lg:text-[48px] text-white leading-[40px] lg:leading-[62px]">
               How We Build
             </h2>
           </div>
-          <div className="bg-[#1f2225] rounded-[8px] flex">
+          <div className="bg-[#1f2225] rounded-[8px] grid grid-cols-2 lg:flex">
             {[
               { label: "Speed over bureaucracy", icon: "/images/about-build-icon-1.svg" },
               { label: "Product obsession", icon: "/images/about-build-icon-2.svg" },
@@ -314,9 +322,9 @@ export default function AboutPage() {
             ].map((item, i) => (
               <div
                 key={item.label}
-                className={`flex-1 flex flex-col gap-4 items-center px-6 py-8 border border-[#2d2f31] ${
-                  i === 0 ? "rounded-l-[4px]" : ""
-                } ${i === 3 ? "rounded-r-[4px]" : ""}`}
+                className={`flex-1 flex flex-col gap-4 items-center px-4 lg:px-6 py-8 border border-[#2d2f31] ${
+                  i === 0 ? "lg:rounded-l-[4px]" : ""
+                } ${i === 3 ? "lg:rounded-r-[4px]" : ""}`}
               >
                 <div
                   className="w-16 h-16 rounded-[45px] border border-white/24 backdrop-blur-[32px] flex items-center justify-center overflow-hidden"
@@ -324,7 +332,7 @@ export default function AboutPage() {
                 >
                   <img src={item.icon} alt="" className="w-8 h-8" />
                 </div>
-                <p className="font-semibold text-[18px] text-white text-center leading-[26px]">
+                <p className="font-semibold text-[16px] lg:text-[18px] text-white text-center leading-[22px] lg:leading-[26px]">
                   {item.label}
                 </p>
               </div>

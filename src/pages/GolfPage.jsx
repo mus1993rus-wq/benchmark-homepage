@@ -39,7 +39,7 @@ function CollectionCard({ image, title, desc }) {
         }}
       >
         <div className="flex flex-col gap-4 text-white">
-          <p className="font-bold text-[32px] leading-[40px]">{title}</p>
+          <p className="font-bold text-[24px] lg:text-[32px] leading-[30px] lg:leading-[40px]">{title}</p>
           <p className="font-normal text-[16px] leading-[24px] opacity-80">{desc}</p>
         </div>
       </div>
@@ -116,7 +116,7 @@ function PhoneScreen({ src, isEdge = false }) {
   return (
     <div
       className="relative overflow-hidden flex-shrink-0 rounded-[8px] bg-[#999]"
-      style={{ width: "262px", height: "460px" }}
+      style={{ width: "200px", height: "352px" }}
     >
       {src && (
         <img
@@ -192,19 +192,16 @@ export default function GolfPage() {
           }}
         />
         <Header />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-6">
-          <div
-            className="max-w-[860px] flex flex-col gap-4 items-center"
-            style={{ paddingTop: "130px" }}
-          >
-            <h1 className="text-white font-extrabold text-[64px] leading-[80px] uppercase">
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-4 lg:px-6">
+          <div className="max-w-[860px] flex flex-col gap-4 items-center">
+            <h1 className="text-white font-extrabold text-[36px] leading-[44px] lg:text-[64px] lg:leading-[80px] uppercase">
               Benchmark Golf
             </h1>
             <p className="text-white text-[16px] leading-[24px] font-normal">
               AI-powered simulation &amp; swing feedback. No sensors. No guesswork.
             </p>
             <div className="mt-4">
-              <button className="bg-white text-black font-bold px-10 py-5 rounded text-base hover:bg-gray-100 transition-colors">
+              <button className="bg-white text-black font-bold px-8 lg:px-10 py-4 lg:py-5 rounded text-base hover:bg-gray-100 transition-colors">
                 Visit Benchmark Golf
               </button>
             </div>
@@ -217,12 +214,12 @@ export default function GolfPage() {
       <div className="bg-[#171a1c]">
 
         {/* Feature Tags with Icons */}
-        <section className="py-16 px-6">
-          <div className="max-w-[1200px] mx-auto flex gap-6 items-start justify-between">
+        <section className="py-12 lg:py-16 px-4 lg:px-6">
+          <div className="max-w-[1200px] mx-auto grid grid-cols-2 lg:flex gap-6 lg:items-start lg:justify-between">
             {featureTags.map((tag) => (
               <div
                 key={tag.label}
-                className="flex-1 flex flex-col gap-4 items-center text-center"
+                className="flex flex-col gap-4 items-center text-center"
               >
                 <div
                   className="flex items-center justify-center p-4 rounded-[45px]"
@@ -234,7 +231,7 @@ export default function GolfPage() {
                 >
                   <img src={tag.icon} alt="" className="w-8 h-8" />
                 </div>
-                <p className="font-semibold text-[18px] text-white leading-[26px]">
+                <p className="font-semibold text-[15px] lg:text-[18px] text-white leading-[22px] lg:leading-[26px]">
                   {tag.label}
                 </p>
               </div>
@@ -243,25 +240,25 @@ export default function GolfPage() {
         </section>
 
         {/* Divider */}
-        <div className="max-w-[1200px] mx-auto px-6">
+        <div className="max-w-[1200px] mx-auto px-4 lg:px-6">
           <div className="h-px" style={{ background: "#2D2F31" }} />
         </div>
 
         {/* System Section */}
-        <section className="py-20 px-6">
-          <div className="max-w-[1200px] mx-auto flex gap-16 items-center">
-            {/* Left: image */}
-            <div className="flex-1 h-[538px] rounded-[8px] overflow-hidden">
+        <section className="py-12 lg:py-20 px-4 lg:px-6">
+          <div className="max-w-[1200px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
+            {/* Image */}
+            <div className="w-full lg:flex-1 h-[280px] lg:h-[538px] rounded-[8px] overflow-hidden">
               <img
                 src="/images/golf-coaching.png"
                 alt="Benchmark Golf Analysis"
                 className="w-full h-full object-cover"
               />
             </div>
-            {/* Right: content */}
-            <div className="w-[570px] flex-shrink-0 flex flex-col gap-6">
+            {/* Content */}
+            <div className="w-full lg:w-[570px] lg:flex-shrink-0 flex flex-col gap-6">
               <div className="flex flex-col gap-6">
-                <h2 className="font-bold text-[48px] text-white leading-[62px] capitalize">
+                <h2 className="font-bold text-[32px] lg:text-[48px] text-white leading-[40px] lg:leading-[62px] capitalize">
                   Benchmark Golf System
                 </h2>
                 <p className="font-bold text-[18px] text-white leading-[20px]">
@@ -296,12 +293,12 @@ export default function GolfPage() {
         </section>
 
         {/* Adaptive Coaching */}
-        <section className="px-6 pb-20">
-          <div className="max-w-[1200px] mx-auto flex gap-16 items-center">
-            {/* Left: text */}
-            <div className="flex-1 flex flex-col gap-10">
+        <section className="px-4 lg:px-6 pb-12 lg:pb-20">
+          <div className="max-w-[1200px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
+            {/* Text */}
+            <div className="w-full lg:flex-1 flex flex-col gap-8 lg:gap-10">
               <div className="flex flex-col gap-6 text-white">
-                <h2 className="font-bold text-[48px] text-white leading-[62px] capitalize">
+                <h2 className="font-bold text-[32px] lg:text-[48px] text-white leading-[40px] lg:leading-[62px] capitalize">
                   Adaptive Coaching. Built From Real Swings.
                 </h2>
                 <p className="font-semibold text-[16px] text-white leading-[22px]">
@@ -325,15 +322,13 @@ export default function GolfPage() {
                 />
               </div>
             </div>
-            {/* Right: image */}
-            <div className="flex-1 h-[538px] rounded-[8px] overflow-hidden relative">
-              {/* Background */}
+            {/* Image */}
+            <div className="w-full lg:flex-1 h-[280px] lg:h-[538px] rounded-[8px] overflow-hidden relative">
               <img
                 src="/images/golf-system.png"
                 alt="Adaptive Coaching"
                 className="absolute inset-0 w-full h-full object-cover"
               />
-              {/* Blur overlay */}
               <div
                 className="absolute inset-0"
                 style={{
@@ -341,7 +336,6 @@ export default function GolfPage() {
                   backdropFilter: "blur(12px)",
                 }}
               />
-              {/* Phone UI overlay — above the blur */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <img
                   src="/images/golf-coaching-overlay.png"
@@ -355,12 +349,21 @@ export default function GolfPage() {
         </section>
 
         {/* Built For Every Golfer */}
-        <section className="px-6 pb-20">
-          <div className="max-w-[1200px] mx-auto flex flex-col gap-12">
-            <h2 className="font-bold text-[52px] text-white text-center leading-[62px]">
+        <section className="px-4 lg:px-6 pb-12 lg:pb-20">
+          <div className="max-w-[1200px] mx-auto flex flex-col gap-8 lg:gap-12">
+            <h2 className="font-bold text-[32px] lg:text-[52px] text-white text-center leading-[40px] lg:leading-[62px]">
               Built For Every Golfer
             </h2>
-            <div className="flex gap-6 h-[480px]">
+            {/* Mobile: stacked */}
+            <div className="flex flex-col gap-6 lg:hidden">
+              {golfCards.map((card) => (
+                <div key={card.title} className="relative rounded-[8px] overflow-hidden h-[400px]">
+                  <CollectionCard image={card.image} title={card.title} desc={card.desc} />
+                </div>
+              ))}
+            </div>
+            {/* Desktop: row */}
+            <div className="hidden lg:flex gap-6 h-[480px]">
               {golfCards.map((card) => (
                 <CollectionCard key={card.title} image={card.image} title={card.title} desc={card.desc} />
               ))}
@@ -370,16 +373,16 @@ export default function GolfPage() {
       </div>
 
       {/* White section — Become the best player + Stats */}
-      <section className="bg-white py-20">
-        <div className="max-w-[1280px] mx-auto px-6 flex flex-col items-center gap-12">
-          <h2 className="font-bold text-[48px] text-black text-center leading-[62px] max-w-[832px]">
+      <section className="bg-white py-12 lg:py-20">
+        <div className="max-w-[1280px] mx-auto px-4 lg:px-6 flex flex-col items-center gap-8 lg:gap-12">
+          <h2 className="font-bold text-[28px] lg:text-[48px] text-black text-center leading-[36px] lg:leading-[62px] max-w-[832px]">
             Become the best player in your sport without leaving home
           </h2>
         </div>
 
-        {/* Phone screens gallery — full width with overflow clipping */}
-        <div className="overflow-hidden mt-12">
-          <div className="flex gap-6 justify-center">
+        {/* Phone screens gallery — scrollable on mobile */}
+        <div className="overflow-x-auto mt-8 lg:mt-12">
+          <div className="flex gap-4 lg:gap-6 justify-start lg:justify-center px-4 lg:px-0" style={{ minWidth: "max-content" }}>
             {phoneScreens.map((screen, i) => (
               <PhoneScreen key={i} src={screen.src} isEdge={screen.isEdge} />
             ))}
@@ -387,24 +390,24 @@ export default function GolfPage() {
         </div>
 
         {/* Stats */}
-        <div className="max-w-[1200px] mx-auto px-6 mt-12">
-          <div className="flex gap-10 items-center justify-between">
+        <div className="max-w-[1200px] mx-auto px-4 lg:px-6 mt-8 lg:mt-12">
+          <div className="grid grid-cols-2 lg:flex gap-8 lg:gap-10 lg:items-center lg:justify-between">
             {stats.map((s) => (
               <div
                 key={s.label}
-                className="flex flex-col gap-3 items-center text-center w-[260px]"
+                className="flex flex-col gap-3 items-center text-center lg:w-[260px]"
               >
                 <div className="flex gap-3 items-center justify-center">
                   {s.isStar && (
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="#ffc32c">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffc32c">
                       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                     </svg>
                   )}
-                  <p className="font-bold text-[32px] text-black leading-[40px]">
+                  <p className="font-bold text-[24px] lg:text-[32px] text-black leading-[32px] lg:leading-[40px]">
                     {s.value}
                   </p>
                 </div>
-                <p className="font-semibold text-[18px] text-black leading-[26px]">
+                <p className="font-semibold text-[14px] lg:text-[18px] text-black leading-[20px] lg:leading-[26px]">
                   {s.label}
                 </p>
               </div>

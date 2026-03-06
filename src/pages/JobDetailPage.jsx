@@ -274,18 +274,18 @@ export default function JobDetailPage() {
       <AnnouncementBar />
 
       {/* Header */}
-      <div className="relative h-[140px]">
+      <div className="relative h-[78px] lg:h-[140px]">
         <Header />
       </div>
 
       {/* Page content */}
-      <div className="flex flex-col items-center px-6 pt-[60px] pb-24">
+      <div className="flex flex-col items-center px-4 lg:px-6 pt-[40px] lg:pt-[60px] pb-24">
         {/* Job header */}
         <div className="flex flex-col gap-4 items-center w-full max-w-[1135px] mb-10">
           {/* Back link */}
           <Link
             to="/careers"
-            className="flex gap-2 items-center text-[#818181] text-[16px] leading-[24px] underline hover:text-white transition-colors no-underline group"
+            className="flex gap-2 items-center text-[#818181] text-[16px] leading-[24px] underline hover:text-white transition-colors no-underline group self-start lg:self-center"
           >
             <svg
               width="20"
@@ -305,19 +305,19 @@ export default function JobDetailPage() {
           </Link>
 
           {/* Job title */}
-          <h1 className="font-bold text-white text-[48px] leading-[62px] text-center capitalize">
+          <h1 className="font-bold text-white text-[28px] lg:text-[48px] leading-[36px] lg:leading-[62px] text-center capitalize">
             {job.title}
           </h1>
 
           {/* Meta */}
-          <p className="font-normal text-white text-[16px] leading-[24px] text-center">
+          <p className="font-normal text-white text-[14px] lg:text-[16px] leading-[22px] lg:leading-[24px] text-center">
             {job.location}&nbsp;&nbsp;{job.type}&nbsp;&nbsp;Posted{" "}
             {job.postedDate}
           </p>
         </div>
 
         {/* Tab switcher */}
-        <div className="bg-black flex gap-1 items-center justify-center p-1 rounded-[4px] w-[380px] h-[48px] mb-10">
+        <div className="bg-black flex gap-1 items-center justify-center p-1 rounded-[4px] w-full max-w-[380px] h-[48px] mb-10">
           <button
             onClick={() => setActiveTab("overview")}
             className={`flex-1 h-full flex items-center justify-center px-6 py-2 rounded-[4px] text-[16px] leading-[24px] transition-colors ${

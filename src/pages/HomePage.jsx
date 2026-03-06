@@ -16,12 +16,12 @@ function HeroSection() {
         className="absolute inset-0 z-10"
         style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5))" }}
       />
-      <div className="relative z-20 flex flex-col items-center text-center px-3 lg:px-6 pt-[94px] lg:pt-[431px]">
+      <div className="relative z-20 flex flex-col items-center text-center px-3 lg:px-6 pt-[40px] lg:pt-[431px]">
         <div className="w-full lg:w-[840px] flex flex-col gap-4 mb-0 lg:mb-[57px]">
-          <h1 className="text-white font-bold text-[48px] leading-[62px] capitalize lg:font-extrabold lg:text-[64px] lg:leading-[80px] lg:uppercase">
+          <h1 className="text-white font-bold text-[30px] leading-normal uppercase lg:font-extrabold lg:text-[64px] lg:leading-[80px]">
             Scaling the teaching of sports
           </h1>
-          <p className="text-white font-bold text-[16px] lg:font-semibold lg:text-[18px] lg:capitalize">
+          <p className="text-white font-bold text-[16px] lg:font-semibold lg:text-[18px] capitalize">
             Consumer applications that can teach hundreds of millions of people
           </p>
         </div>
@@ -68,23 +68,31 @@ function FeatureIcon({ icon, label, dark = true }) {
   );
 }
 
-// ─── Mobile Feature Icons Section (below hero, white bg) ─────────────────────
+// ─── Mobile Feature Icons Section (below hero, dark bg) ─────────────────────
 function MobileFeatureSection() {
   const features = [
     { icon: "/images/icon-wearable.svg", label: "No wearables" },
-    { icon: "/images/icon-camera.svg", label: <>Just your camera<br />and real swings.</> },
+    { icon: "/images/icon-camera.svg", label: "Just your camera and real swings." },
     { icon: "/images/icon-sensor.svg", label: "No sensors" },
   ];
 
   return (
-    <section className="lg:hidden bg-white py-10 px-3 flex flex-col gap-6 items-center">
+    <section className="lg:hidden bg-[#171a1c] py-10 px-5 flex flex-col gap-6">
       {features.map((f, i) => (
-        <FeatureIcon
-          key={i}
-          icon={<img src={f.icon} alt="" className="w-8 h-8" />}
-          label={f.label}
-          dark={false}
-        />
+        <div key={i} className="flex items-center gap-4">
+          <div
+            className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full border backdrop-blur-[32px] p-3"
+            style={{
+              background: "rgba(255,255,255,0.08)",
+              borderColor: "rgba(255,255,255,0.24)",
+            }}
+          >
+            <img src={f.icon} alt="" className="w-6 h-6" />
+          </div>
+          <p className="font-semibold text-[18px] text-white leading-[26px]">
+            {f.label}
+          </p>
+        </div>
       ))}
     </section>
   );
@@ -99,14 +107,14 @@ function StatsSection() {
   ];
 
   return (
-    <section className="bg-white py-16 px-3 lg:px-6">
+    <section className="bg-white py-12 lg:py-16 px-4 lg:px-6">
       <div className="max-w-[1200px] mx-auto">
-        <p className="text-center text-[#818181] font-bold text-[18px] leading-normal mb-10">
+        <p className="text-center text-[#717171] font-bold text-[18px] leading-normal mb-10">
           Trusted by athletes who put in the work.
         </p>
         <div className="flex flex-col lg:flex-row gap-10 items-center">
           {stats.map((s) => (
-            <div key={s.label} className="flex-1 text-center">
+            <div key={s.label} className="flex-1 text-center w-full">
               <p className="font-bold text-[#0f1010] text-[32px] leading-[40px] lg:text-[48px] lg:leading-[62px] capitalize mb-3">
                 {s.value}
               </p>
@@ -167,7 +175,7 @@ function CollectionSection() {
   ];
 
   return (
-    <section className="bg-white py-20 px-3 lg:px-6">
+    <section className="bg-white py-12 lg:py-20 px-4 lg:px-6">
       <div className="max-w-[1200px] mx-auto flex flex-col gap-10 items-center">
         <div className="text-center w-full lg:w-[800px] flex flex-col gap-4">
           <h2 className="font-bold text-[#0f1010] text-[32px] leading-[40px] lg:text-[48px] lg:leading-[62px] capitalize">
@@ -263,9 +271,9 @@ function SportCardMobile({ img, badge, sport, desc, to }) {
 
 function SportsProductsSection() {
   return (
-    <section className="bg-[#171a1c] py-20 px-3 lg:px-6">
+    <section className="bg-[#171a1c] py-12 lg:py-20 px-4 lg:px-6">
       <div className="max-w-[1200px] mx-auto">
-        <div className="text-center mb-14 flex flex-col gap-4 items-center">
+        <div className="text-center mb-10 lg:mb-14 flex flex-col gap-4 items-center">
           <h2 className="font-bold text-white text-[32px] leading-[40px] lg:text-[48px] lg:leading-[62px] capitalize">
             Sports products
           </h2>
@@ -368,9 +376,9 @@ function ComparisonSection() {
   );
 
   return (
-    <section className="bg-[#171a1c] py-20 px-3 lg:px-6 border-t border-white/[0.08]">
+    <section className="bg-[#171a1c] py-12 lg:py-20 px-4 lg:px-6 border-t border-white/[0.08]">
       <div className="max-w-[1200px] mx-auto">
-        <div className="max-w-[800px] mx-auto text-center mb-16 flex flex-col gap-4 items-center">
+        <div className="max-w-[800px] mx-auto text-center mb-10 lg:mb-16 flex flex-col gap-4 items-center">
           <h2 className="font-bold text-white text-[32px] leading-[40px] lg:text-[48px] lg:leading-[62px]">
             Why this wins vs traditional coaching
           </h2>
@@ -508,7 +516,7 @@ function ProcessSection() {
   );
 
   return (
-    <section className="bg-[#171a1c] py-20 px-3 lg:px-6">
+    <section className="bg-[#171a1c] py-12 lg:py-20 px-4 lg:px-6">
       <div className="max-w-[1200px] mx-auto">
         {/* Mobile: image on top, text below */}
         <div className="flex flex-col gap-10 lg:hidden">
