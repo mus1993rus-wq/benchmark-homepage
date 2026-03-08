@@ -271,28 +271,31 @@ export default function AboutPage() {
               Lean team. Extreme talent bar. Built to work fast.
             </p>
           </div>
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-[34px] items-stretch">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-[24px] items-stretch">
             {[
               {
                 img: "/images/team-daniel.png",
-                imgStyle: { left: "-18.28%", width: "132.6%", height: "132.6%", top: "-17.54%" },
                 name: "Daniel Puumalainen",
                 role: "CEO",
                 desc: "Technical product vision, consumer obsession, deep regional roots + global ambition",
               },
               {
                 img: "/images/team-paul.png",
-                imgStyle: null,
                 name: "Paul Boranian",
                 role: "CMO",
                 desc: "Brand + distribution engine; turning product into demand",
               },
               {
                 img: "/images/team-arne.png",
-                imgStyle: null,
                 name: "Arne Noori",
                 role: "Head of Engineering",
                 desc: "Execution, platform reliability, engineering culture",
+              },
+              {
+                img: "/images/team-bernard.png",
+                name: "Bernard Kim",
+                role: "Chief of Staff",
+                desc: "Priorities, execution rhythm, and org-wide coordination",
               },
             ].map((member) => (
               <div
@@ -300,21 +303,12 @@ export default function AboutPage() {
                 className="flex-1 flex flex-col overflow-hidden rounded-[4px]"
                 style={{ background: "rgba(255,255,255,0.04)" }}
               >
-                <div className="w-full aspect-square overflow-hidden rounded-[8px] relative">
-                  {member.imgStyle ? (
-                    <img
-                      src={member.img}
-                      alt={member.name}
-                      className="absolute max-w-none"
-                      style={member.imgStyle}
-                    />
-                  ) : (
-                    <img
-                      src={member.img}
-                      alt={member.name}
-                      className="w-full h-full object-cover"
-                    />
-                  )}
+                <div className="w-full aspect-square overflow-hidden relative">
+                  <img
+                    src={member.img}
+                    alt={member.name}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="px-[20px] py-[24px] flex flex-col gap-4 w-full">
                   <div className="flex flex-col gap-2">
