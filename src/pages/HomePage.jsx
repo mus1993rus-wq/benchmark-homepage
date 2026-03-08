@@ -133,43 +133,24 @@ function StatsSection() {
 function CollectionSection() {
   const cards = [
     {
-      title: "One platform. Many sports.",
+      title: "One platform. Many sports",
       desc: "Same training experience across golf, tennis, padel, cricket and more.",
       image: (
         <img src="/images/home-card-1.png" alt="" className="absolute inset-0 w-full h-full object-cover" />
       ),
     },
     {
-      title: "Train anywhere. Learn from every rep.",
+      title: "Train anywhere. Learn from every rep",
       desc: "Use your phone to capture motion, find patterns, and get clear next steps.",
       image: (
-        <div className="absolute inset-0 overflow-hidden">
-          <img
-            src="/images/home-card-2.png"
-            alt=""
-            className="absolute max-w-none"
-            style={{ height: "115.67%", left: "-8.11%", top: "-13.19%", width: "183.62%" }}
-          />
-        </div>
+        <img src="/images/home-card-2.png" alt="" className="absolute inset-0 w-full h-full object-cover" />
       ),
     },
     {
-      title: 'Built to scale, not to \u201ccoach harder\u201d.',
+      title: 'Built to scale, not to \u201ccoach harder\u201d',
       desc: "Coaching becomes a product: consistent, measurable, always improving.",
       image: (
-        <>
-          <div className="absolute inset-0 overflow-hidden">
-            <img src="/images/home-card-3.png" alt="" className="absolute inset-0 w-full h-full object-cover" />
-          </div>
-          <div className="absolute inset-0 overflow-hidden">
-            <img
-              src="/images/home-card-3b.png"
-              alt=""
-              className="absolute max-w-none"
-              style={{ height: "101.48%", left: "-8.34%", top: "-0.75%", width: "116.67%" }}
-            />
-          </div>
-        </>
+        <img src="/images/home-card-3.png" alt="" className="absolute inset-0 w-full h-full object-cover" />
       ),
     },
   ];

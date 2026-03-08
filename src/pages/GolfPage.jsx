@@ -28,20 +28,19 @@ function CheckItem({ title, desc }) {
 
 function CollectionCard({ image, title, desc }) {
   return (
-    <div className="flex-1 relative rounded-[8px] overflow-hidden">
+    <div className="flex-1 h-full relative rounded-[8px] overflow-hidden">
       {image}
       <div
-        className="absolute bottom-0 left-0 right-0 px-[24px] pb-[32px] pt-[64px] rounded-[8px] flex flex-col justify-end"
+        className="absolute bottom-0 left-0 right-0 px-[24px] py-[32px] rounded-[8px] flex flex-col gap-[16px]"
         style={{
           background:
             "linear-gradient(to bottom, rgba(35,35,35,0) 0%, rgba(35,35,35,0.6) 100%)",
           backdropFilter: "blur(30px)",
+          WebkitBackdropFilter: "blur(30px)",
         }}
       >
-        <div className="flex flex-col gap-4 text-white">
-          <p className="font-bold text-[24px] lg:text-[32px] leading-[30px] lg:leading-[40px]">{title}</p>
-          <p className="font-normal text-[16px] leading-[24px] opacity-80">{desc}</p>
-        </div>
+        <p className="font-bold text-[24px] leading-[28px] text-white">{title}</p>
+        <p className="font-normal text-[16px] leading-[24px] text-white">{desc}</p>
       </div>
     </div>
   );
@@ -51,64 +50,17 @@ const golfCards = [
   {
     title: "For beginners",
     desc: "Start with correct fundamentals. Avoid bad habits.",
-    image: (
-      <div className="absolute inset-0 overflow-hidden">
-        <img
-          src="/images/golf-card1.png"
-          alt=""
-          className="absolute max-w-none"
-          style={{ height: "125.16%", left: "-28.43%", top: "0", width: "156.77%" }}
-        />
-      </div>
-    ),
+    image: <img src="/images/golf-card1.png" alt="" className="absolute inset-0 w-full h-full object-cover" />,
   },
   {
     title: "For golfers who feel stuck",
     desc: "Stop guessing. Fix what's holding you back.",
-    image: (
-      <div aria-hidden="true" className="absolute inset-0">
-        <div className="absolute inset-0 overflow-hidden">
-          <img
-            src="/images/golf-card2a.png"
-            alt=""
-            className="absolute max-w-none"
-            style={{ height: "81.03%", left: "-0.68%", top: "-1.72%", width: "101.35%" }}
-          />
-        </div>
-        <div className="absolute inset-0 overflow-hidden">
-          <img
-            src="/images/golf-card2b.png"
-            alt=""
-            className="absolute max-w-none"
-            style={{ height: "100%", left: "-27.16%", top: "0", width: "187.66%" }}
-          />
-        </div>
-      </div>
-    ),
+    image: <img src="/images/golf-card2.png" alt="" className="absolute inset-0 w-full h-full object-cover" />,
   },
   {
     title: "For performance players",
     desc: "Dial in details. Track measurable improvement.",
-    image: (
-      <div aria-hidden="true" className="absolute inset-0">
-        <div className="absolute inset-0 overflow-hidden">
-          <img
-            src="/images/golf-card3a.png"
-            alt=""
-            className="absolute max-w-none"
-            style={{ height: "79.93%", left: "0", top: "-0.05%", width: "100%" }}
-          />
-        </div>
-        <div className="absolute inset-0 overflow-hidden">
-          <img
-            src="/images/golf-card3b.png"
-            alt=""
-            className="absolute max-w-none"
-            style={{ height: "144.87%", left: "-10.79%", top: "-32.65%", width: "121.49%" }}
-          />
-        </div>
-      </div>
-    ),
+    image: <img src="/images/golf-card3.png" alt="" className="absolute inset-0 w-full h-full object-cover" />,
   },
 ];
 

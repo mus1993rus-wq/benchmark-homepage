@@ -195,7 +195,6 @@ export default function AboutPage() {
             <div className="h-[400px] lg:h-full">
               <CollectionCard
                 img="/images/about-approach-2.png"
-                imgStyle={{ height: "115.67%", left: "-8.11%", top: "-13.19%", width: "183.62%" }}
                 title="Structured Progression"
                 desc="Every session builds on the last. No random drills."
               />
@@ -203,8 +202,6 @@ export default function AboutPage() {
             <div className="h-[400px] lg:h-full">
               <CollectionCard
                 img="/images/about-approach-3.png"
-                img2="/images/about-approach-3b.png"
-                img2Style={{ height: "101.48%", left: "-8.34%", top: "-0.75%", width: "116.67%" }}
                 title="Platform, Not Product"
                 desc="One core engine. Multiple sports. Consistent experience."
               />
