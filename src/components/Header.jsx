@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 const sportsItems = [
@@ -25,6 +25,10 @@ export function Header() {
   const [dropdownMounted, setDropdownMounted] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
+  // Sticky header state
+  const [stickyVisible, setStickyVisible] = useState(false);
+  const lastScrollY = useRef(0);
+
   // Open: mount first, then trigger visible (animate in)
   // Close: trigger invisible (animate out), then unmount after transition
   useEffect(() => {
@@ -41,8 +45,163 @@ export function Header() {
     return () => clearTimeout(timeout);
   }, [sportsOpen]);
 
+  // Scroll direction detection for sticky header
+  useEffect(() => {
+    const threshold = 80;
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY < threshold) {
+        setStickyVisible(false);
+      } else if (currentScrollY < lastScrollY.current) {
+        // Scrolling up — show sticky header
+        setStickyVisible(true);
+      } else {
+        // Scrolling down — hide sticky header
+        setStickyVisible(false);
+        // Also close sports dropdown when hiding
+        if (sportsOpen) setSportsOpen(false);
+      }
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [sportsOpen]);
+
   return (
     <>
+      {/* ─── Sticky Header (scroll-up) ──────────────────────────────────── */}
+      <div
+        className="fixed top-0 left-0 right-0 z-50 bg-black"
+        style={{
+          transform: stickyVisible ? "translateY(0)" : "translateY(-100%)",
+          transition: "transform 0.3s cubic-bezier(0.4,0,0.2,1)",
+        }}
+      >
+        {/* Mobile sticky header */}
+        <div className="lg:hidden flex items-center justify-between px-4 h-[78px] relative">
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="w-10 h-10 flex items-center justify-center"
+            aria-label="Відкрити меню"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="5" width="20" height="2" rx="1" fill="white" />
+              <rect x="2" y="11" width="20" height="2" rx="1" fill="white" />
+              <rect x="2" y="17" width="20" height="2" rx="1" fill="white" />
+            </svg>
+          </button>
+          <Link to="/" className="absolute left-1/2 -translate-x-1/2">
+            <img src="/images/logo.svg" alt="benchmark SPORTS" style={{ height: "40px", width: "157.5px" }} />
+          </Link>
+          <div className="w-10" />
+        </div>
+
+        {/* Desktop sticky header */}
+        <div className="hidden lg:block">
+          <div className="flex items-center justify-between px-[240px] py-[28px] gap-[80px]">
+            {/* Left nav */}
+            <nav className="flex items-center gap-16 justify-end flex-1">
+              <button
+                className="font-bold text-base whitespace-nowrap flex items-center gap-1 text-white hover:text-white/80"
+                style={{ transition: "color 0.3s" }}
+                onClick={() => setSportsOpen(!sportsOpen)}
+              >
+                Sports
+                <svg
+                  width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
+                  className="opacity-70"
+                  style={{
+                    transform: sportsOpen ? "rotate(180deg)" : "rotate(0deg)",
+                    transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1)",
+                  }}
+                >
+                  <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
+                </svg>
+              </button>
+              <Link
+                to="/about"
+                className="font-bold text-base whitespace-nowrap text-white hover:text-white/80"
+                style={{ transition: "color 0.3s" }}
+              >
+                About Us
+              </Link>
+            </nav>
+
+            {/* Logo */}
+            <Link to="/" className="shrink-0">
+              <img
+                src="/images/logo.svg"
+                alt="benchmark SPORTS"
+                style={{ height: "40px", width: "157.5px" }}
+              />
+            </Link>
+
+            {/* Right nav */}
+            <nav className="flex items-center gap-16 flex-1">
+              <Link
+                to="/careers"
+                className="font-bold text-base whitespace-nowrap text-white hover:text-white/80"
+                style={{ transition: "color 0.3s" }}
+              >
+                Careers
+              </Link>
+              <Link
+                to="/contact"
+                className="font-bold text-base whitespace-nowrap text-white hover:text-white/80"
+                style={{ transition: "color 0.3s" }}
+              >
+                Contacts
+              </Link>
+            </nav>
+          </div>
+
+          {/* Sports dropdown for sticky header */}
+          {dropdownMounted && (
+            <div
+              className="w-full bg-[#111] overflow-hidden border-t border-white/10"
+              style={{
+                opacity: dropdownVisible ? 1 : 0,
+                transform: dropdownVisible ? "translateY(0)" : "translateY(-16px)",
+                transition: "opacity 0.35s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.4,0,0.2,1)",
+              }}
+            >
+              <div className="pb-[60px]">
+                <div className="flex gap-[16px] items-center mx-auto w-[1200px] h-[380px]">
+                  {sportsItems.map((sport, i) => (
+                    <Link
+                      key={sport.to}
+                      to={sport.to}
+                      className="relative flex-1 h-full rounded-[8px] overflow-hidden block img-zoom"
+                      onClick={() => setSportsOpen(false)}
+                      style={{
+                        opacity: dropdownVisible ? 1 : 0,
+                        transform: dropdownVisible ? "translateY(0)" : "translateY(24px)",
+                        transition: `opacity 0.4s cubic-bezier(0.4,0,0.2,1) ${i * 60}ms, transform 0.4s cubic-bezier(0.4,0,0.2,1) ${i * 60}ms`,
+                      }}
+                    >
+                      <img src={sport.image} alt={sport.label} className="absolute inset-0 w-full h-full object-cover" />
+                      <div className="absolute inset-0 rounded-[8px] bg-gradient-to-b from-transparent to-[rgba(35,35,35,0.6)]" />
+                      {sport.comingSoon && (
+                        <div className="absolute top-3 left-3 bg-[#30393e] backdrop-blur-[24px] px-3 py-1.5 rounded">
+                          <span className="font-bold text-[16px] text-[#ffc32c] leading-5">Coming soon</span>
+                        </div>
+                      )}
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <div className="flex flex-col gap-3 text-white">
+                          <p className="font-bold text-[24px] leading-7">{sport.label}</p>
+                          <p className="font-normal text-[16px] leading-6">{sport.desc}</p>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* ─── Mobile Header ─────────────────────────────────────────────────── */}
       <div className="lg:hidden bg-white border-b border-[#e6e6e6] flex items-center justify-between px-4 h-[78px] relative z-20">
         <button

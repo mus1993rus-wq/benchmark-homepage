@@ -35,14 +35,25 @@ function CheckItem({ title, desc }) {
   );
 }
 
-function CollectionCard({ img, img2, img2Style, title, desc }) {
+function CollectionCard({ img, imgStyle, img2, img2Style, title, desc }) {
   return (
     <div className="flex-1 relative rounded-[8px] overflow-hidden h-full">
-      <img
-        src={img}
-        alt={title}
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+      {imgStyle ? (
+        <div className="absolute inset-0 overflow-hidden">
+          <img
+            src={img}
+            alt={title}
+            className="absolute max-w-none"
+            style={imgStyle}
+          />
+        </div>
+      ) : (
+        <img
+          src={img}
+          alt={title}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
       {img2 && (
         <div className="absolute inset-0 overflow-hidden">
           <img
@@ -184,6 +195,7 @@ export default function AboutPage() {
             <div className="h-[400px] lg:h-full">
               <CollectionCard
                 img="/images/about-approach-2.png"
+                imgStyle={{ height: "115.67%", left: "-8.11%", top: "-13.19%", width: "183.62%" }}
                 title="Structured Progression"
                 desc="Every session builds on the last. No random drills."
               />
@@ -266,18 +278,21 @@ export default function AboutPage() {
             {[
               {
                 img: "/images/team-daniel.png",
+                imgStyle: { left: "-18.28%", width: "132.6%", height: "132.6%", top: "-17.54%" },
                 name: "Daniel Puumalainen",
                 role: "CEO",
                 desc: "Technical product vision, consumer obsession, deep regional roots + global ambition",
               },
               {
                 img: "/images/team-paul.png",
+                imgStyle: null,
                 name: "Paul Boranian",
                 role: "CMO",
                 desc: "Brand + distribution engine; turning product into demand",
               },
               {
                 img: "/images/team-arne.png",
+                imgStyle: null,
                 name: "Arne Noori",
                 role: "Head of Engineering",
                 desc: "Execution, platform reliability, engineering culture",
@@ -288,12 +303,21 @@ export default function AboutPage() {
                 className="flex-1 flex flex-col overflow-hidden rounded-[4px]"
                 style={{ background: "rgba(255,255,255,0.04)" }}
               >
-                <div className="w-full aspect-square overflow-hidden rounded-[8px]">
-                  <img
-                    src={member.img}
-                    alt={member.name}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="w-full aspect-square overflow-hidden rounded-[8px] relative">
+                  {member.imgStyle ? (
+                    <img
+                      src={member.img}
+                      alt={member.name}
+                      className="absolute max-w-none"
+                      style={member.imgStyle}
+                    />
+                  ) : (
+                    <img
+                      src={member.img}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
                 </div>
                 <div className="px-[20px] py-[24px] flex flex-col gap-4 w-full">
                   <div className="flex flex-col gap-2">
@@ -328,10 +352,10 @@ export default function AboutPage() {
           </div>
           <div className="bg-[#1f2225] rounded-[8px] grid grid-cols-2 lg:flex">
             {[
-              { label: "Speed over bureaucracy", icon: "/images/about-build-icon-1.png" },
-              { label: "Product obsession", icon: "/images/about-build-icon-2.png" },
-              { label: "Long-term thinking", icon: "/images/about-build-icon-3.png" },
-              { label: "Measurable outcomes", icon: "/images/about-build-icon-4.png" },
+              { label: "Speed over bureaucracy", icon: "/images/about-build-icon-1.svg" },
+              { label: "Product obsession", icon: "/images/about-build-icon-2.svg" },
+              { label: "Long-term thinking", icon: "/images/about-build-icon-3.svg" },
+              { label: "Measurable outcomes", icon: "/images/about-build-icon-4.svg" },
             ].map((item, i) => (
               <div
                 key={item.label}

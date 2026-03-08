@@ -17,14 +17,8 @@ export function Footer({ onHeightChange }) {
   return (
     <footer
       ref={footerRef}
-      className="bg-[#1f2225] border-t border-white/[0.08] w-full"
-      style={{
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 0,
-      }}
+      className="bg-[#1f2225] border-t border-white/[0.08] w-full lg:fixed lg:bottom-0 lg:left-0 lg:right-0"
+      style={{ zIndex: 0 }}
     >
       {/* Main footer content */}
       <div className="flex flex-col lg:flex-row items-start justify-between px-8 lg:px-[240px] pt-8 lg:pt-[80px] pb-8 lg:pb-[64px] gap-8 lg:gap-0">
