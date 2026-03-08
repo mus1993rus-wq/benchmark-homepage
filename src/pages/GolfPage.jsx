@@ -1,3 +1,5 @@
+import { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
 
@@ -64,41 +66,6 @@ const golfCards = [
   },
 ];
 
-function PhoneScreen({ src, isEdge = false }) {
-  return (
-    <div
-      className="relative overflow-hidden flex-shrink-0 rounded-[8px] bg-[#999]"
-      style={{ width: "200px", height: "352px" }}
-    >
-      {src && (
-        <img
-          src={src}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-      )}
-      <div className="absolute inset-0 flex items-center justify-center">
-        {isEdge ? (
-          <div className="flex items-center justify-center w-[64px] h-[64px]">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-              <path d="M10 7l22 13-22 13V7z" fill="white" />
-            </svg>
-          </div>
-        ) : (
-          <div
-            className="bg-white flex items-center justify-center rounded"
-            style={{ padding: "20px 24px" }}
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M4 2l10 6-10 6V2z" fill="black" />
-            </svg>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
 const featureTags = [
   { icon: "/images/golf-icon-1.svg", label: "Data-based, not opinion-based" },
   { icon: "/images/golf-icon-2.svg", label: "Always available" },
@@ -113,19 +80,236 @@ const stats = [
   { value: "91%", label: "of Golfers see improvement within 14 days" },
 ];
 
+// Phone screen data with video URLs (update with real video links from Figma comments)
 const phoneScreens = [
-  { src: "/images/golf-screen-1.png", isEdge: true },
-  { src: "/images/golf-screen-2.png", isEdge: false },
-  { src: "/images/golf-screen-3.png", isEdge: false },
-  { src: "/images/golf-screen-4.png", isEdge: false },
-  { src: "/images/golf-screen-5.png", isEdge: false },
-  { src: "/images/golf-screen-6.png", isEdge: false },
-  { src: "/images/golf-screen-7.png", isEdge: true },
+  {
+    src: "/images/golf-screen-1.png",
+    isEdge: true,
+    videoUrl: null,
+    title: "Swing Analysis",
+  },
+  {
+    src: "/images/golf-screen-2.png",
+    isEdge: false,
+    videoUrl: null,
+    title: "Impact Feedback",
+  },
+  {
+    src: "/images/golf-screen-3.png",
+    isEdge: false,
+    videoUrl: null,
+    title: "Session Overview",
+  },
+  {
+    src: "/images/golf-screen-4.png",
+    isEdge: false,
+    videoUrl: null,
+    title: "Coaching Plan",
+  },
+  {
+    src: "/images/golf-screen-5.png",
+    isEdge: false,
+    videoUrl: null,
+    title: "Progress Tracking",
+  },
+  {
+    src: "/images/golf-screen-6.png",
+    isEdge: false,
+    videoUrl: null,
+    title: "Simulation Mode",
+  },
+  {
+    src: "/images/golf-screen-7.png",
+    isEdge: true,
+    videoUrl: null,
+    title: "Divot Analysis",
+  },
 ];
 
+// ─── Fullscreen Video Modal ──────────────────────────────────────────────────
+function VideoModal({ screens, initialIndex, onClose }) {
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const current = screens[currentIndex];
+
+  const goNext = useCallback(() => {
+    setCurrentIndex((i) => (i + 1) % screens.length);
+  }, [screens.length]);
+
+  const goPrev = useCallback(() => {
+    setCurrentIndex((i) => (i - 1 + screens.length) % screens.length);
+  }, [screens.length]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") goNext();
+      if (e.key === "ArrowLeft") goPrev();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose, goNext, goPrev]);
+
+  // Prevent body scroll
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center"
+      style={{ background: "rgba(0,0,0,0.95)" }}
+    >
+      {/* Close button */}
+      <button
+        className="absolute top-6 right-6 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+        onClick={onClose}
+        aria-label="Close"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6l12 12" stroke="white" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      </button>
+
+      {/* Counter */}
+      <div className="absolute top-6 left-1/2 -translate-x-1/2 text-white/60 text-sm font-semibold">
+        {currentIndex + 1} / {screens.length}
+      </div>
+
+      {/* Prev button */}
+      <button
+        className="absolute left-4 lg:left-8 z-10 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors disabled:opacity-30"
+        onClick={goPrev}
+        aria-label="Previous"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M15 18l-6-6 6-6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+
+      {/* Video / Image content */}
+      <div className="flex flex-col items-center gap-6 w-full max-w-[400px] px-16 lg:px-0">
+        <div className="relative w-full rounded-[20px] overflow-hidden bg-black" style={{ aspectRatio: "9/16", maxHeight: "75vh" }}>
+          {current.videoUrl ? (
+            <video
+              key={current.videoUrl}
+              src={current.videoUrl}
+              className="w-full h-full object-contain"
+              controls
+              autoPlay
+              playsInline
+            />
+          ) : (
+            <>
+              <img
+                src={current.src}
+                alt={current.title}
+                className="w-full h-full object-cover"
+              />
+              {/* Play overlay for when no video URL is set */}
+              <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+        {/* Title */}
+        <p className="text-white font-bold text-lg text-center">{current.title}</p>
+
+        {/* Dot indicators */}
+        <div className="flex gap-2 items-center">
+          {screens.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentIndex(i)}
+              className="transition-all duration-300"
+              style={{
+                width: i === currentIndex ? "24px" : "8px",
+                height: "8px",
+                borderRadius: "4px",
+                background: i === currentIndex ? "white" : "rgba(255,255,255,0.3)",
+              }}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Next button */}
+      <button
+        className="absolute right-4 lg:right-8 z-10 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+        onClick={goNext}
+        aria-label="Next"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M9 18l6-6-6-6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+
+      {/* Background click to close */}
+      <div
+        className="absolute inset-0 -z-10"
+        onClick={onClose}
+      />
+    </div>,
+    document.body
+  );
+}
+
+// ─── Phone Screen Card ────────────────────────────────────────────────────────
+function PhoneScreen({ src, isEdge = false, onClick }) {
+  return (
+    <div
+      className="relative overflow-hidden flex-shrink-0 rounded-[8px] bg-[#999] cursor-pointer group"
+      style={{ width: "200px", height: "352px" }}
+      onClick={onClick}
+    >
+      {src && (
+        <img
+          src={src}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      )}
+      {/* Hover overlay */}
+      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+        <div className="w-14 h-14 rounded-full bg-white/0 group-hover:bg-white/20 backdrop-blur-sm transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100">
+          {isEdge ? (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          ) : (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function GolfPage() {
+  const [videoModal, setVideoModal] = useState({ open: false, index: 0 });
+
+  const openModal = (index) => setVideoModal({ open: true, index });
+  const closeModal = () => setVideoModal({ open: false, index: 0 });
+
   return (
     <div className="min-h-screen font-sans antialiased">
+      {videoModal.open && (
+        <VideoModal
+          screens={phoneScreens}
+          initialIndex={videoModal.index}
+          onClose={closeModal}
+        />
+      )}
+
       <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
         <AnnouncementBar />
 
@@ -332,11 +516,16 @@ export default function GolfPage() {
           </h2>
         </div>
 
-        {/* Phone screens gallery — scrollable on mobile */}
+        {/* Phone screens gallery — clickable, opens video modal */}
         <div className="overflow-x-auto mt-8 lg:mt-12">
           <div className="flex gap-4 lg:gap-6 justify-start lg:justify-center px-4 lg:px-0" style={{ minWidth: "max-content" }}>
             {phoneScreens.map((screen, i) => (
-              <PhoneScreen key={i} src={screen.src} isEdge={screen.isEdge} />
+              <PhoneScreen
+                key={i}
+                src={screen.src}
+                isEdge={screen.isEdge}
+                onClick={() => openModal(i)}
+              />
             ))}
           </div>
         </div>

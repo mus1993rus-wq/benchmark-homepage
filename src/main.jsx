@@ -26,12 +26,22 @@ function App() {
   const [footerHeight, setFooterHeight] = useState(420);
   const handleFooterHeight = useCallback((h) => setFooterHeight(h), []);
 
+  // Only apply footer margin on desktop (≥1024px) to avoid white space on mobile
+  const [isDesktop, setIsDesktop] = useState(
+    () => typeof window !== "undefined" && window.innerWidth >= 1024
+  );
+  useEffect(() => {
+    const handler = () => setIsDesktop(window.innerWidth >= 1024);
+    window.addEventListener("resize", handler, { passive: true });
+    return () => window.removeEventListener("resize", handler);
+  }, []);
+
   return (
     <BrowserRouter>
       <ScrollToTop />
       {/*
         Обгортка сторінки: position:relative; z-index:1.
-        marginBottom = висота футера — margin не перехоплює pointer events,
+        marginBottom = висота футера тільки на desktop — margin не перехоплює pointer events,
         тому кліки у нижній зоні проходять до футера (z-index:0).
       */}
       <div
@@ -39,7 +49,7 @@ function App() {
           position: "relative",
           zIndex: 1,
           overflow: "clip",
-          marginBottom: footerHeight,
+          marginBottom: isDesktop ? footerHeight : 0,
         }}
       >
         <Routes>
