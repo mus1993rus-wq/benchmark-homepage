@@ -1,5 +1,6 @@
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
+import { useHeroScroll } from "../hooks/useHeroScroll";
 
 function CheckItem({ title, desc }) {
   return (
@@ -172,13 +173,15 @@ const phoneScreens = [
 ];
 
 export default function GolfPage() {
+  const { outerRef, innerRef } = useHeroScroll();
   return (
     <div className="min-h-screen font-sans antialiased">
-      <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+      <div style={{ height: "100vh", display: "flex", flexDirection: "column", background: "#000" }}>
         <AnnouncementBar />
 
-        {/* Hero */}
-        <div className="relative overflow-hidden" style={{ flex: 1 }}>
+        {/* Hero — animated expand on scroll */}
+        <div ref={outerRef} style={{ flex: 1, padding: "16px" }}>
+        <div ref={innerRef} className="relative overflow-hidden" style={{ borderRadius: "20px", height: "100%", willChange: "border-radius" }}>
         <img
           src="/images/golf-hero-bg.png"
           alt="Benchmark Golf"
@@ -207,7 +210,8 @@ export default function GolfPage() {
             </div>
           </div>
         </div>
-      </div>
+        </div>
+        </div>
       </div>
 
       {/* Dark section */}

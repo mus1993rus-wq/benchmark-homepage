@@ -1,14 +1,17 @@
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
+import { useHeroScroll } from "../hooks/useHeroScroll";
 
 export default function PadelPage() {
+  const { outerRef, innerRef } = useHeroScroll();
   return (
     <div className="min-h-screen font-sans antialiased">
-      <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+      <div style={{ height: "100vh", display: "flex", flexDirection: "column", background: "#000" }}>
         <AnnouncementBar />
 
-        {/* Hero */}
-        <div className="relative overflow-hidden" style={{ flex: 1 }}>
+        {/* Hero — animated expand on scroll */}
+        <div ref={outerRef} style={{ flex: 1, padding: "16px" }}>
+        <div ref={innerRef} className="relative overflow-hidden" style={{ borderRadius: "20px", height: "100%", willChange: "border-radius" }}>
         <img
           src="/images/padel-hero.png"
           alt="Benchmark Padel"
@@ -51,7 +54,8 @@ export default function PadelPage() {
             </p>
           </div>
         </div>
-      </div>
+        </div>
+        </div>
       </div>
 
     </div>

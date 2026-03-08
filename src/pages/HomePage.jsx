@@ -2,11 +2,23 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
+import { useHeroScroll } from "../hooks/useHeroScroll";
 
 // ─── Hero Section ─────────────────────────────────────────────────────────────
 function HeroSection() {
+  const { outerRef, innerRef } = useHeroScroll();
   return (
-    <section className="relative w-full h-[443px] lg:h-[880px] overflow-hidden bg-gray-900">
+    // Outer: black bg + animated padding — creates the "card frame" that expands on scroll
+    <div
+      ref={outerRef}
+      className="w-full h-[443px] lg:h-[880px]"
+      style={{ background: "#000", padding: "16px" }}
+    >
+      <section
+        ref={innerRef}
+        className="relative w-full h-full overflow-hidden"
+        style={{ borderRadius: "20px", willChange: "border-radius" }}
+      >
       <img
         src="/images/hero-bg.png"
         alt="Athletes in motion"
@@ -45,7 +57,8 @@ function HeroSection() {
           />
         </div>
       </div>
-    </section>
+      </section>
+    </div>
   );
 }
 
