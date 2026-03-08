@@ -1,6 +1,5 @@
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
-import { useHeroScroll } from "../hooks/useHeroScroll";
 
 // CheckItem for dark backgrounds (white text)
 function CheckItemDark({ title, desc }) {
@@ -85,22 +84,12 @@ function ProblemDiagram() {
 }
 
 export default function AboutPage() {
-  const { outerRef, innerRef } = useHeroScroll();
   return (
     <div className="min-h-screen font-sans antialiased">
       <AnnouncementBar />
 
-      {/* Hero — animated expand on scroll */}
-      <div
-        ref={outerRef}
-        className="h-[480px] lg:h-[880px]"
-        style={{ background: "#000", padding: "16px" }}
-      >
-        <div
-          ref={innerRef}
-          className="relative h-full overflow-hidden"
-          style={{ borderRadius: "20px", willChange: "border-radius" }}
-        >
+      {/* Hero */}
+      <div className="relative min-h-[480px] lg:h-[880px] overflow-hidden">
         <img
           src="/images/about-hero-bg.png"
           alt="About Benchmark Sports"
@@ -123,7 +112,6 @@ export default function AboutPage() {
               Benchmark Sports exists to make high-level coaching accessible across sports — not just for those who can afford private lessons. So the next 100 million people learn sports through our digital platform.
             </p>
           </div>
-        </div>
         </div>
       </div>
 

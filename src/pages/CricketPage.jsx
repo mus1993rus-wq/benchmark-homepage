@@ -1,17 +1,14 @@
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
-import { useHeroScroll } from "../hooks/useHeroScroll";
 
 export default function CricketPage() {
-  const { outerRef, innerRef } = useHeroScroll();
   return (
     <div className="min-h-screen font-sans antialiased">
-      <div style={{ height: "100vh", display: "flex", flexDirection: "column", background: "#000" }}>
+      <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
         <AnnouncementBar />
 
-        {/* Hero — animated expand on scroll */}
-        <div ref={outerRef} style={{ flex: 1, padding: "16px" }}>
-        <div ref={innerRef} className="relative overflow-hidden" style={{ borderRadius: "20px", height: "100%", willChange: "border-radius" }}>
+        {/* Hero */}
+        <div className="relative overflow-hidden" style={{ flex: 1 }}>
         <img
           src="/images/cricket-hero.png"
           alt="Benchmark Cricket"
@@ -57,8 +54,7 @@ export default function CricketPage() {
             </p>
           </div>
         </div>
-        </div>
-        </div>
+      </div>
       </div>
 
     </div>
