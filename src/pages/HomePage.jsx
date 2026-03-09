@@ -80,7 +80,7 @@ function HeroSection() {
 
       {/* Hero text — scroll-driven on desktop, static on mobile */}
       <motion.div
-        className="absolute inset-0 z-20 flex flex-col items-center justify-end text-center px-4 lg:px-6 pb-10 lg:pb-16"
+        className="absolute inset-0 z-20 flex flex-col items-center justify-center lg:justify-end text-center px-4 lg:px-6 lg:pb-16"
         style={{ y: isDesktop ? textY : 0, opacity: isDesktop ? textOpacity : 1 }}
       >
         <motion.div
@@ -369,42 +369,57 @@ function SportCardMobile({ img, badge, sport, desc, to }) {
 }
 
 function SportsProductsSection() {
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "start start"],
+  });
+  // White curtain sweeps upward over a sharp window at the very end of the scroll range
+  const curtainY = useTransform(scrollYProgress, [0.75, 1], ["0%", "-102%"]);
+
   return (
-    <section className="bg-[#171a1c] py-12 lg:py-20 px-4 lg:px-6">
-      <div className="max-w-[1200px] mx-auto">
-        <FadeIn className="text-center mb-10 lg:mb-14 flex flex-col gap-4 items-center">
-          <h2 className="font-bold text-white text-[32px] leading-[40px] lg:text-[48px] lg:leading-[62px] capitalize">
-            Sports products
-          </h2>
-          <p className="font-normal text-[#818181] text-[16px] leading-[24px]">
-            Built on the same engine. Tailored to each sport.
-          </p>
-        </FadeIn>
+    <section ref={sectionRef} className="relative bg-[#171a1c] py-12 lg:py-20 px-4 lg:px-6 overflow-hidden">
+      {/* White curtain — sweeps up to reveal the dark background beneath (snap effect) */}
+      <motion.div
+        className="absolute inset-0 bg-white pointer-events-none"
+        style={{ y: curtainY, zIndex: 1 }}
+      />
+      <div className="relative" style={{ zIndex: 2 }}>
+        <div className="max-w-[1200px] mx-auto">
+          <FadeIn className="text-center mb-10 lg:mb-14 flex flex-col gap-4 items-center">
+            <h2 className="font-bold text-white text-[32px] leading-[40px] lg:text-[48px] lg:leading-[62px] capitalize">
+              Sports products
+            </h2>
+            <p className="font-normal text-[#818181] text-[16px] leading-[24px]">
+              Built on the same engine. Tailored to each sport.
+            </p>
+          </FadeIn>
 
-        {/* Mobile: all stacked */}
-        <div className="flex flex-col gap-6 lg:hidden">
-          {sports.map((c, i) => (
-            <FadeIn key={c.sport} delay={i * 0.08}>
-              <SportCardMobile {...c} />
-            </FadeIn>
-          ))}
-        </div>
-
-        {/* Desktop: 2×2 grid */}
-        <div className="hidden lg:flex flex-col gap-6">
-          <div className="flex gap-6 h-[420px]">
-            {sports.slice(0, 2).map((c, i) => (
-              <FadeIn key={c.sport} delay={i * 0.1} className="flex-1 h-full">
-                <SportCard {...c} />
+          {/* Mobile: all stacked */}
+          <div className="flex flex-col gap-6 lg:hidden">
+            {sports.map((c, i) => (
+              <FadeIn key={c.sport} delay={i * 0.08}>
+                <SportCardMobile {...c} />
               </FadeIn>
             ))}
           </div>
-          <div className="flex gap-6 h-[420px]">
-            {sports.slice(2, 4).map((c, i) => (
-              <FadeIn key={c.sport} delay={i * 0.1} className="flex-1 h-full">
-                <SportCard {...c} />
-              </FadeIn>
-            ))}
+
+          {/* Desktop: 2×2 grid */}
+          <div className="hidden lg:flex flex-col gap-6">
+            <div className="flex gap-6 h-[420px]">
+              {sports.slice(0, 2).map((c, i) => (
+                <FadeIn key={c.sport} delay={i * 0.1} className="flex-1 h-full">
+                  <SportCard {...c} />
+                </FadeIn>
+              ))}
+            </div>
+            <div className="flex gap-6 h-[420px]">
+              {sports.slice(2, 4).map((c, i) => (
+                <FadeIn key={c.sport} delay={i * 0.1} className="flex-1 h-full">
+                  <SportCard {...c} />
+                </FadeIn>
+              ))}
+            </div>
           </div>
         </div>
       </div>

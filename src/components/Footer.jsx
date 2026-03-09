@@ -41,26 +41,26 @@ export function Footer({ onHeightChange }) {
           {/* Sports — visible on mobile & desktop */}
           <div className="flex flex-col gap-[8px] lg:gap-2 flex-1 lg:flex-none lg:w-[120px]">
             <p className="text-[#717171]">Sports</p>
-            <Link to="/golf" className="text-white lg:text-[#818181] hover:text-white/70 lg:hover:text-white transition-colors">Golf</Link>
-            <Link to="/tennis" className="text-white lg:text-[#818181] hover:text-white/70 lg:hover:text-white transition-colors">Tennis</Link>
-            <Link to="/padel" className="text-white lg:text-[#818181] hover:text-white/70 lg:hover:text-white transition-colors">Padel</Link>
-            <Link to="/cricket" className="text-white lg:text-[#818181] hover:text-white/70 lg:hover:text-white transition-colors">Cricket</Link>
+            <Link to="/golf" className="text-white hover:text-white/70 transition-colors">Golf</Link>
+            <Link to="/tennis" className="text-white hover:text-white/70 transition-colors">Tennis</Link>
+            <Link to="/padel" className="text-white hover:text-white/70 transition-colors">Padel</Link>
+            <Link to="/cricket" className="text-white hover:text-white/70 transition-colors">Cricket</Link>
           </div>
 
           {/* Menu — hidden on mobile, visible on desktop */}
           <div className="hidden lg:flex flex-col gap-2 w-[120px]">
             <p className="text-[#717171]">Menu</p>
-            <Link to="/about" className="text-[#818181] hover:text-white transition-colors">About Us</Link>
-            <Link to="/contact" className="text-[#818181] hover:text-white transition-colors">Contacts</Link>
-            <Link to="/careers" className="text-[#818181] hover:text-white transition-colors">Careers</Link>
+            <Link to="/about" className="text-white hover:text-white/70 transition-colors">About Us</Link>
+            <Link to="/contact" className="text-white hover:text-white/70 transition-colors">Contacts</Link>
+            <Link to="/careers" className="text-white hover:text-white/70 transition-colors">Careers</Link>
           </div>
 
           {/* Follow Us — visible on mobile & desktop */}
           <div className="flex flex-col gap-[8px] lg:gap-2 flex-1 lg:flex-none lg:w-[120px]">
             <p className="text-[#717171]">Follow Us</p>
-            <a href="#" className="text-white lg:text-[#818181] hover:text-white/70 lg:hover:text-white transition-colors">Linkedin</a>
-            <a href="#" className="text-white lg:text-[#818181] hover:text-white/70 lg:hover:text-white transition-colors">Instagram</a>
-            <a href="#" className="text-white lg:text-[#818181] hover:text-white/70 lg:hover:text-white transition-colors">TikTok</a>
+            <a href="#" className="text-white hover:text-white/70 transition-colors">Linkedin</a>
+            <a href="#" className="text-white hover:text-white/70 transition-colors">Instagram</a>
+            <a href="#" className="text-white hover:text-white/70 transition-colors">TikTok</a>
           </div>
         </div>
       </div>
