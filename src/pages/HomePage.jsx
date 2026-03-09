@@ -438,7 +438,7 @@ function ComparisonSection() {
     },
     {
       title: "Expensive simulators",
-      subtitle: "Cool metrics, but no clear fixes.",
+      subtitle: "Great metrics, but they rarely turn numbers into a clear next step.",
       rows: [
         "They show the result but do not explain the reason",
         "Do not lead to steady improvement step by step",
@@ -448,7 +448,7 @@ function ComparisonSection() {
     },
     {
       title: "Video Content",
-      subtitle: "Cheap, but without personalization.",
+      subtitle: "Endless advice, but no feedback loop for your specific mistakes.",
       rows: [
         "One content for all",
         "Without feedback on your movement",
@@ -476,7 +476,7 @@ function ComparisonSection() {
           {/* Scrollable on mobile */}
           <div className="overflow-x-auto -mx-3 px-3 lg:mx-0 lg:px-0">
             {/* 4 independent flex columns side-by-side, gap-[4px] between them */}
-            <div className="flex gap-[4px] min-w-[700px] lg:min-w-0">
+            <div className="flex gap-[24px] min-w-[700px] lg:min-w-0">
 
               {/* ── Benchmark column ── */}
               <div className="flex-1 bg-[#1f2225] rounded-[4px] flex flex-col">
