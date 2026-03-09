@@ -50,7 +50,7 @@ function HeroSection() {
     offset: ["start start", "end start"],
   });
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.25, 0.55], [1, 1, 0]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.45, 0.75], [1, 1, 0]);
   const overlayOpacity = useTransform(scrollYProgress, [0, 0.7], [0, 0.45]);
   const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
 

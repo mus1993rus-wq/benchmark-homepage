@@ -277,7 +277,7 @@ export default function GolfPage() {
   const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
   const overlayOpacity = useTransform(scrollYProgress, [0, 0.7], [0, 0.45]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.25, 0.55], [1, 1, 0]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.45, 0.75], [1, 1, 0]);
 
   return (
     <div className="min-h-screen font-sans antialiased">
