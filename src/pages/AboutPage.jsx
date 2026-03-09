@@ -308,7 +308,7 @@ export default function AboutPage() {
                       decoding="async"
                     />
                   </div>
-                  <div className="px-[20px] py-[24px] flex flex-col gap-4 w-full">
+                  <div className="px-[20px] py-[24px] flex flex-col items-center text-center gap-4 w-full">
                     <div className="flex flex-col gap-2">
                       <p className="font-bold text-[24px] text-white leading-[28px]">{member.name}</p>
                       <p className="font-normal text-[#717171] text-[16px] leading-[22px]">{member.role}</p>

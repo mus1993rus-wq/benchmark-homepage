@@ -304,14 +304,14 @@ function SportCard({ img, badge, sport, desc, to }) {
         </div>
       )}
       <div
-        className="absolute inset-0 rounded-[8px] flex gap-6 items-end pb-[32px] px-[24px]"
+        className="absolute inset-0 rounded-[8px] flex flex-col items-center justify-end pb-[32px] px-[24px] gap-4"
         style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%)" }}
       >
-        <div className="flex-1 flex flex-col gap-3 text-white">
+        <div className="flex flex-col gap-3 text-white text-center w-full">
           <p className="font-bold text-[24px] leading-[28px]">{sport}</p>
           <p className="font-normal text-[16px] leading-[24px]">{desc}</p>
         </div>
-        <span className="flex-shrink-0 flex items-center justify-center px-6 py-4 rounded-[4px] font-bold text-[16px] text-white leading-[20px] whitespace-nowrap border border-white bg-transparent transition-colors hover:bg-white hover:text-black">
+        <span className="w-full flex items-center justify-center px-6 py-4 rounded-[4px] font-bold text-[16px] text-white leading-[20px] border border-white bg-transparent transition-colors hover:bg-white hover:text-black">
           <ArrowLabel>Learn More</ArrowLabel>
         </span>
       </div>
@@ -336,10 +336,10 @@ function SportCardMobile({ img, badge, sport, desc, to }) {
         </div>
       )}
       <div
-        className="absolute inset-0 rounded-[8px] flex flex-col justify-end gap-4 pb-[24px] px-[16px]"
+        className="absolute inset-0 rounded-[8px] flex flex-col items-center justify-end gap-4 pb-[24px] px-[16px]"
         style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%)" }}
       >
-        <div className="flex flex-col gap-3 text-white">
+        <div className="flex flex-col gap-3 text-white text-center w-full">
           <p className="font-bold text-[24px] leading-[28px]">{sport}</p>
           <p className="font-normal text-[16px] leading-[24px]">{desc}</p>
         </div>
