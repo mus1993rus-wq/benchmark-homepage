@@ -337,9 +337,14 @@ export default function GolfPage() {
               AI-powered simulation &amp; swing feedback. No sensors. No guesswork.
             </p>
             <div className="mt-4">
-              <button className="bg-white text-black font-bold px-8 lg:px-10 py-4 lg:py-5 rounded text-base hover:bg-gray-100 transition-colors">
-                Visit Benchmark Golf
-              </button>
+              <a
+                href="https://golfdaddy.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white text-black font-bold px-8 lg:px-10 py-4 lg:py-5 rounded text-base hover:bg-gray-100 transition-colors inline-block"
+              >
+                Visit Golf Daddy
+              </a>
             </div>
           </div>
         </div>
