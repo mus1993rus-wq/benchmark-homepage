@@ -251,7 +251,7 @@ export function Header() {
                       <Link
                         key={sport.to}
                         to={sport.to}
-                        className="relative flex-1 h-full rounded-[8px] overflow-hidden block img-zoom"
+                        className="relative flex-1 h-full rounded-[8px] overflow-hidden block img-zoom group"
                         onClick={() => setSportsOpen(false)}
                         style={{
                           opacity: dropdownVisible ? 1 : 0,
@@ -259,7 +259,7 @@ export function Header() {
                           transition: `opacity 0.4s cubic-bezier(0.4,0,0.2,1) ${i * 60}ms, transform 0.4s cubic-bezier(0.4,0,0.2,1) ${i * 60}ms`,
                         }}
                       >
-                        <img src={sport.image} alt={sport.label} className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
+                        <img src={sport.image} alt={sport.label} className={`absolute inset-0 w-full h-full object-cover transition-[filter] duration-300${sport.comingSoon ? " group-hover:[filter:grayscale(0.75)]" : ""}`} loading="lazy" decoding="async" />
                         <div className="absolute inset-0 rounded-[8px] bg-gradient-to-b from-transparent to-[rgba(35,35,35,0.6)]" />
                         {sport.comingSoon && (
                           <div className="absolute top-3 left-3 bg-[#30393e] backdrop-blur-[24px] px-3 py-1.5 rounded">
@@ -536,7 +536,7 @@ export function Header() {
                   <Link
                     key={sport.to}
                     to={sport.to}
-                    className="relative flex-1 h-full rounded-[8px] overflow-hidden block img-zoom"
+                    className="relative flex-1 h-full rounded-[8px] overflow-hidden block img-zoom group"
                     onClick={() => setSportsOpen(false)}
                     style={{
                       opacity: dropdownVisible ? 1 : 0,
@@ -544,7 +544,7 @@ export function Header() {
                       transition: `opacity 0.4s cubic-bezier(0.4,0,0.2,1) ${i * 60}ms, transform 0.4s cubic-bezier(0.4,0,0.2,1) ${i * 60}ms`,
                     }}
                   >
-                    <img src={sport.image} alt={sport.label} className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
+                    <img src={sport.image} alt={sport.label} className={`absolute inset-0 w-full h-full object-cover transition-[filter] duration-300${sport.comingSoon ? " group-hover:[filter:grayscale(0.75)]" : ""}`} loading="lazy" decoding="async" />
                     <div className="absolute inset-0 rounded-[8px] bg-gradient-to-b from-transparent to-[rgba(35,35,35,0.6)]" />
                     {sport.comingSoon && (
                       <div className="absolute top-3 left-3 bg-[#30393e] backdrop-blur-[24px] px-3 py-1.5 rounded">
