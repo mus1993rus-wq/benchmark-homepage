@@ -80,15 +80,10 @@ function HeroSection() {
 
       {/* Hero text — scroll-driven on desktop, static on mobile */}
       <motion.div
-        className="absolute inset-0 z-20 flex flex-col items-center justify-center lg:justify-end text-center px-4 lg:px-6 lg:pb-16"
+        className="absolute inset-0 z-20 flex flex-col items-center justify-center lg:justify-end text-center px-4 lg:px-6 lg:pb-16 pt-[64px] lg:pt-0"
         style={{ y: isDesktop ? textY : 0, opacity: isDesktop ? textOpacity : 1 }}
       >
-        <motion.div
-          className="flex flex-col items-center w-full"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
-        >
+        <div className="flex flex-col items-center w-full">
           <div className="w-full lg:w-[840px] flex flex-col gap-4 mb-0 lg:mb-[57px]">
             <h1 className="text-white font-bold text-[30px] leading-normal uppercase lg:font-extrabold lg:text-[64px] lg:leading-[80px]">
               Scaling the teaching of sports
@@ -116,7 +111,7 @@ function HeroSection() {
               dark
             />
           </div>
-        </motion.div>
+        </div>
       </motion.div>
     </section>
   );
@@ -740,10 +735,9 @@ function ProcessSection() {
 export default function HomePage() {
   return (
     <div className="min-h-screen font-sans antialiased">
-      {/* hero block — 65vh on mobile, 100vh on desktop */}
-      <div className="h-[65vh] lg:h-screen flex flex-col">
+      {/* Hero block — 480px on mobile (40px bar + 64px header + 376px image), 100vh on desktop */}
+      <div className="h-[480px] lg:h-screen flex flex-col">
         <AnnouncementBar />
-        {/* position:relative + flex:1 gives a defined height; HeroSection is absolute inset-0 inside */}
         <div className="relative overflow-hidden" style={{ flex: 1 }}>
           <Header />
           <HeroSection />

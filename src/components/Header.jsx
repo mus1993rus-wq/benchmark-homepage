@@ -253,12 +253,10 @@ export function Header() {
 
       {/* ─── Mobile Header ─────────────────────────────────────────────────── */}
       <div
-        className="lg:hidden flex items-center justify-between px-4 h-[78px] relative z-30"
+        className="lg:hidden flex items-center justify-between px-4 h-[64px] relative z-30"
         style={{
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          background: "rgba(10,10,10,0.55)",
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          background: "white",
+          borderBottom: "1px solid rgba(0,0,0,0.08)",
         }}
       >
         <button
@@ -267,13 +265,13 @@ export function Header() {
           aria-label="Відкрити меню"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <rect x="2" y="5" width="20" height="2" rx="1" fill="white" />
-            <rect x="2" y="11" width="20" height="2" rx="1" fill="white" />
-            <rect x="2" y="17" width="20" height="2" rx="1" fill="white" />
+            <rect x="2" y="5" width="20" height="2" rx="1" fill="black" />
+            <rect x="2" y="11" width="20" height="2" rx="1" fill="black" />
+            <rect x="2" y="17" width="20" height="2" rx="1" fill="black" />
           </svg>
         </button>
         <Link to="/" className="absolute left-1/2 -translate-x-1/2">
-          <img src="/images/logo.svg" alt="benchmark SPORTS" style={{ height: '40px', width: '157.5px' }} loading="lazy" decoding="async" />
+          <img src="/images/logo.svg" alt="benchmark SPORTS" style={{ height: '40px', width: '157.5px', filter: 'brightness(0)' }} loading="lazy" decoding="async" />
         </Link>
         <div className="w-10" />
       </div>
