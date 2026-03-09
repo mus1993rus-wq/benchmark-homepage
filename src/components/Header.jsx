@@ -30,6 +30,10 @@ export function Header() {
   const [dropdownMounted, setDropdownMounted] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
+  // Mobile menu mounted/visible for smooth animation
+  const [mobileMenuMounted, setMobileMenuMounted] = useState(false);
+  const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
+
   // Sticky header state
   const [stickyVisible, setStickyVisible] = useState(false);
   const lastScrollY = useRef(0);
@@ -53,6 +57,24 @@ export function Header() {
     }
     return () => clearTimeout(timeout);
   }, [sportsOpen]);
+
+  // Mobile menu open → mount + lock scroll, close → animate out then unmount
+  useEffect(() => {
+    let timeout;
+    if (mobileMenuOpen) {
+      setMobileMenuMounted(true);
+      document.body.style.overflow = "hidden";
+      timeout = setTimeout(() => setMobileMenuVisible(true), 10);
+    } else {
+      setMobileMenuVisible(false);
+      document.body.style.overflow = "";
+      timeout = setTimeout(() => {
+        setMobileMenuMounted(false);
+        setMobileSportsExpanded(false);
+      }, 400);
+    }
+    return () => clearTimeout(timeout);
+  }, [mobileMenuOpen]);
 
   // Track main header bottom edge for blur overlay positioning (task 6)
   useEffect(() => {
@@ -276,26 +298,22 @@ export function Header() {
         <div className="w-10" />
       </div>
 
-      {/* ─── Mobile Menu — Figma style: white top panel + blurred dark bottom ── */}
-      {mobileMenuOpen && createPortal(
+      {/* ─── Mobile Menu — slide down from top + stagger nav items ── */}
+      {mobileMenuMounted && createPortal(
         <div className="lg:hidden fixed inset-0 z-50 flex flex-col">
-          {/* White top panel */}
-          <div className="bg-white flex flex-col" style={{ minHeight: 'auto' }}>
-            {/* Announcement bar */}
-            <div className="w-full bg-black text-white flex items-center justify-center h-10 px-12 shrink-0">
-              <span className="font-normal text-base leading-6">Description text</span>
-              <button className="ml-2 font-bold text-base leading-5 px-3 py-1 rounded transition-colors hover:bg-white hover:text-black">
-                Learn More
-              </button>
-            </div>
-
-            {/* Header row: X on left, logo centered */}
-            <div className="flex items-center justify-between px-5 h-[78px] relative">
+          {/* White top panel — slides down from top */}
+          <div
+            className="bg-white flex flex-col"
+            style={{
+              transform: mobileMenuVisible ? "translateY(0)" : "translateY(-100%)",
+              opacity: mobileMenuVisible ? 1 : 0,
+              transition: "transform 0.38s cubic-bezier(0.4,0,0.2,1), opacity 0.25s cubic-bezier(0.4,0,0.2,1)",
+            }}
+          >
+            {/* Header row: X on left, logo centered — matches main header height */}
+            <div className="flex items-center justify-between px-4 h-[64px] relative border-b border-black/[0.08]">
               <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setMobileSportsExpanded(false);
-                }}
+                onClick={() => setMobileMenuOpen(false)}
                 className="w-10 h-10 flex items-center justify-center"
                 aria-label="Закрити меню"
               >
@@ -306,19 +324,25 @@ export function Header() {
               <Link
                 to="/"
                 className="absolute left-1/2 -translate-x-1/2"
-                onClick={() => { setMobileMenuOpen(false); setMobileSportsExpanded(false); }}
+                onClick={() => setMobileMenuOpen(false)}
               >
                 <img src="/images/logo.svg" alt="benchmark SPORTS" className="brightness-0" style={{ height: '40px', width: '157.5px' }} loading="lazy" decoding="async" />
               </Link>
               <div className="w-10" />
             </div>
 
-            {/* Nav links */}
-            <nav className="flex flex-col gap-6 px-5 pb-8 pt-2">
+            {/* Nav links — stagger in after panel appears */}
+            <nav className="flex flex-col px-5 pt-2 pb-8">
               {/* Sports — expandable */}
-              <div>
+              <div
+                style={{
+                  opacity: mobileMenuVisible ? 1 : 0,
+                  transform: mobileMenuVisible ? "translateY(0)" : "translateY(10px)",
+                  transition: "opacity 0.35s cubic-bezier(0.4,0,0.2,1) 80ms, transform 0.35s cubic-bezier(0.4,0,0.2,1) 80ms",
+                }}
+              >
                 <button
-                  className="w-full flex items-center justify-between font-bold text-[18px] text-black leading-5"
+                  className="w-full flex items-center justify-between font-bold text-[18px] text-black leading-5 py-4"
                   onClick={() => setMobileSportsExpanded((v) => !v)}
                 >
                   <span>Sports</span>
@@ -332,45 +356,56 @@ export function Header() {
                     <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
                   </svg>
                 </button>
-                {/* Sports sub-items */}
                 {mobileSportsExpanded && (
-                  <div className="flex flex-col gap-[16px] mt-[16px]">
+                  <div className="flex flex-col gap-4 pb-4">
                     {mobileSportsItems.map((item) => (
                       <Link
                         key={item.to}
                         to={item.to}
                         className="font-bold text-[24px] text-[#0f1010] leading-[28px]"
-                        onClick={() => { setMobileMenuOpen(false); setMobileSportsExpanded(false); }}
+                        onClick={() => setMobileMenuOpen(false)}
                       >
                         {item.label}
                       </Link>
                     ))}
                   </div>
                 )}
+                <div className="h-px bg-black/[0.08]" />
               </div>
 
-              {mobileNavLinks.map((link) => (
-                <Link
+              {mobileNavLinks.map((link, i) => (
+                <div
                   key={link.to}
-                  to={link.to}
-                  className="font-bold text-[18px] text-black leading-5"
-                  onClick={() => { setMobileMenuOpen(false); setMobileSportsExpanded(false); }}
+                  style={{
+                    opacity: mobileMenuVisible ? 1 : 0,
+                    transform: mobileMenuVisible ? "translateY(0)" : "translateY(10px)",
+                    transition: `opacity 0.35s cubic-bezier(0.4,0,0.2,1) ${130 + i * 55}ms, transform 0.35s cubic-bezier(0.4,0,0.2,1) ${130 + i * 55}ms`,
+                  }}
                 >
-                  {link.label}
-                </Link>
+                  <Link
+                    to={link.to}
+                    className="flex items-center font-bold text-[18px] text-black leading-5 py-4"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                  {i < mobileNavLinks.length - 1 && <div className="h-px bg-black/[0.08]" />}
+                </div>
               ))}
             </nav>
           </div>
 
-          {/* Dark blurred bottom — shows page content through */}
+          {/* Dark blurred backdrop — fades in separately */}
           <div
             className="flex-1"
             style={{
               backdropFilter: "blur(12px)",
               WebkitBackdropFilter: "blur(12px)",
               background: "rgba(0,0,0,0.24)",
+              opacity: mobileMenuVisible ? 1 : 0,
+              transition: "opacity 0.38s cubic-bezier(0.4,0,0.2,1)",
             }}
-            onClick={() => { setMobileMenuOpen(false); setMobileSportsExpanded(false); }}
+            onClick={() => setMobileMenuOpen(false)}
           />
         </div>,
         document.body
