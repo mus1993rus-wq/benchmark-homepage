@@ -15,6 +15,8 @@ export default function PadelPage() {
           alt="Benchmark Padel"
           className="absolute inset-0 w-full h-full object-cover"
         />
+        {/* Blur layer */}
+        <div className="absolute inset-0 backdrop-blur-[4px]" />
         {/* Gradient overlay */}
         <div
           className="absolute inset-0"

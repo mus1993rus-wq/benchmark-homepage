@@ -15,13 +15,14 @@ export default function CricketPage() {
           alt="Benchmark Cricket"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* Gradient overlay — left to right dark blend */}
+        {/* Blur layer */}
+        <div className="absolute inset-0 backdrop-blur-[4px]" />
+        {/* Gradient overlay */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to right, rgba(0,0,0,0.48) 47%, rgba(0,0,0,0) 86%)",
-            mixBlendMode: "overlay",
+              "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%)",
           }}
         />
         <Header />

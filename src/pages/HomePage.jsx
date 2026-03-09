@@ -35,27 +35,35 @@ function HeroSection() {
   });
 
   // As user scrolls through the hero: text floats up slightly then fades
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-18%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.25, 0.55], [1, 1, 0]);
 
   // Image darkens on scroll
   const overlayOpacity = useTransform(scrollYProgress, [0, 0.7], [0, 0.45]);
 
+  // Parallax: image moves slower than the page scroll — minimal zoom (108%) to keep original look
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
+
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-gray-900"
-      style={{ flex: 1 }}
+      className="absolute inset-0 overflow-hidden bg-gray-900"
     >
-      <img
-        src="/images/hero-bg.webp"
-        alt="Athletes in motion"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+      {/* Wrapper is 108% tall, offset -4% — minimal zoom to keep original image look */}
+      <motion.div
+        className="absolute"
+        style={{ top: "-4%", left: 0, right: 0, height: "108%", y: imageY }}
+      >
+        <img
+          src="/images/hero-bg.webp"
+          alt="Athletes in motion"
+          className="w-full h-full object-cover"
+        />
+      </motion.div>
       {/* Static gradient */}
       <div
         className="absolute inset-0 z-10"
-        style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5))" }}
+        style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.7) 100%)" }}
       />
       {/* Scroll-driven darkening overlay */}
       <motion.div
@@ -63,13 +71,13 @@ function HeroSection() {
         style={{ opacity: overlayOpacity }}
       />
 
-      {/* Hero text — centered vertically & horizontally, scroll-driven float + fade */}
+      {/* Hero text — bottom-aligned, scroll-driven float + fade */}
       <motion.div
-        className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-3 lg:px-6"
+        className="absolute inset-0 z-20 flex flex-col items-center justify-end text-center px-4 lg:px-6 pb-10 lg:pb-16"
         style={{ y: textY, opacity: textOpacity }}
       >
         <motion.div
-          className="flex flex-col items-center"
+          className="flex flex-col items-center w-full"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
@@ -476,7 +484,7 @@ function ComparisonSection() {
           {/* Scrollable on mobile */}
           <div className="overflow-x-auto -mx-3 px-3 lg:mx-0 lg:px-0">
             {/* 4 independent flex columns side-by-side, gap-[4px] between them */}
-            <div className="flex gap-[24px] min-w-[700px] lg:min-w-0">
+            <div className="flex gap-[12px] lg:gap-[24px] min-w-[1100px] lg:min-w-0">
 
               {/* ── Benchmark column ── */}
               <div className="flex-1 bg-[#1f2225] rounded-[4px] flex flex-col">
@@ -623,80 +631,90 @@ function ProcessSection() {
     </div>
   );
 
-  const Accordion = () => (
-    <div className="flex flex-col gap-[24px]">
-      <div className="h-px bg-white/20" />
-      {steps.map((step, i) => (
-        <div key={step.title}>
-          <div
-            className="flex gap-[16px] items-start justify-between cursor-pointer group"
-            onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
-          >
-            <div className="flex-1">
-              <motion.p
-                className="font-bold text-[24px] leading-[28px] text-white"
-                animate={{ opacity: openIndex === i ? 1 : 0.4 }}
-                transition={{ duration: 0.25 }}
+  const Accordion = ({ showImage = false }) => {
+    const [hoveredIndex, setHoveredIndex] = useState(null);
+    return (
+      <div className="flex flex-col gap-[24px]">
+        {steps.map((step, i) => {
+          const isActive = openIndex === i;
+          const isHovered = hoveredIndex === i;
+          return (
+            <div key={step.title}>
+              <div
+                className="flex gap-[16px] items-start justify-between cursor-pointer"
+                onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
+                onMouseEnter={() => setHoveredIndex(i)}
+                onMouseLeave={() => setHoveredIndex(null)}
               >
-                {step.title}
-              </motion.p>
-              <AnimatePresence initial={false}>
-                {openIndex === i && (
-                  <motion.div
-                    key="body"
-                    initial={{ opacity: 0, height: 0, y: -6 }}
-                    animate={{ opacity: 1, height: "auto", y: 0 }}
-                    exit={{ opacity: 0, height: 0, y: -6 }}
-                    transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
-                    style={{ overflow: "hidden" }}
+                <div className="flex-1">
+                  <motion.p
+                    className="font-bold text-[24px] leading-[28px] text-white"
+                    animate={{ opacity: isActive || isHovered ? 1 : 0.4 }}
+                    transition={{ duration: 0.25 }}
                   >
-                    <p className="font-normal text-[16px] leading-[24px] text-white whitespace-pre-line mt-4">
-                      {step.body}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    {step.title}
+                  </motion.p>
+                  <AnimatePresence initial={false}>
+                    {isActive && (
+                      <motion.div
+                        key="body"
+                        initial={{ opacity: 0, height: 0, y: -6 }}
+                        animate={{ opacity: 1, height: "auto", y: 0 }}
+                        exit={{ opacity: 0, height: 0, y: -6 }}
+                        transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+                        style={{ overflow: "hidden" }}
+                      >
+                        {showImage && (
+                          <div className="mt-4 mb-4">
+                            <ProcessImage className="w-full h-[260px]" />
+                          </div>
+                        )}
+                        <p className="font-normal text-[16px] leading-[24px] text-white whitespace-pre-line mt-4">
+                          {step.body}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+                <motion.div
+                  className="flex-shrink-0 w-[24px] h-[24px] flex items-center justify-center mt-0.5"
+                  animate={{ opacity: isActive || isHovered ? 1 : 0.3 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <motion.svg
+                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    animate={{ rotate: isActive ? 45 : 0 }}
+                    transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+                  >
+                    <line x1="12" y1="5" x2="12" y2="19" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="5" y1="12" x2="19" y2="12" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                  </motion.svg>
+                </motion.div>
+              </div>
+              {i < steps.length - 1 && <div className="h-px bg-white/20 mt-[24px]" />}
             </div>
-            <motion.div
-              className="flex-shrink-0 w-[24px] h-[24px] flex items-center justify-center mt-0.5"
-              animate={{ opacity: openIndex === i ? 1 : 0.3 }}
-              transition={{ duration: 0.2 }}
-            >
-              <motion.svg
-                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                animate={{ rotate: openIndex === i ? 45 : 0 }}
-                transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-              >
-                <line x1="12" y1="5" x2="12" y2="19" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                <line x1="5" y1="12" x2="19" y2="12" stroke="white" strokeWidth="2" strokeLinecap="round" />
-              </motion.svg>
-            </motion.div>
-          </div>
-          <div className="h-px bg-white/20 mt-[24px]" />
-        </div>
-      ))}
-    </div>
-  );
+          );
+        })}
+      </div>
+    );
+  };
 
   return (
     <section className="bg-[#171a1c] py-12 lg:py-20 px-4 lg:px-6">
       <div className="max-w-[1200px] mx-auto">
         {/* Mobile */}
         <div className="flex flex-col gap-10 lg:hidden">
-          <FadeIn>
-            <ProcessImage className="w-full h-[349px]" />
-          </FadeIn>
-          <FadeIn delay={0.1} className="flex flex-col gap-8">
+          <FadeIn className="flex flex-col gap-8">
             <h2 className="font-bold text-white text-[32px] leading-[40px] capitalize">
               A simple process, built around technique.
             </h2>
-            <Accordion />
+            <Accordion showImage />
           </FadeIn>
         </div>
 
         {/* Desktop */}
         <div className="hidden lg:flex gap-[64px] items-start">
-          <FadeIn className="flex flex-col gap-[32px] w-[540px] flex-shrink-0">
+          <FadeIn className="flex flex-col gap-[40px] w-[540px] flex-shrink-0">
             <h2 className="font-bold text-white text-[48px] leading-[62px] capitalize">
               A simple process, built around technique.
             </h2>
@@ -718,6 +736,7 @@ export default function HomePage() {
       {/* 100vh hero block — same pattern as GolfPage */}
       <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
         <AnnouncementBar />
+        {/* position:relative + flex:1 gives a defined height; HeroSection is absolute inset-0 inside */}
         <div className="relative overflow-hidden" style={{ flex: 1 }}>
           <Header />
           <HeroSection />

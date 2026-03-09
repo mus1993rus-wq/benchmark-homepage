@@ -141,28 +141,30 @@ export default function AboutPage() {
       </div>
 
       {/* Mission Section — dark bg */}
-      <section className="bg-[#171a1c] py-16 lg:py-24 px-4 lg:px-6 relative overflow-hidden">
-        <div className="max-w-[1200px] mx-auto flex flex-col items-center relative z-10">
-          {/* Watermark */}
+      {/* Layout matches Figma: flex-col, "Our Mission" in flow above content */}
+      <section className="bg-[#171a1c] pt-16 lg:pt-20 pb-16 lg:pb-24 px-4 lg:px-6 overflow-hidden">
+        <FadeIn className="flex flex-col items-center w-full">
+          {/* "Our Mission" — normal flow element, directly above content */}
           <p
-            className="hidden lg:block text-white text-[144px] font-extrabold uppercase leading-none text-center select-none absolute top-0 left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none"
-            style={{ opacity: "0.03" }}
+            className="w-full text-white text-[48px] lg:text-[144px] font-extrabold uppercase leading-none text-center select-none pointer-events-none whitespace-nowrap"
+            style={{ opacity: 0.06 }}
           >
             Our Mission
           </p>
-          <FadeIn className="max-w-[800px] text-center pt-8 relative z-10">
-            <div className="font-bold text-[16px] lg:text-[18px] text-white leading-[28px] lg:leading-[20px]">
+          {/* Content — sits directly below the watermark */}
+          <div className="max-w-[800px] text-center mt-6 lg:mt-8">
+            <div className="font-bold text-[16px] lg:text-[18px] text-white leading-[24px] lg:leading-[20px]">
               <p className="mb-0">Traditional technique coaching works — but it doesn't scale.</p>
               <p className="mb-0">It's expensive. It's time-bound. It's location-dependent.</p>
-              <p className="mb-4"></p>
+              <p className="mb-0">&nbsp;</p>
               <p className="mb-0">We're building a multi-sport training platform that turns movement into measurable data — and data into structured improvement.</p>
-              <p className="mb-4"></p>
+              <p className="mb-0">&nbsp;</p>
               <p className="mb-0">From golf to tennis, padel, cricket and beyond, our goal is simple:</p>
-              <p className="mb-4"></p>
+              <p className="mb-0">&nbsp;</p>
               <p>Make elite-level technique training available anywhere.</p>
             </div>
-          </FadeIn>
-        </div>
+          </div>
+        </FadeIn>
       </section>
 
       {/* Problem Section — dark bg */}
@@ -222,7 +224,7 @@ export default function AboutPage() {
           <FadeIn className="w-full lg:flex-1">
             <div className="h-[300px] lg:h-[538px] rounded-[4px] overflow-hidden">
               <img
-                src="/images/about-analyze.png"
+                src="/images/about-analyze.webp"
                 alt="The Benchmark Engine"
                 className="w-full h-full object-cover"
                 loading="lazy"

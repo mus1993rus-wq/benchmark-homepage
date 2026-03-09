@@ -87,7 +87,7 @@ export function Footer({ onHeightChange }) {
         <div className="w-full h-px bg-white/[0.08]" />
 
         {/* Copyright */}
-        <div className="flex items-center justify-between py-3 w-full px-8 lg:px-[240px]">
+        <div className="flex items-center justify-center py-3 w-full px-8 lg:px-[240px]">
           <p className="text-white/50 text-sm leading-[18px] font-normal">
             2026 © Benchmark Sports. All rights reserved.
           </p>

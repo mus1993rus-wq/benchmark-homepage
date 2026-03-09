@@ -99,7 +99,10 @@ export function Header() {
         <div
           className="fixed top-0 left-0 right-0 z-50"
           style={{
-            background: sportsOpen ? "#ffffff" : "#000000",
+            background: sportsOpen ? "#ffffff" : "rgba(10,10,10,0.72)",
+            backdropFilter: sportsOpen ? "none" : "blur(20px)",
+            WebkitBackdropFilter: sportsOpen ? "none" : "blur(20px)",
+            borderBottom: sportsOpen ? "none" : "1px solid rgba(255,255,255,0.08)",
             transform: stickyVisible ? "translateY(0)" : "translateY(-100%)",
             transition: "transform 0.3s cubic-bezier(0.4,0,0.2,1), background 0.35s cubic-bezier(0.4,0,0.2,1)",
           }}
@@ -249,20 +252,28 @@ export function Header() {
       )}
 
       {/* ─── Mobile Header ─────────────────────────────────────────────────── */}
-      <div className="lg:hidden bg-white border-b border-[#e6e6e6] flex items-center justify-between px-4 h-[78px] relative z-20">
+      <div
+        className="lg:hidden flex items-center justify-between px-4 h-[78px] relative z-20"
+        style={{
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          background: "rgba(10,10,10,0.55)",
+          borderBottom: "1px solid rgba(255,255,255,0.08)",
+        }}
+      >
         <button
           onClick={() => setMobileMenuOpen(true)}
           className="w-10 h-10 flex items-center justify-center"
           aria-label="Відкрити меню"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <rect x="2" y="5" width="20" height="2" rx="1" fill="black" />
-            <rect x="2" y="11" width="20" height="2" rx="1" fill="black" />
-            <rect x="2" y="17" width="20" height="2" rx="1" fill="black" />
+            <rect x="2" y="5" width="20" height="2" rx="1" fill="white" />
+            <rect x="2" y="11" width="20" height="2" rx="1" fill="white" />
+            <rect x="2" y="17" width="20" height="2" rx="1" fill="white" />
           </svg>
         </button>
         <Link to="/" className="absolute left-1/2 -translate-x-1/2">
-          <img src="/images/logo.svg" alt="benchmark SPORTS" className="brightness-0" style={{ height: '40px', width: '157.5px' }} loading="lazy" decoding="async" />
+          <img src="/images/logo.svg" alt="benchmark SPORTS" style={{ height: '40px', width: '157.5px' }} loading="lazy" decoding="async" />
         </Link>
         <div className="w-10" />
       </div>
