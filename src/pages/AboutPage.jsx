@@ -78,7 +78,7 @@ function CollectionCard({ img, imgStyle, img2, img2Style, title, desc }) {
           background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%)",
         }}
       >
-        <div className="flex flex-col gap-4 text-white">
+        <div className="flex flex-col gap-4 text-white text-center">
           <p className="font-bold text-[24px] leading-[28px]">{title}</p>
           <p className="font-normal text-[16px] leading-[22px]">{desc}</p>
         </div>

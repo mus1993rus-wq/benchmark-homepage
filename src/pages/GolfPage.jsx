@@ -40,8 +40,8 @@ function CollectionCard({ image, title, desc }) {
           background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%)",
         }}
       >
-        <p className="font-bold text-[24px] leading-[28px] text-white">{title}</p>
-        <p className="font-normal text-[16px] leading-[24px] text-white">{desc}</p>
+        <p className="font-bold text-[24px] leading-[28px] text-white text-center">{title}</p>
+        <p className="font-normal text-[16px] leading-[24px] text-white text-center">{desc}</p>
       </div>
     </div>
   );
