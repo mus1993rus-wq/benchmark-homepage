@@ -486,7 +486,7 @@ function ComparisonSection() {
           {/* Scrollable on mobile */}
           <div className="overflow-x-auto -mx-3 px-3 lg:mx-0 lg:px-0">
             {/* 4 independent flex columns side-by-side, gap-[4px] between them */}
-            <div className="flex gap-[24px] lg:gap-[24px] min-w-[1100px] lg:min-w-0">
+            <div className="flex gap-[24px] lg:gap-[24px] min-w-[1200px] lg:min-w-0">
 
               {/* ── Benchmark column ── */}
               <div className="flex-1 bg-[#1f2225] rounded-[4px] flex flex-col">
@@ -502,7 +502,7 @@ function ComparisonSection() {
                       decoding="async"
                     />
                   </div>
-                  <p className="font-normal text-[#717171] text-[13px] lg:text-[16px] leading-[18px] lg:leading-[24px] text-center">
+                  <p className="font-normal text-[#717171] text-[14px] lg:text-[16px] leading-[20px] lg:leading-[24px] text-center">
                     Data-based, always-on coaching that adapts to you.
                   </p>
                 </div>
@@ -516,7 +516,7 @@ function ComparisonSection() {
                       }`}
                     >
                       <CheckGreen />
-                      <p className="flex-1 font-semibold text-[12px] lg:text-[14px] text-white leading-[16px] lg:leading-[20px]">
+                      <p className="flex-1 font-semibold text-[14px] lg:text-[14px] text-white leading-[20px] lg:leading-[20px]">
                         {row}
                       </p>
                     </div>
@@ -530,11 +530,11 @@ function ComparisonSection() {
                   {/* Header */}
                   <div className="flex flex-col gap-[12px] items-center px-[16px] pt-[24px] pb-[16px]">
                     <div className="h-[48px] flex items-center justify-center w-full">
-                      <p className="font-bold text-white text-[14px] lg:text-[20px] leading-[18px] lg:leading-[26px] text-center">
+                      <p className="font-bold text-white text-[16px] lg:text-[20px] leading-[22px] lg:leading-[26px] text-center">
                         {col.title}
                       </p>
                     </div>
-                    <p className="font-normal text-[#717171] text-[13px] lg:text-[16px] leading-[18px] lg:leading-[24px] text-center">
+                    <p className="font-normal text-[#717171] text-[14px] lg:text-[16px] leading-[20px] lg:leading-[24px] text-center">
                       {col.subtitle}
                     </p>
                   </div>
@@ -548,7 +548,7 @@ function ComparisonSection() {
                         }`}
                       >
                         <CheckDark />
-                        <p className="flex-1 font-semibold text-[12px] lg:text-[14px] text-white leading-[16px] lg:leading-[20px]">
+                        <p className="flex-1 font-semibold text-[14px] lg:text-[14px] text-white leading-[20px] lg:leading-[20px]">
                           {row}
                         </p>
                       </div>
