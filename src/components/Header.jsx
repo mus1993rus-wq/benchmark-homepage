@@ -253,7 +253,7 @@ export function Header() {
 
       {/* ─── Mobile Header ─────────────────────────────────────────────────── */}
       <div
-        className="lg:hidden flex items-center justify-between px-4 h-[78px] relative z-20"
+        className="lg:hidden flex items-center justify-between px-4 h-[78px] relative z-30"
         style={{
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
