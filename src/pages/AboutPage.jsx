@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
 import { FadeIn } from "../components/FadeIn";
@@ -103,39 +104,66 @@ function ProblemDiagram() {
 }
 
 export default function AboutPage() {
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.7], [0, 0.45]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.25, 0.55], [1, 1, 0]);
+
   return (
     <div className="min-h-screen font-sans antialiased">
-      {/* 100vh hero block — same pattern as GolfPage */}
+      {/* 100vh hero block */}
       <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
         <AnnouncementBar />
         {/* Hero */}
-        <div className="relative overflow-hidden" style={{ flex: 1 }}>
-          <img
-            src="/images/about-hero-bg.webp"
-            alt="About Benchmark Sports"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+        <div ref={heroRef} className="relative overflow-hidden" style={{ flex: 1 }}>
+          {/* Parallax image wrapper */}
+          <motion.div
+            className="absolute"
+            style={{ top: "-4%", left: 0, right: 0, height: "108%", y: imageY }}
+          >
+            <img
+              src="/images/about-hero-bg.webp"
+              alt="About Benchmark Sports"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+          {/* Static gradient */}
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 z-10"
             style={{
               background: "linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%)",
             }}
           />
-          <Header />
+          {/* Scroll-driven darkening overlay */}
           <motion.div
-            className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-4 lg:px-6"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
+            className="absolute inset-0 z-10 bg-black"
+            style={{ opacity: overlayOpacity }}
+          />
+          <Header />
+          {/* Scroll-driven text wrapper */}
+          <motion.div
+            className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 lg:px-6"
+            style={{ y: textY, opacity: textOpacity }}
           >
-            <div className="max-w-[849px] flex flex-col gap-4 items-center">
-              <h1 className="text-white font-extrabold text-[32px] leading-[40px] lg:text-[64px] lg:leading-[80px] uppercase">
-                Building the future of technique training.
-              </h1>
-              <p className="text-white text-[16px] leading-[24px] font-normal">
-                Benchmark Sports exists to make high-level coaching accessible across sports — not just for those who can afford private lessons. So the next 100 million people learn sports through our digital platform.
-              </p>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
+            >
+              <div className="max-w-[849px] flex flex-col gap-4 items-center">
+                <h1 className="text-white font-extrabold text-[32px] leading-[40px] lg:text-[64px] lg:leading-[80px] uppercase">
+                  Building the future of technique training.
+                </h1>
+                <p className="text-white text-[16px] leading-[24px] font-normal">
+                  Benchmark Sports exists to make high-level coaching accessible across sports — not just for those who can afford private lessons. So the next 100 million people learn sports through our digital platform.
+                </p>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
