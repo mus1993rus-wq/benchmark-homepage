@@ -220,7 +220,7 @@ export default function AboutPage() {
           <FadeIn className="w-full lg:flex-1">
             <div className="h-[300px] lg:h-[538px] rounded-[4px] overflow-hidden">
               <img
-                src="/images/about-analyze.webp"
+                src="/images/about-analyze.png"
                 alt="The Benchmark Engine"
                 className="w-full h-full object-cover"
                 loading="lazy"
