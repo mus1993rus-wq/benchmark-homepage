@@ -73,10 +73,9 @@ function CollectionCard({ img, imgStyle, img2, img2Style, title, desc }) {
         </div>
       )}
       <div
-        className="absolute bottom-0 left-0 right-0 px-[24px] py-[32px] rounded-[8px]"
+        className="absolute inset-0 px-[24px] pb-[32px] rounded-[8px] flex flex-col justify-end"
         style={{
-          background: "linear-gradient(to bottom, rgba(35,35,35,0) 0%, rgba(35,35,35,0.6) 100%)",
-          backdropFilter: "blur(30px)",
+          background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%)",
         }}
       >
         <div className="flex flex-col gap-4 text-white">

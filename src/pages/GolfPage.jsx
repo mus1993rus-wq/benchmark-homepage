@@ -35,11 +35,9 @@ function CollectionCard({ image, title, desc }) {
     <div className="flex-1 h-full relative rounded-[8px] overflow-hidden">
       {image}
       <div
-        className="absolute bottom-0 left-0 right-0 px-[24px] py-[32px] rounded-[8px] flex flex-col gap-[16px]"
+        className="absolute inset-0 px-[24px] pb-[32px] rounded-[8px] flex flex-col justify-end gap-[16px]"
         style={{
-          background: "linear-gradient(to bottom, rgba(35,35,35,0) 0%, rgba(35,35,35,0.6) 100%)",
-          backdropFilter: "blur(30px)",
-          WebkitBackdropFilter: "blur(30px)",
+          background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%)",
         }}
       >
         <p className="font-bold text-[24px] leading-[28px] text-white">{title}</p>
