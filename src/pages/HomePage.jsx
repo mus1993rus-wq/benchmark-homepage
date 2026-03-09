@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
@@ -28,54 +28,21 @@ function ArrowLabel({ children, className = "" }) {
 
 // ─── Hero Section ─────────────────────────────────────────────────────────────
 function HeroSection() {
-  const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  // As user scrolls through the hero: text floats up slightly then fades
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.25, 0.55], [1, 1, 0]);
-
-  // Image darkens on scroll
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.7], [0, 0.45]);
-
-  // Parallax: image moves slower than the page scroll — minimal zoom (108%) to keep original look
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
-
   return (
-    <section
-      ref={sectionRef}
-      className="absolute inset-0 overflow-hidden bg-gray-900"
-    >
-      {/* Wrapper is 108% tall, offset -4% — minimal zoom to keep original image look */}
-      <motion.div
-        className="absolute"
-        style={{ top: "-4%", left: 0, right: 0, height: "108%", y: imageY }}
-      >
-        <img
-          src="/images/hero-bg.webp"
-          alt="Athletes in motion"
-          className="w-full h-full object-cover"
-        />
-      </motion.div>
+    <section className="absolute inset-0 overflow-hidden bg-gray-900">
+      <img
+        src="/images/hero-bg.webp"
+        alt="Athletes in motion"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
       {/* Static gradient */}
       <div
         className="absolute inset-0 z-10"
         style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.7) 100%)" }}
       />
-      {/* Scroll-driven darkening overlay */}
-      <motion.div
-        className="absolute inset-0 z-10 bg-black"
-        style={{ opacity: overlayOpacity }}
-      />
 
-      {/* Hero text — bottom-aligned, scroll-driven float + fade */}
-      <motion.div
-        className="absolute inset-0 z-20 flex flex-col items-center justify-end text-center px-4 lg:px-6 pb-10 lg:pb-16"
-        style={{ y: textY, opacity: textOpacity }}
-      >
+      {/* Hero text — bottom-aligned */}
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-end text-center px-4 lg:px-6 pb-10 lg:pb-16">
         <motion.div
           className="flex flex-col items-center w-full"
           initial={{ opacity: 0, y: 24 }}
@@ -110,7 +77,7 @@ function HeroSection() {
             />
           </div>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 }
@@ -484,7 +451,7 @@ function ComparisonSection() {
           {/* Scrollable on mobile */}
           <div className="overflow-x-auto -mx-3 px-3 lg:mx-0 lg:px-0">
             {/* 4 independent flex columns side-by-side, gap-[4px] between them */}
-            <div className="flex gap-[12px] lg:gap-[24px] min-w-[1100px] lg:min-w-0">
+            <div className="flex gap-[24px] lg:gap-[24px] min-w-[1100px] lg:min-w-0">
 
               {/* ── Benchmark column ── */}
               <div className="flex-1 bg-[#1f2225] rounded-[4px] flex flex-col">

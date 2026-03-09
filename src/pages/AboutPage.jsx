@@ -1,5 +1,4 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
 import { FadeIn } from "../components/FadeIn";
@@ -104,34 +103,18 @@ function ProblemDiagram() {
 }
 
 export default function AboutPage() {
-  const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.7], [0, 0.45]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.25, 0.55], [1, 1, 0]);
-
   return (
     <div className="min-h-screen font-sans antialiased">
       {/* 100vh hero block */}
       <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
         <AnnouncementBar />
         {/* Hero */}
-        <div ref={heroRef} className="relative overflow-hidden" style={{ flex: 1 }}>
-          {/* Parallax image wrapper */}
-          <motion.div
-            className="absolute"
-            style={{ top: "-4%", left: 0, right: 0, height: "108%", y: imageY }}
-          >
-            <img
-              src="/images/about-hero-bg.webp"
-              alt="About Benchmark Sports"
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
+        <div className="relative overflow-hidden" style={{ flex: 1 }}>
+          <img
+            src="/images/about-hero-bg.webp"
+            alt="About Benchmark Sports"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
           {/* Static gradient */}
           <div
             className="absolute inset-0 z-10"
@@ -139,17 +122,9 @@ export default function AboutPage() {
               background: "linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%)",
             }}
           />
-          {/* Scroll-driven darkening overlay */}
-          <motion.div
-            className="absolute inset-0 z-10 bg-black"
-            style={{ opacity: overlayOpacity }}
-          />
           <Header />
-          {/* Scroll-driven text wrapper */}
-          <motion.div
-            className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 lg:px-6"
-            style={{ y: textY, opacity: textOpacity }}
-          >
+          {/* Text */}
+          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 lg:px-6">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -164,7 +139,7 @@ export default function AboutPage() {
                 </p>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </div>
 

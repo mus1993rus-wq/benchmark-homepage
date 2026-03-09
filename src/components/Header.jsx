@@ -10,10 +10,10 @@ const sportsItems = [
 ];
 
 const mobileSportsItems = [
-  { to: "/golf", label: "Golf" },
-  { to: "/tennis", label: "Tennis" },
-  { to: "/padel", label: "Padel" },
-  { to: "/cricket", label: "Cricket" },
+  { to: "/golf", label: "Benchmark Golf" },
+  { to: "/tennis", label: "Benchmark Tennis" },
+  { to: "/padel", label: "Benchmark Padel" },
+  { to: "/cricket", label: "Benchmark Cricket" },
 ];
 
 const mobileNavLinks = [
@@ -336,12 +336,12 @@ export function Header() {
                 </button>
                 {/* Sports sub-items */}
                 {mobileSportsExpanded && (
-                  <div className="flex flex-col gap-4 mt-4 pl-4">
+                  <div className="flex flex-col gap-[16px] mt-[16px]">
                     {mobileSportsItems.map((item) => (
                       <Link
                         key={item.to}
                         to={item.to}
-                        className="font-semibold text-[16px] text-black/70"
+                        className="font-bold text-[24px] text-[#0f1010] leading-[28px]"
                         onClick={() => { setMobileMenuOpen(false); setMobileSportsExpanded(false); }}
                       >
                         {item.label}
