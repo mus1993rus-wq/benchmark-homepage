@@ -66,7 +66,7 @@ body {
 }
 
 .animate-ticker {
-  animation: ticker 20s linear infinite;
+  animation: ticker 24s linear infinite;
   display: inline-block;
   white-space: nowrap;
 }
