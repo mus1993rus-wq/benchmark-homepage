@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const linkStyle = { transition: "color 0.3s cubic-bezier(0.4,0,0.2,1)" };
-const linkClass = "text-white hover:text-white/80";
+const linkClass = "nav-link text-white hover:text-white/80 inline-block";
 
 export function Footer({ onHeightChange }) {
   const footerRef = useRef(null);

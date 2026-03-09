@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
 import { FadeIn } from "../components/FadeIn";
+import { ThankYouModal } from "../components/ThankYouModal";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ export default function ContactPage() {
     subject: "",
     message: "",
   });
+  const [submitted, setSubmitted] = useState(false);
 
   const subjects = [
     "General Inquiry",
@@ -23,8 +25,14 @@ export default function ContactPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
   return (
     <div className="min-h-screen font-sans antialiased bg-[#171b1d]">
+      {submitted && <ThankYouModal onClose={() => setSubmitted(false)} />}
       <AnnouncementBar />
 
       {/* Header */}
@@ -46,7 +54,7 @@ export default function ContactPage() {
 
         {/* Form */}
         <FadeIn delay={0.1} className="w-full max-w-[600px]">
-        <div className="w-full flex flex-col gap-6">
+        <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6">
           {/* Name */}
           <div className="flex flex-col gap-2">
             <label className="text-white text-base leading-6">
@@ -85,7 +93,7 @@ export default function ContactPage() {
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
-                className="w-full bg-[#1f2225] border border-white/[0.08] rounded px-[17px] py-[13px] text-[#818181] text-sm leading-[18px] appearance-none focus:outline-none focus:border-white/30 transition-colors"
+                className={`w-full bg-[#1f2225] border border-white/[0.08] rounded px-[17px] py-[13px] text-sm leading-[18px] appearance-none focus:outline-none focus:border-white/30 transition-colors ${formData.subject ? "text-white" : "text-[#818181]"}`}
               >
                 <option value="">Select Subject</option>
                 {subjects.map((s) => (
@@ -124,11 +132,11 @@ export default function ContactPage() {
 
           {/* Submit */}
           <div className="flex justify-center mt-2">
-            <button className="bg-white text-black font-bold px-10 py-5 rounded text-base hover:bg-gray-100 transition-colors">
+            <button type="submit" className="bg-white text-black font-bold px-10 py-5 rounded text-base hover:bg-gray-100 transition-colors">
               Send Message
             </button>
           </div>
-        </div>
+        </form>
         </FadeIn>
       </div>
 

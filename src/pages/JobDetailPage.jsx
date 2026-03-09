@@ -3,6 +3,7 @@ import { Link, useParams, Navigate } from "react-router-dom";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
 import { FadeIn } from "../components/FadeIn";
+import { ThankYouModal } from "../components/ThankYouModal";
 
 function toSlug(title) {
   return title
@@ -143,6 +144,7 @@ function OverviewTab({ job }) {
 
 function ApplicationTab() {
   const [fileName, setFileName] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
   const fileInputRef = useRef(null);
 
   const handleFileChange = (e) => {
@@ -153,6 +155,7 @@ function ApplicationTab() {
 
   return (
     <div className="flex flex-col gap-6 items-center w-full max-w-[600px] mx-auto">
+      {submitted && <ThankYouModal onClose={() => setSubmitted(false)} />}
       {/* Form fields */}
       <div className="flex flex-col gap-4 items-start w-full">
         {/* Name */}
@@ -163,7 +166,7 @@ function ApplicationTab() {
           <input
             type="text"
             placeholder="Name"
-            className="w-full bg-[#1f2225] border border-[rgba(255,255,255,0.08)] rounded-[4px] px-[17px] py-[13px] text-[14px] leading-[18px] text-[#818181] placeholder-[#818181] outline-none focus:border-[rgba(255,255,255,0.2)] transition-colors"
+            className="w-full bg-[#1f2225] border border-[rgba(255,255,255,0.08)] rounded-[4px] px-[17px] py-[13px] text-[14px] leading-[18px] text-white placeholder-[#818181] outline-none focus:border-[rgba(255,255,255,0.2)] transition-colors"
           />
         </div>
 
@@ -175,7 +178,7 @@ function ApplicationTab() {
           <input
             type="email"
             placeholder="Email"
-            className="w-full bg-[#1f2225] border border-[rgba(255,255,255,0.08)] rounded-[4px] px-[17px] py-[13px] text-[14px] leading-[18px] text-[#818181] placeholder-[#818181] outline-none focus:border-[rgba(255,255,255,0.2)] transition-colors"
+            className="w-full bg-[#1f2225] border border-[rgba(255,255,255,0.08)] rounded-[4px] px-[17px] py-[13px] text-[14px] leading-[18px] text-white placeholder-[#818181] outline-none focus:border-[rgba(255,255,255,0.2)] transition-colors"
           />
         </div>
 
@@ -187,7 +190,7 @@ function ApplicationTab() {
           <input
             type="url"
             placeholder="Github/Portfolio URL"
-            className="w-full bg-[#1f2225] border border-[rgba(255,255,255,0.08)] rounded-[4px] px-[17px] py-[13px] text-[14px] leading-[18px] text-[#818181] placeholder-[#818181] outline-none focus:border-[rgba(255,255,255,0.2)] transition-colors"
+            className="w-full bg-[#1f2225] border border-[rgba(255,255,255,0.08)] rounded-[4px] px-[17px] py-[13px] text-[14px] leading-[18px] text-white placeholder-[#818181] outline-none focus:border-[rgba(255,255,255,0.2)] transition-colors"
           />
         </div>
 
@@ -244,14 +247,15 @@ function ApplicationTab() {
           <textarea
             placeholder="What makes you more than a resume?"
             rows={4}
-            className="w-full bg-[#1f2225] border border-[rgba(255,255,255,0.08)] rounded-[4px] px-[17px] py-[13px] text-[16px] leading-[24px] text-[#818181] placeholder-[#818181] outline-none focus:border-[rgba(255,255,255,0.2)] transition-colors resize-none"
+            className="w-full bg-[#1f2225] border border-[rgba(255,255,255,0.08)] rounded-[4px] px-[17px] py-[13px] text-[16px] leading-[24px] text-white placeholder-[#818181] outline-none focus:border-[rgba(255,255,255,0.2)] transition-colors resize-none"
           />
         </div>
       </div>
 
       {/* Submit button */}
       <button
-        type="submit"
+        type="button"
+        onClick={() => setSubmitted(true)}
         className="bg-white text-black font-bold text-[16px] leading-[20px] px-10 py-5 rounded-[4px] hover:bg-[#e8e8e8] transition-colors"
       >
         Send Application
