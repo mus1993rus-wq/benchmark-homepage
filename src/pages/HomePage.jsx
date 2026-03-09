@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
@@ -439,30 +440,53 @@ function ProcessSection() {
   const ProcessImage = ({ className }) => (
     <div className={`rounded-[8px] overflow-hidden relative ${className}`}>
       <div className="absolute inset-0 bg-[#515151] rounded-[8px]" />
-      {activeImage.bg && (
-        <img src={activeImage.bg} alt="" className="absolute inset-0 w-full h-full object-cover rounded-[8px]" loading="lazy" decoding="async" />
-      )}
-      <div className="absolute inset-0 overflow-hidden rounded-[8px]">
-        {activeImage.offset ? (
-          <img
-            key={activeImage.src}
-            src={activeImage.src}
-            alt="Training"
-            className="absolute transition-opacity duration-300"
-            style={{ width: activeImage.offset.width, height: activeImage.offset.height, left: activeImage.offset.left, top: activeImage.offset.top, maxWidth: "none", objectFit: "cover" }}
-            loading="lazy"
-            decoding="async"
-          />
-        ) : (
-          <img
-            key={activeImage.src}
-            src={activeImage.src}
-            alt="Training"
-            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+      <AnimatePresence initial={false}>
+        {activeImage.bg && (
+          <motion.img
+            key={`bg-${activeImage.src}`}
+            src={activeImage.bg}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover rounded-[8px]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
             loading="lazy"
             decoding="async"
           />
         )}
+      </AnimatePresence>
+      <div className="absolute inset-0 overflow-hidden rounded-[8px]">
+        <AnimatePresence mode="wait">
+          {activeImage.offset ? (
+            <motion.img
+              key={activeImage.src}
+              src={activeImage.src}
+              alt="Training"
+              className="absolute"
+              style={{ width: activeImage.offset.width, height: activeImage.offset.height, left: activeImage.offset.left, top: activeImage.offset.top, maxWidth: "none", objectFit: "cover" }}
+              initial={{ opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <motion.img
+              key={activeImage.src}
+              src={activeImage.src}
+              alt="Training"
+              className="absolute inset-0 w-full h-full object-cover"
+              initial={{ opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
@@ -472,29 +496,65 @@ function ProcessSection() {
       <div className="h-px bg-white/20" />
       {steps.map((step, i) => (
         <div key={step.title}>
-          <div className="flex gap-[16px] items-start justify-between cursor-pointer" onClick={() => setOpenIndex(openIndex === i ? -1 : i)}>
+          <div
+            className="flex gap-[16px] items-start justify-between cursor-pointer group"
+            onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
+          >
+            {/* Animated green left indicator */}
+            <div className="flex-shrink-0 flex flex-col items-center self-stretch pt-1">
+              <motion.div
+                className="w-[3px] rounded-full bg-[#62d947]"
+                initial={false}
+                animate={{
+                  height: openIndex === i ? "100%" : "0%",
+                  opacity: openIndex === i ? 1 : 0,
+                }}
+                transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+                style={{ minHeight: openIndex === i ? "24px" : "0px" }}
+              />
+            </div>
+
             <div className="flex-1">
-              {openIndex === i ? (
-                <div className="flex flex-col gap-[16px] text-white">
-                  <p className="font-bold text-[24px] leading-[28px]">{step.title}</p>
-                  <p className="font-normal text-[16px] leading-[24px] whitespace-pre-line">{step.body}</p>
-                </div>
-              ) : (
-                <p className="font-bold text-[24px] leading-[28px] text-white opacity-50">{step.title}</p>
-              )}
+              <motion.p
+                className="font-bold text-[24px] leading-[28px] text-white"
+                animate={{ opacity: openIndex === i ? 1 : 0.4 }}
+                transition={{ duration: 0.25 }}
+              >
+                {step.title}
+              </motion.p>
+
+              <AnimatePresence initial={false}>
+                {openIndex === i && (
+                  <motion.div
+                    key="body"
+                    initial={{ opacity: 0, height: 0, y: -6 }}
+                    animate={{ opacity: 1, height: "auto", y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: -6 }}
+                    transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+                    style={{ overflow: "hidden" }}
+                  >
+                    <p className="font-normal text-[16px] leading-[24px] text-white whitespace-pre-line mt-4">
+                      {step.body}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-            <div className={`flex-shrink-0 w-[24px] h-[24px] flex items-center justify-center ${openIndex !== i ? "opacity-30" : ""}`}>
-              {openIndex === i ? (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <line x1="5" y1="12" x2="19" y2="12" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-              ) : (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <line x1="12" y1="5" x2="12" y2="19" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                  <line x1="5" y1="12" x2="19" y2="12" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-              )}
-            </div>
+
+            <motion.div
+              className="flex-shrink-0 w-[24px] h-[24px] flex items-center justify-center mt-0.5"
+              animate={{ opacity: openIndex === i ? 1 : 0.3 }}
+              transition={{ duration: 0.2 }}
+            >
+              <motion.svg
+                width="24" height="24" viewBox="0 0 24 24" fill="none"
+                animate={{ rotate: openIndex === i ? 45 : 0 }}
+                transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+              >
+                <line x1="12" y1="5" x2="12" y2="19" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                <line x1="5" y1="12" x2="19" y2="12" stroke="white" strokeWidth="2" strokeLinecap="round" />
+              </motion.svg>
+            </motion.div>
           </div>
           <div className="h-px bg-white/20 mt-[24px]" />
         </div>
