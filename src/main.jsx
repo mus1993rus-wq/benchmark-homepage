@@ -1,17 +1,26 @@
-import { StrictMode, useState, useCallback, useEffect } from "react";
+import { StrictMode, useState, useCallback, useEffect, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./index.css";
-import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
-import GolfPage from "./pages/GolfPage";
-import TennisPage from "./pages/TennisPage";
-import PadelPage from "./pages/PadelPage";
-import CricketPage from "./pages/CricketPage";
-import ContactPage from "./pages/ContactPage";
-import CareersPage from "./pages/CareersPage";
-import JobDetailPage from "./pages/JobDetailPage";
 import { Footer } from "./components/Footer";
+
+// ─── Lazy-load every page — each route is its own JS chunk ───────────────────
+// This means the initial bundle only includes the current page's code.
+// All other pages are fetched on-demand when the user navigates to them.
+const HomePage    = lazy(() => import("./pages/HomePage"));
+const AboutPage   = lazy(() => import("./pages/AboutPage"));
+const GolfPage    = lazy(() => import("./pages/GolfPage"));
+const TennisPage  = lazy(() => import("./pages/TennisPage"));
+const PadelPage   = lazy(() => import("./pages/PadelPage"));
+const CricketPage = lazy(() => import("./pages/CricketPage"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
+const CareersPage = lazy(() => import("./pages/CareersPage"));
+const JobDetailPage = lazy(() => import("./pages/JobDetailPage"));
+
+// Minimal dark-screen fallback shown while a lazy page chunk loads
+function PageFallback() {
+  return <div style={{ minHeight: "100vh", background: "#0f1010" }} />;
+}
 
 // Скролимо на початок сторінки при кожній навігації
 function ScrollToTop() {
@@ -52,17 +61,19 @@ function App() {
           marginBottom: isDesktop ? footerHeight : 0,
         }}
       >
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/golf" element={<GolfPage />} />
-          <Route path="/tennis" element={<TennisPage />} />
-          <Route path="/padel" element={<PadelPage />} />
-          <Route path="/cricket" element={<CricketPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/careers" element={<CareersPage />} />
-          <Route path="/careers/:slug" element={<JobDetailPage />} />
-        </Routes>
+        <Suspense fallback={<PageFallback />}>
+          <Routes>
+            <Route path="/"              element={<HomePage />} />
+            <Route path="/about"         element={<AboutPage />} />
+            <Route path="/golf"          element={<GolfPage />} />
+            <Route path="/tennis"        element={<TennisPage />} />
+            <Route path="/padel"         element={<PadelPage />} />
+            <Route path="/cricket"       element={<CricketPage />} />
+            <Route path="/contact"       element={<ContactPage />} />
+            <Route path="/careers"       element={<CareersPage />} />
+            <Route path="/careers/:slug" element={<JobDetailPage />} />
+          </Routes>
+        </Suspense>
       </div>
 
       {/* Footer поза обгорткою — у кореневому stacking context (z-index:0) */}

@@ -4,13 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Benchmark Sports</title>
+    <meta name="description" content="Benchmark Sports — AI-powered technique training for golf, tennis, padel and cricket. No sensors, no wearables. Just your phone." />
 
-    <!-- Preload critical hero images for instant first paint -->
+    <!-- ── Google Fonts ─────────────────────────────────────────────────────
+         Preconnect first so the DNS + TLS handshake happens in parallel
+         with everything else. Putting <link rel="stylesheet"> here (rather
+         than @import inside CSS) avoids an extra network round-trip and
+         lets the browser start downloading font files sooner.
+         Only the weights actually used in the codebase are loaded:
+           400 (normal), 600 (semibold), 700 (bold), 800 (extrabold)
+         + italic 400 for the mission quote on the About page.
+    ──────────────────────────────────────────────────────────────────────── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;0,6..12,800;1,6..12,400&display=swap"
+    />
+
+    <!-- ── Critical image preloads ─────────────────────────────────────────
+         Only the hero images are preloaded — they're the largest LCP
+         candidates and need to start loading before JS executes.
+    ──────────────────────────────────────────────────────────────────────── -->
     <link rel="preload" as="image" href="/images/hero-bg.webp" />
-    <link rel="preload" as="image" href="/images/golf-hero-bg.webp" />
 
-    <!-- DNS prefetch for external domains -->
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <!-- ── DNS prefetch for external domains ───────────────────────────── -->
     <link rel="dns-prefetch" href="https://golfdaddy.com" />
   </head>
   <body>

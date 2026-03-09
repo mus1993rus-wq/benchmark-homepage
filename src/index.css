@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200;0,6..12,300;0,6..12,400;0,6..12,600;0,6..12,700;0,6..12,800;0,6..12,900;1,6..12,400&display=swap');
+/* Google Fonts are loaded via <link> in index.html for better performance
+   (avoids the extra network round-trip caused by @import inside CSS). */
 
 @tailwind base;
 @tailwind components;
