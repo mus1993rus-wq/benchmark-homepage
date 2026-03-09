@@ -64,7 +64,7 @@ function HeroSection() {
         <img
           src="/images/hero-bg.webp"
           alt="Athletes in motion"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-[center_20%] lg:object-center"
         />
       </motion.div>
       {/* Static gradient */}
@@ -740,8 +740,8 @@ function ProcessSection() {
 export default function HomePage() {
   return (
     <div className="min-h-screen font-sans antialiased">
-      {/* 100vh hero block — same pattern as GolfPage */}
-      <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+      {/* hero block — 65vh on mobile, 100vh on desktop */}
+      <div className="h-[65vh] lg:h-screen flex flex-col">
         <AnnouncementBar />
         {/* position:relative + flex:1 gives a defined height; HeroSection is absolute inset-0 inside */}
         <div className="relative overflow-hidden" style={{ flex: 1 }}>
