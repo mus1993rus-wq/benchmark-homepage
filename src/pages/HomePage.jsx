@@ -44,7 +44,8 @@ function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-[443px] lg:h-[880px] overflow-hidden bg-gray-900"
+      className="relative overflow-hidden bg-gray-900"
+      style={{ flex: 1 }}
     >
       <img
         src="/images/hero-bg.webp"
@@ -62,8 +63,9 @@ function HeroSection() {
         style={{ opacity: overlayOpacity }}
       />
 
+      {/* Hero text — centered vertically & horizontally, scroll-driven float + fade */}
       <motion.div
-        className="relative z-20 flex flex-col items-center text-center px-3 lg:px-6 pt-[40px] lg:pt-[431px]"
+        className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-3 lg:px-6"
         style={{ y: textY, opacity: textOpacity }}
       >
         <motion.div
@@ -713,10 +715,13 @@ function ProcessSection() {
 export default function HomePage() {
   return (
     <div className="min-h-screen font-sans antialiased">
-      <AnnouncementBar />
-      <div className="relative">
-        <Header />
-        <HeroSection />
+      {/* 100vh hero block — same pattern as GolfPage */}
+      <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+        <AnnouncementBar />
+        <div className="relative overflow-hidden" style={{ flex: 1 }}>
+          <Header />
+          <HeroSection />
+        </div>
       </div>
       <MobileFeatureSection />
       <StatsSection />
