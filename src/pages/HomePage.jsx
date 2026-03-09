@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { AnnouncementBar } from "../components/AnnouncementBar";
@@ -100,29 +100,77 @@ function MobileFeatureSection() {
 }
 
 // ─── Stats Section ────────────────────────────────────────────────────────────
+function useCountUp(target, duration = 1800, started = false) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!started) return;
+    let raf;
+    const startTime = performance.now();
+    const step = (now) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * target));
+      if (progress < 1) {
+        raf = requestAnimationFrame(step);
+      } else {
+        setCount(target);
+      }
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [started, target, duration]);
+  return count;
+}
+
+function StatItem({ target, suffix, label, started }) {
+  const count = useCountUp(target, 1800, started);
+  return (
+    <div className="flex-1 text-center w-full">
+      <p className="font-bold text-[#0f1010] text-[32px] leading-[40px] lg:text-[48px] lg:leading-[62px] capitalize mb-3">
+        {count.toLocaleString()}{suffix}
+      </p>
+      <p className="text-black font-semibold text-[18px] leading-[26px]">
+        {label}
+      </p>
+    </div>
+  );
+}
+
 function StatsSection() {
+  const [started, setStarted] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const stats = [
-    { value: "500,000+", label: "Happy Players" },
-    { value: "500,000,000+", label: "Video Analysis" },
-    { value: "78%", label: "Users train again within 7 days" },
+    { target: 500000, suffix: "+", label: "Happy Players" },
+    { target: 500000000, suffix: "+", label: "Video Analysis" },
+    { target: 78, suffix: "%", label: "Users train again within 7 days" },
   ];
 
   return (
-    <section className="bg-white py-12 lg:py-16 px-4 lg:px-6">
+    <section ref={ref} className="bg-white py-12 lg:py-16 px-4 lg:px-6">
       <div className="max-w-[1200px] mx-auto">
         <p className="text-center text-[#717171] font-bold text-[18px] leading-normal mb-10">
           Trusted by athletes who put in the work.
         </p>
         <div className="flex flex-col lg:flex-row gap-10 items-center">
           {stats.map((s) => (
-            <div key={s.label} className="flex-1 text-center w-full">
-              <p className="font-bold text-[#0f1010] text-[32px] leading-[40px] lg:text-[48px] lg:leading-[62px] capitalize mb-3">
-                {s.value}
-              </p>
-              <p className="text-black font-semibold text-[18px] leading-[26px]">
-                {s.label}
-              </p>
-            </div>
+            <StatItem key={s.label} {...s} started={started} />
           ))}
         </div>
       </div>
@@ -170,7 +218,7 @@ function CollectionSection() {
 
         <div className="flex flex-col lg:flex-row gap-6 w-full">
           {cards.map((card) => (
-            <div key={card.title} className="lg:flex-1 relative rounded-[8px] overflow-hidden h-[480px] img-zoom">
+            <div key={card.title} className="lg:flex-1 relative rounded-[8px] overflow-hidden h-[480px]">
               {card.image}
               <div
                 className="absolute bottom-0 left-0 right-0 p-6 rounded-[8px]"
@@ -202,9 +250,16 @@ const sports = [
 ];
 
 function SportCard({ img, badge, sport, desc, to }) {
+  const isComingSoon = !!badge;
   return (
-    <div className="flex-1 rounded-[8px] overflow-hidden relative img-zoom">
-      <img src={img} alt={sport} className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
+    <Link to={to} className="flex-1 rounded-[8px] overflow-hidden relative img-zoom group block">
+      <img
+        src={img}
+        alt={sport}
+        className={`absolute inset-0 w-full h-full object-cover transition-[filter] duration-300${isComingSoon ? " group-hover:grayscale" : ""}`}
+        loading="lazy"
+        decoding="async"
+      />
       {badge && (
         <div className="absolute top-6 left-6 flex items-center justify-center px-3 py-1.5 rounded" style={{ background: "#30393e", backdropFilter: "blur(24px)" }}>
           <span className="font-bold text-[#ffc32c] text-[16px] leading-[20px] whitespace-nowrap">{badge}</span>
@@ -218,18 +273,25 @@ function SportCard({ img, badge, sport, desc, to }) {
           <p className="font-bold text-[24px] leading-[28px]">{sport}</p>
           <p className="font-normal text-[16px] leading-[24px]">{desc}</p>
         </div>
-        <Link to={to} className="flex-shrink-0 flex items-center justify-center px-6 py-4 rounded-[4px] font-bold text-[16px] text-white leading-[20px] whitespace-nowrap bg-white/10 transition-colors hover:bg-white hover:text-black">
+        <span className="flex-shrink-0 flex items-center justify-center px-6 py-4 rounded-[4px] font-bold text-[16px] text-white leading-[20px] whitespace-nowrap bg-white/10 transition-colors hover:bg-white hover:text-black">
           Learn More
-        </Link>
+        </span>
       </div>
-    </div>
+    </Link>
   );
 }
 
 function SportCardMobile({ img, badge, sport, desc, to }) {
+  const isComingSoon = !!badge;
   return (
-    <div className="rounded-[8px] overflow-hidden relative h-[400px] img-zoom">
-      <img src={img} alt={sport} className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
+    <Link to={to} className="rounded-[8px] overflow-hidden relative h-[400px] img-zoom group block">
+      <img
+        src={img}
+        alt={sport}
+        className={`absolute inset-0 w-full h-full object-cover transition-[filter] duration-300${isComingSoon ? " group-hover:grayscale" : ""}`}
+        loading="lazy"
+        decoding="async"
+      />
       {badge && (
         <div className="absolute top-6 left-6 flex items-center justify-center px-3 py-1.5 rounded" style={{ background: "#30393e", backdropFilter: "blur(24px)" }}>
           <span className="font-bold text-[#ffc32c] text-[16px] leading-[20px] whitespace-nowrap">{badge}</span>
@@ -243,11 +305,11 @@ function SportCardMobile({ img, badge, sport, desc, to }) {
           <p className="font-bold text-[24px] leading-[28px]">{sport}</p>
           <p className="font-normal text-[16px] leading-[24px]">{desc}</p>
         </div>
-        <Link to={to} className="flex items-center justify-center px-6 py-4 rounded-[4px] font-bold text-[16px] text-black leading-[20px] bg-white w-full transition-colors hover:bg-white hover:text-black">
+        <span className="flex items-center justify-center px-6 py-4 rounded-[4px] font-bold text-[16px] text-black leading-[20px] bg-white w-full">
           Learn More
-        </Link>
+        </span>
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -301,61 +363,71 @@ function ComparisonSection() {
     </div>
   );
 
-  const benchmarkRows = [
-    "Video Recording", "Analyzes", "Suggests specific fixes",
-    "Updates the plan with each session.",
-    "Detects movement patterns over time",
-    "Tracks progress session by session",
-    "Always available, no scheduling",
+  const columnHeaders = [
+    {
+      logo: true,
+      subtitle: "Data-based, always-on coaching that adapts to you.",
+    },
+    {
+      title: "Human Coaches",
+      subtitle: "Strong influence, but depends on the person and schedule.",
+    },
+    {
+      title: "Expensive simulators",
+      subtitle: "Cool metrics, but no clear fixes.",
+    },
+    {
+      title: "Video Content",
+      subtitle: "Cheap, but without personalization.",
+    },
   ];
 
-  const humanCoachRows = [
-    { text: "The assessment is often subjective.", hasCheck: true },
-    { text: "Progress may be uneven", hasCheck: true },
-    { text: "The frequency of classes is limited by time, place.", hasCheck: true },
-    { text: "Limited budget", hasCheck: true },
-    { text: "-", hasCheck: false }, { text: "-", hasCheck: false }, { text: "-", hasCheck: false },
+  // Each inner array is one row across all 4 columns: [benchmark, humanCoach, simulator, video]
+  // check: "green" | "dark" | false (no icon, centered dash)
+  const tableRows = [
+    [
+      { check: "green", text: "Video Recording" },
+      { check: "dark", text: "The assessment is often subjective." },
+      { check: "dark", text: "They show the result but do not explain the reason." },
+      { check: "dark", text: "One content for all" },
+    ],
+    [
+      { check: "green", text: "Analyzes" },
+      { check: "dark", text: "Progress may be uneven" },
+      { check: "dark", text: "Do not lead to steady improvement step by step." },
+      { check: "dark", text: "Without feedback on your movement." },
+    ],
+    [
+      { check: "green", text: "Suggests specific fixes" },
+      { check: "dark", text: "The frequency of classes is limited by time, place." },
+      { check: "dark", text: "High price" },
+      { check: "dark", text: "You spend a lot of time" },
+    ],
+    [
+      { check: "green", text: "Updates the plan with each session." },
+      { check: "dark", text: "Limited budget" },
+      { check: "dark", text: "Location binding" },
+      { check: "dark", text: "Little progress" },
+    ],
+    [
+      { check: "green", text: "Detects movement patterns over time" },
+      { check: false, text: "—" },
+      { check: false, text: "—" },
+      { check: false, text: "—" },
+    ],
+    [
+      { check: "green", text: "Tracks progress session by session" },
+      { check: false, text: "—" },
+      { check: false, text: "—" },
+      { check: false, text: "—" },
+    ],
+    [
+      { check: "green", text: "Always available, no scheduling" },
+      { check: false, text: "—" },
+      { check: false, text: "—" },
+      { check: false, text: "—" },
+    ],
   ];
-
-  const simulatorRows = [
-    { text: "They show the result but do not explain the reason.", hasCheck: true },
-    { text: "Do not lead to steady improvement step by step.", hasCheck: true },
-    { text: "High price", hasCheck: true },
-    { text: "Location binding", hasCheck: true },
-    { text: "-", hasCheck: false }, { text: "-", hasCheck: false }, { text: "-", hasCheck: false },
-  ];
-
-  const videoRows = [
-    { text: "One content for all", hasCheck: true },
-    { text: "Without feedback on your movement.", hasCheck: true },
-    { text: "You spend a lot of time", hasCheck: true },
-    { text: "Little progress", hasCheck: true },
-    { text: "-", hasCheck: false }, { text: "-", hasCheck: false }, { text: "-", hasCheck: false },
-  ];
-
-  const OtherColumn = ({ title, subtitle, rows }) => (
-    <div className="w-[297px] lg:flex-1 flex-shrink-0 bg-[#1f2225] rounded-[4px] flex flex-col gap-[16px] items-center px-[16px] py-[24px]">
-      <div className="flex flex-col gap-[12px] items-center w-full">
-        <div className="h-[48px] flex items-center justify-center w-full">
-          <p className="font-bold text-white text-[16px] leading-[22px] text-center">{title}</p>
-        </div>
-        <div className="flex items-center justify-center w-full">
-          <p className="font-normal text-[#818181] text-[16px] leading-[24px] text-center">{subtitle}</p>
-        </div>
-      </div>
-      <div className="flex flex-col items-start w-full">
-        {rows.map((row, i) => (
-          <div key={i} className={`flex gap-[16px] h-[64px] items-center px-[12px] py-[16px] w-full ${i < rows.length - 1 ? "border-b border-[#2d2f31]" : ""}`}>
-            {row.hasCheck ? (
-              <><CheckDark /><p className="flex-1 font-semibold text-[16px] text-white leading-[22px]">{row.text}</p></>
-            ) : (
-              <p className="flex-1 font-semibold text-[16px] text-white leading-[20px] text-center">{row.text}</p>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
 
   return (
     <section className="bg-[#171a1c] py-12 lg:py-20 px-4 lg:px-6 border-t border-white/[0.08]">
@@ -371,41 +443,54 @@ function ComparisonSection() {
 
         {/* Scrollable container on mobile */}
         <div className="overflow-x-auto -mx-3 px-3 lg:mx-0 lg:px-0">
-          <div className="flex gap-[4px] items-stretch min-w-max lg:min-w-0">
-            {/* Benchmark column */}
-            <div className="w-[297px] lg:flex-1 flex-shrink-0 bg-[#1f2225] rounded-[4px] flex flex-col gap-[16px] items-center px-[16px] py-[24px]">
-              <div className="flex flex-col gap-[12px] items-center w-full">
-                <div className="h-[48px] w-full flex items-center justify-center">
-                  <img
-                    src="/images/logo.svg"
-                    alt="benchmark SPORTS"
-                    className="brightness-0 invert"
-                    style={{ height: '32px', width: 'auto' }}
-                    loading="lazy"
-                    decoding="async"
-                  />
+          {/* CSS grid: 4 equal columns — each grid row auto-sizes to its tallest cell */}
+          <div
+            className="grid gap-[4px] min-w-[1200px] lg:min-w-0"
+            style={{ gridTemplateColumns: "repeat(4, 1fr)" }}
+          >
+            {/* ── Column Headers ── */}
+            {columnHeaders.map((col, i) => (
+              <div
+                key={i}
+                className="bg-[#1f2225] rounded-t-[4px] flex flex-col gap-[12px] items-center px-[16px] pt-[24px] pb-[16px]"
+              >
+                <div className="h-[48px] flex items-center justify-center w-full">
+                  {col.logo ? (
+                    <img
+                      src="/images/logo.svg"
+                      alt="benchmark SPORTS"
+                      className="brightness-0 invert"
+                      style={{ height: "32px", width: "auto" }}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <p className="font-bold text-white text-[16px] leading-[22px] text-center">{col.title}</p>
+                  )}
                 </div>
-                <p className="font-normal text-[#818181] text-[16px] leading-[24px] text-center">
-                  Data-based, always-on coaching that adapts to you.
-                </p>
+                <p className="font-normal text-[#818181] text-[16px] leading-[24px] text-center">{col.subtitle}</p>
               </div>
-              <div className="flex flex-col items-start w-full">
-                <div className="flex gap-[16px] h-[56px] items-center px-[12px] py-[16px] w-full border-b border-[#2d2f31]">
-                  <CheckGreen />
-                  <p className="font-semibold text-[16px] text-white leading-[22px] whitespace-nowrap">Video Recording</p>
-                </div>
-                {benchmarkRows.slice(1).map((row, i) => (
-                  <div key={i} className={`flex gap-[16px] h-[64px] items-center px-[12px] py-[16px] w-full ${i < benchmarkRows.length - 2 ? "border-b border-[#2d2f31]" : ""}`}>
-                    <CheckGreen />
-                    <p className="flex-1 font-semibold text-[16px] text-white leading-[22px]">{row}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            ))}
 
-            <OtherColumn title="Human Coaches" subtitle="Strong influence, but depends on the person and schedule." rows={humanCoachRows} />
-            <OtherColumn title="Expensive simulators" subtitle="Cool metrics, but no clear fixes." rows={simulatorRows} />
-            <OtherColumn title="Video Content" subtitle="Cheap, but without personalization." rows={videoRows} />
+            {/* ── Data Rows ── */}
+            {tableRows.map((row, rowIdx) =>
+              row.map((cell, colIdx) => (
+                <div
+                  key={`${rowIdx}-${colIdx}`}
+                  className={`bg-[#1f2225] flex gap-[16px] items-center px-[12px] py-[16px] w-full
+                    ${rowIdx < tableRows.length - 1 ? "border-b border-[#2d2f31]" : "rounded-b-[4px]"}`}
+                >
+                  {cell.check ? (
+                    <>
+                      {cell.check === "green" ? <CheckGreen /> : <CheckDark />}
+                      <p className="flex-1 font-semibold text-[16px] text-white leading-[22px]">{cell.text}</p>
+                    </>
+                  ) : (
+                    <p className="flex-1 font-semibold text-[16px] text-white leading-[20px] text-center">{cell.text}</p>
+                  )}
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -437,57 +522,59 @@ function ProcessSection() {
 
   const activeImage = openIndex >= 0 ? steps[openIndex].image : steps[0].image;
 
+  // Single AnimatePresence wraps both bg + main image as one composite unit.
+  // Key is openIndex so when tab changes, the old composite exits then the new enters.
+  // This prevents the double-image flash that occurred with two separate AnimatePresence instances.
   const ProcessImage = ({ className }) => (
     <div className={`rounded-[8px] overflow-hidden relative ${className}`}>
       <div className="absolute inset-0 bg-[#515151] rounded-[8px]" />
-      <AnimatePresence initial={false}>
-        {activeImage.bg && (
-          <motion.img
-            key={`bg-${activeImage.src}`}
-            src={activeImage.bg}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover rounded-[8px]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            loading="lazy"
-            decoding="async"
-          />
-        )}
-      </AnimatePresence>
-      <div className="absolute inset-0 overflow-hidden rounded-[8px]">
-        <AnimatePresence mode="wait">
-          {activeImage.offset ? (
-            <motion.img
-              key={activeImage.src}
-              src={activeImage.src}
-              alt="Training"
-              className="absolute"
-              style={{ width: activeImage.offset.width, height: activeImage.offset.height, left: activeImage.offset.left, top: activeImage.offset.top, maxWidth: "none", objectFit: "cover" }}
-              initial={{ opacity: 0, scale: 1.04 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.97 }}
-              transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
-              loading="lazy"
-              decoding="async"
-            />
-          ) : (
-            <motion.img
-              key={activeImage.src}
-              src={activeImage.src}
-              alt="Training"
-              className="absolute inset-0 w-full h-full object-cover"
-              initial={{ opacity: 0, scale: 1.04 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.97 }}
-              transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={openIndex}
+          className="absolute inset-0"
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.97 }}
+          transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+        >
+          {activeImage.bg && (
+            <img
+              src={activeImage.bg}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover rounded-[8px]"
               loading="lazy"
               decoding="async"
             />
           )}
-        </AnimatePresence>
-      </div>
+          <div className="absolute inset-0 overflow-hidden rounded-[8px]">
+            {activeImage.offset ? (
+              <img
+                src={activeImage.src}
+                alt="Training"
+                className="absolute"
+                style={{
+                  width: activeImage.offset.width,
+                  height: activeImage.offset.height,
+                  left: activeImage.offset.left,
+                  top: activeImage.offset.top,
+                  maxWidth: "none",
+                  objectFit: "cover",
+                }}
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <img
+                src={activeImage.src}
+                alt="Training"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            )}
+          </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 
@@ -500,20 +587,6 @@ function ProcessSection() {
             className="flex gap-[16px] items-start justify-between cursor-pointer group"
             onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
           >
-            {/* Animated green left indicator */}
-            <div className="flex-shrink-0 flex flex-col items-center self-stretch pt-1">
-              <motion.div
-                className="w-[3px] rounded-full bg-[#62d947]"
-                initial={false}
-                animate={{
-                  height: openIndex === i ? "100%" : "0%",
-                  opacity: openIndex === i ? 1 : 0,
-                }}
-                transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
-                style={{ minHeight: openIndex === i ? "24px" : "0px" }}
-              />
-            </div>
-
             <div className="flex-1">
               <motion.p
                 className="font-bold text-[24px] leading-[28px] text-white"
