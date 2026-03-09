@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
 import { FadeIn } from "../components/FadeIn";
@@ -121,7 +122,12 @@ export default function AboutPage() {
           }}
         />
         <Header />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-4 lg:px-6">
+        <motion.div
+          className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-4 lg:px-6"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
+        >
           <div className="max-w-[849px] flex flex-col gap-4 items-center">
             <h1 className="text-white font-extrabold text-[32px] leading-[40px] lg:text-[64px] lg:leading-[80px] uppercase">
               Building the future of technique training.
@@ -130,7 +136,7 @@ export default function AboutPage() {
               Benchmark Sports exists to make high-level coaching accessible across sports — not just for those who can afford private lessons. So the next 100 million people learn sports through our digital platform.
             </p>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Mission Section — dark bg */}
@@ -333,10 +339,10 @@ export default function AboutPage() {
           <FadeIn delay={0.1}>
             <div className="bg-[#1f2225] rounded-[8px] grid grid-cols-2 lg:flex">
               {[
-                { label: "Speed over bureaucracy", icon: "/images/about-build-icon-1.svg" },
-                { label: "Product obsession",      icon: "/images/about-build-icon-2.svg" },
-                { label: "Long-term thinking",     icon: "/images/about-build-icon-3.svg" },
-                { label: "Measurable outcomes",    icon: "/images/about-build-icon-4.svg" },
+                { label: "Speed over bureaucracy", icon: "/images/about-build-icon-1.svg", flip: true },
+                { label: "Product obsession",      icon: "/images/about-build-icon-2.svg", flip: false },
+                { label: "Long-term thinking",     icon: "/images/about-build-icon-3.svg", flip: false },
+                { label: "Measurable outcomes",    icon: "/images/about-build-icon-4.svg", flip: false },
               ].map((item, i) => (
                 <div
                   key={item.label}
@@ -348,7 +354,13 @@ export default function AboutPage() {
                     className="w-16 h-16 rounded-[45px] border border-white/24 backdrop-blur-[32px] flex items-center justify-center overflow-hidden"
                     style={{ background: "rgba(255,255,255,0.08)" }}
                   >
-                    <img src={item.icon} alt="" className="w-8 h-8" loading="lazy" decoding="async" />
+                    <img
+                      src={item.icon}
+                      alt=""
+                      className={`w-8 h-8${item.flip ? " -scale-y-100 rotate-180" : ""}`}
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                   <p className="font-semibold text-[16px] lg:text-[18px] text-white text-center leading-[22px] lg:leading-[26px]">
                     {item.label}

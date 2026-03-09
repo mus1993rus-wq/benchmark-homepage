@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
+import { motion } from "framer-motion";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
 import { FadeIn } from "../components/FadeIn";
@@ -280,7 +281,12 @@ export default function GolfPage() {
             style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5))" }}
           />
           <Header />
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-4 lg:px-6">
+          <motion.div
+            className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-4 lg:px-6"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
+          >
             <div className="max-w-[860px] flex flex-col gap-4 items-center">
               <h1 className="text-white font-extrabold text-[36px] leading-[44px] lg:text-[64px] lg:leading-[80px] uppercase">
                 Golf Daddy By Benchmark Golf
@@ -299,7 +305,7 @@ export default function GolfPage() {
                 </a>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 

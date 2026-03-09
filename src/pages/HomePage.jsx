@@ -66,33 +66,40 @@ function HeroSection() {
         className="relative z-20 flex flex-col items-center text-center px-3 lg:px-6 pt-[40px] lg:pt-[431px]"
         style={{ y: textY, opacity: textOpacity }}
       >
-        <div className="w-full lg:w-[840px] flex flex-col gap-4 mb-0 lg:mb-[57px]">
-          <h1 className="text-white font-bold text-[30px] leading-normal uppercase lg:font-extrabold lg:text-[64px] lg:leading-[80px]">
-            Scaling the teaching of sports
-          </h1>
-          <p className="text-white font-bold text-[16px] lg:font-semibold lg:text-[18px] capitalize">
-            Consumer applications that can teach hundreds of millions of people
-          </p>
-        </div>
+        <motion.div
+          className="flex flex-col items-center"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
+        >
+          <div className="w-full lg:w-[840px] flex flex-col gap-4 mb-0 lg:mb-[57px]">
+            <h1 className="text-white font-bold text-[30px] leading-normal uppercase lg:font-extrabold lg:text-[64px] lg:leading-[80px]">
+              Scaling the teaching of sports
+            </h1>
+            <p className="text-white font-bold text-[16px] lg:font-semibold lg:text-[18px] capitalize">
+              Consumer applications that can teach hundreds of millions of people
+            </p>
+          </div>
 
-        {/* Desktop feature icons */}
-        <div className="hidden lg:flex items-start gap-6">
-          <FeatureIcon
-            icon={<img src="/images/icon-wearable.svg" alt="" className="w-8 h-8" loading="lazy" decoding="async" />}
-            label="No wearables"
-            dark
-          />
-          <FeatureIcon
-            icon={<img src="/images/icon-camera.svg" alt="" className="w-8 h-8" loading="lazy" decoding="async" />}
-            label={<>Just your camera<br />and real swings.</>}
-            dark
-          />
-          <FeatureIcon
-            icon={<img src="/images/icon-sensor.svg" alt="" className="w-8 h-8" loading="lazy" decoding="async" />}
-            label="No sensors"
-            dark
-          />
-        </div>
+          {/* Desktop feature icons */}
+          <div className="hidden lg:flex items-start gap-6">
+            <FeatureIcon
+              icon={<img src="/images/icon-wearable.svg" alt="" className="w-8 h-8" loading="lazy" decoding="async" />}
+              label="No wearables"
+              dark
+            />
+            <FeatureIcon
+              icon={<img src="/images/icon-camera.svg" alt="" className="w-8 h-8" loading="lazy" decoding="async" />}
+              label={<>Just your camera<br />and real swings.</>}
+              dark
+            />
+            <FeatureIcon
+              icon={<img src="/images/icon-sensor.svg" alt="" className="w-8 h-8" loading="lazy" decoding="async" />}
+              label="No sensors"
+              dark
+            />
+          </div>
+        </motion.div>
       </motion.div>
     </section>
   );
@@ -408,51 +415,50 @@ function ComparisonSection() {
     </div>
   );
 
-  const columnHeaders = [
-    { logo: true,  subtitle: "Data-based, always-on coaching that adapts to you." },
-    { title: "Human Coaches",       subtitle: "Strong influence, but depends on the person and schedule." },
-    { title: "Expensive simulators", subtitle: "Cool metrics, but no clear fixes." },
-    { title: "Video Content",        subtitle: "Cheap, but without personalization." },
+  const benchmarkRows = [
+    "Video Recording",
+    "Analyzes",
+    "Suggests specific fixes",
+    "Updates the plan with each session",
+    "Detects movement patterns over time",
+    "Tracks progress session by session",
+    "Always available, no scheduling",
   ];
 
-  const tableRows = [
-    [
-      { check: "green", text: "Video Recording" },
-      { check: "dark",  text: "The assessment is often subjective." },
-      { check: "dark",  text: "They show the result but do not explain the reason." },
-      { check: "dark",  text: "One content for all" },
-    ],
-    [
-      { check: "green", text: "Analyzes" },
-      { check: "dark",  text: "Progress may be uneven" },
-      { check: "dark",  text: "Do not lead to steady improvement step by step." },
-      { check: "dark",  text: "Without feedback on your movement." },
-    ],
-    [
-      { check: "green", text: "Suggests specific fixes" },
-      { check: "dark",  text: "The frequency of classes is limited by time, place." },
-      { check: "dark",  text: "High price" },
-      { check: "dark",  text: "You spend a lot of time" },
-    ],
-    [
-      { check: "green", text: "Updates the plan with each session." },
-      { check: "dark",  text: "Limited budget" },
-      { check: "dark",  text: "Location binding" },
-      { check: "dark",  text: "Little progress" },
-    ],
-    [
-      { check: "green", text: "Detects movement patterns over time" },
-      { check: false, text: "—" }, { check: false, text: "—" }, { check: false, text: "—" },
-    ],
-    [
-      { check: "green", text: "Tracks progress session by session" },
-      { check: false, text: "—" }, { check: false, text: "—" }, { check: false, text: "—" },
-    ],
-    [
-      { check: "green", text: "Always available, no scheduling" },
-      { check: false, text: "—" }, { check: false, text: "—" }, { check: false, text: "—" },
-    ],
+  const competitors = [
+    {
+      title: "Human Coaches",
+      subtitle: "Strong influence, but depends on the person and schedule.",
+      rows: [
+        "The assessment is often subjective",
+        "Progress may be uneven",
+        "The frequency of classes is limited by time, place",
+        "Limited budget",
+      ],
+    },
+    {
+      title: "Expensive simulators",
+      subtitle: "Cool metrics, but no clear fixes.",
+      rows: [
+        "They show the result but do not explain the reason",
+        "Do not lead to steady improvement step by step",
+        "High price",
+        "Location binding",
+      ],
+    },
+    {
+      title: "Video Content",
+      subtitle: "Cheap, but without personalization.",
+      rows: [
+        "One content for all",
+        "Without feedback on your movement",
+        "You spend a lot of time",
+        "Little progress",
+      ],
+    },
   ];
+
+  const totalRows = benchmarkRows.length; // 7
 
   return (
     <section className="bg-[#171a1c] py-12 lg:py-20 px-4 lg:px-6 border-t border-white/[0.08]">
@@ -469,55 +475,88 @@ function ComparisonSection() {
         <FadeIn delay={0.15}>
           {/* Scrollable on mobile */}
           <div className="overflow-x-auto -mx-3 px-3 lg:mx-0 lg:px-0">
-            {/* CSS grid: 4 equal columns — each row auto-sizes to its tallest cell */}
-            <div
-              className="grid min-w-[1200px] lg:min-w-0"
-              style={{ gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}
-            >
-              {/* ── Column Headers ── */}
-              {columnHeaders.map((col, i) => (
-                <div
-                  key={i}
-                  className={`flex flex-col gap-[12px] items-center px-[16px] pt-[24px] pb-[16px] ${i === 0 ? "bg-[#1f2225] rounded-t-[4px]" : ""}`}
-                >
+            {/* 4 independent flex columns side-by-side, gap-[4px] between them */}
+            <div className="flex gap-[4px] min-w-[700px] lg:min-w-0">
+
+              {/* ── Benchmark column ── */}
+              <div className="flex-1 bg-[#1f2225] rounded-[4px] flex flex-col">
+                {/* Header */}
+                <div className="flex flex-col gap-[12px] items-center px-[16px] pt-[24px] pb-[16px]">
                   <div className="h-[48px] flex items-center justify-center w-full">
-                    {col.logo ? (
-                      <img
-                        src="/images/logo.svg"
-                        alt="benchmark SPORTS"
-                        className="brightness-0 invert"
-                        style={{ height: "32px", width: "auto" }}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    ) : (
-                      <p className="font-bold text-white text-[24px] leading-[28px] text-center">{col.title}</p>
-                    )}
+                    <img
+                      src="/images/logo.svg"
+                      alt="benchmark SPORTS"
+                      className="brightness-0 invert"
+                      style={{ height: "32px", width: "auto" }}
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
-                  <p className="font-normal text-[#717171] text-[16px] leading-[24px] text-center">{col.subtitle}</p>
+                  <p className="font-normal text-[#717171] text-[13px] lg:text-[16px] leading-[18px] lg:leading-[24px] text-center">
+                    Data-based, always-on coaching that adapts to you.
+                  </p>
+                </div>
+                {/* Rows */}
+                <div className="flex flex-col px-[4px] pb-[4px]">
+                  {benchmarkRows.map((row, i) => (
+                    <div
+                      key={i}
+                      className={`flex gap-[10px] lg:gap-[12px] items-center px-[10px] lg:px-[12px] h-[64px] ${
+                        i < benchmarkRows.length - 1 ? "border-b border-[#2d2f31]" : ""
+                      }`}
+                    >
+                      <CheckGreen />
+                      <p className="flex-1 font-semibold text-[12px] lg:text-[14px] text-white leading-[16px] lg:leading-[20px]">
+                        {row}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* ── Competitor columns ── */}
+              {competitors.map((col) => (
+                <div key={col.title} className="flex-1 flex flex-col">
+                  {/* Header */}
+                  <div className="flex flex-col gap-[12px] items-center px-[16px] pt-[24px] pb-[16px]">
+                    <div className="h-[48px] flex items-center justify-center w-full">
+                      <p className="font-bold text-white text-[14px] lg:text-[20px] leading-[18px] lg:leading-[26px] text-center">
+                        {col.title}
+                      </p>
+                    </div>
+                    <p className="font-normal text-[#717171] text-[13px] lg:text-[16px] leading-[18px] lg:leading-[24px] text-center">
+                      {col.subtitle}
+                    </p>
+                  </div>
+                  {/* Active rows */}
+                  <div className="flex flex-col">
+                    {col.rows.map((row, i) => (
+                      <div
+                        key={i}
+                        className={`flex gap-[10px] lg:gap-[12px] items-center px-[10px] lg:px-[12px] h-[64px] ${
+                          i < totalRows - 1 ? "border-b border-[#2d2f31]" : ""
+                        }`}
+                      >
+                        <CheckDark />
+                        <p className="flex-1 font-semibold text-[12px] lg:text-[14px] text-white leading-[16px] lg:leading-[20px]">
+                          {row}
+                        </p>
+                      </div>
+                    ))}
+                    {/* Dash rows for remaining slots */}
+                    {Array.from({ length: totalRows - col.rows.length }).map((_, di) => (
+                      <div
+                        key={`dash-${di}`}
+                        className={`flex items-center justify-center px-[10px] lg:px-[12px] h-[64px] ${
+                          col.rows.length + di < totalRows - 1 ? "border-b border-[#2d2f31]" : ""
+                        }`}
+                      >
+                        <p className="font-semibold text-[16px] text-[#818181] leading-[20px]">—</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
-
-              {/* ── Data Rows ── */}
-              {tableRows.map((row, rowIdx) =>
-                row.map((cell, colIdx) => (
-                  <div
-                    key={`${rowIdx}-${colIdx}`}
-                    className={`flex gap-[16px] items-center px-[12px] py-[16px] w-full
-                      ${colIdx === 0 ? "bg-[#1f2225]" : ""}
-                      ${rowIdx < tableRows.length - 1 ? "border-b border-[#2d2f31]" : colIdx === 0 ? "rounded-b-[4px]" : ""}`}
-                  >
-                    {cell.check ? (
-                      <>
-                        {cell.check === "green" ? <CheckGreen /> : <CheckDark />}
-                        <p className="flex-1 font-semibold text-[16px] text-white leading-[22px]">{cell.text}</p>
-                      </>
-                    ) : (
-                      <p className="flex-1 font-semibold text-[16px] text-white leading-[20px] text-center">{cell.text}</p>
-                    )}
-                  </div>
-                ))
-              )}
             </div>
           </div>
         </FadeIn>
