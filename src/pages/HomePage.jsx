@@ -321,7 +321,7 @@ function SportCard({ img, badge, sport, desc, to }) {
       <img
         src={img}
         alt={sport}
-        className={`absolute inset-0 w-full h-full object-cover transition-[filter] duration-300${isComingSoon ? " group-hover:[filter:grayscale(0.5)]" : ""}`}
+        className={`absolute inset-0 w-full h-full object-cover transition-[filter] duration-300${isComingSoon ? " group-hover:[filter:grayscale(0.75)]" : ""}`}
         loading="lazy"
         decoding="async"
       />
@@ -353,7 +353,7 @@ function SportCardMobile({ img, badge, sport, desc, to }) {
       <img
         src={img}
         alt={sport}
-        className={`absolute inset-0 w-full h-full object-cover transition-[filter] duration-300${isComingSoon ? " group-hover:[filter:grayscale(0.5)]" : ""}`}
+        className={`absolute inset-0 w-full h-full object-cover transition-[filter] duration-300${isComingSoon ? " group-hover:[filter:grayscale(0.75)]" : ""}`}
         loading="lazy"
         decoding="async"
       />
