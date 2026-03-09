@@ -3,21 +3,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { Link } from "react-router-dom";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
-
-// ─── Scroll-reveal fade-in wrapper (doubleplay.studio style) ──────────────────
-function FadeIn({ children, delay = 0, y = 32, className = "" }) {
-  return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.65, ease: [0.25, 0.1, 0.25, 1], delay }}
-    >
-      {children}
-    </motion.div>
-  );
-}
+import { FadeIn } from "../components/FadeIn";
 
 // ─── Habito-style double-arrow button label ───────────────────────────────────
 // Two arrows inside an overflow:hidden wrapper — on group-hover, they slide so

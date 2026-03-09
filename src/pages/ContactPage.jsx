@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
+import { FadeIn } from "../components/FadeIn";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -34,17 +35,18 @@ export default function ContactPage() {
       {/* Main content */}
       <div className="flex flex-col items-center px-4 lg:px-6 pt-[40px] lg:pt-[60px] pb-24">
         {/* Title */}
-        <div className="text-center mb-10 lg:mb-16 w-full max-w-[1135px]">
+        <FadeIn className="text-center mb-10 lg:mb-16 w-full max-w-[1135px]">
           <h1 className="text-white font-bold text-[32px] lg:text-[48px] leading-[40px] lg:leading-[62px] capitalize mb-4">
             Let's Talk
           </h1>
           <p className="text-white text-base leading-6 font-normal">
             Questions about Benchmark Sports, partnerships, or media? We'll get back to you shortly.
           </p>
-        </div>
+        </FadeIn>
 
         {/* Form */}
-        <div className="w-full max-w-[600px] flex flex-col gap-6">
+        <FadeIn delay={0.1} className="w-full max-w-[600px]">
+        <div className="w-full flex flex-col gap-6">
           {/* Name */}
           <div className="flex flex-col gap-2">
             <label className="text-white text-base leading-6">
@@ -127,6 +129,7 @@ export default function ContactPage() {
             </button>
           </div>
         </div>
+        </FadeIn>
       </div>
 
     </div>

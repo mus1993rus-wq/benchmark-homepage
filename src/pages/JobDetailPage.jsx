@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
+import { FadeIn } from "../components/FadeIn";
 
 function toSlug(title) {
   return title
@@ -281,7 +282,7 @@ export default function JobDetailPage() {
       {/* Page content */}
       <div className="flex flex-col items-center px-4 lg:px-6 pt-[40px] lg:pt-[60px] pb-24">
         {/* Job header */}
-        <div className="flex flex-col gap-4 items-center w-full max-w-[1135px] mb-10">
+        <FadeIn className="flex flex-col gap-4 items-center w-full max-w-[1135px] mb-10">
           {/* Back link */}
           <Link
             to="/careers"
@@ -314,10 +315,10 @@ export default function JobDetailPage() {
             {job.location}&nbsp;&nbsp;{job.type}&nbsp;&nbsp;Posted{" "}
             {job.postedDate}
           </p>
-        </div>
+        </FadeIn>
 
         {/* Tab switcher */}
-        <div className="bg-black flex gap-1 items-center justify-center p-1 rounded-[4px] w-full max-w-[380px] h-[48px] mb-10">
+        <FadeIn delay={0.1} className="bg-black flex gap-1 items-center justify-center p-1 rounded-[4px] w-full max-w-[380px] h-[48px] mb-10">
           <button
             onClick={() => setActiveTab("overview")}
             className={`flex-1 h-full flex items-center justify-center px-6 py-2 rounded-[4px] text-[16px] leading-[24px] transition-colors ${
@@ -338,16 +339,16 @@ export default function JobDetailPage() {
           >
             Application
           </button>
-        </div>
+        </FadeIn>
 
         {/* Tab content */}
-        <div className="w-full max-w-[800px]">
+        <FadeIn delay={0.15} className="w-full max-w-[800px]">
           {activeTab === "overview" ? (
             <OverviewTab job={job} />
           ) : (
             <ApplicationTab />
           )}
-        </div>
+        </FadeIn>
       </div>
 
     </div>

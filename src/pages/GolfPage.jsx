@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
+import { FadeIn } from "../components/FadeIn";
 
 function CheckItem({ title, desc }) {
   return (
@@ -35,8 +36,7 @@ function CollectionCard({ image, title, desc }) {
       <div
         className="absolute bottom-0 left-0 right-0 px-[24px] py-[32px] rounded-[8px] flex flex-col gap-[16px]"
         style={{
-          background:
-            "linear-gradient(to bottom, rgba(35,35,35,0) 0%, rgba(35,35,35,0.6) 100%)",
+          background: "linear-gradient(to bottom, rgba(35,35,35,0) 0%, rgba(35,35,35,0.6) 100%)",
           backdropFilter: "blur(30px)",
           WebkitBackdropFilter: "blur(30px)",
         }}
@@ -82,48 +82,13 @@ const stats = [
 
 // Phone screen data with locally hosted video files (downloaded from Instagram)
 const phoneScreens = [
-  {
-    src: "/images/golf-screen-1.webp",
-    isEdge: true,
-    videoUrl: "/videos/golf-screen-00001.mp4",
-    title: "Swing Analysis",
-  },
-  {
-    src: "/images/golf-screen-2.webp",
-    isEdge: false,
-    videoUrl: "/videos/golf-screen-00002.mp4",
-    title: "Impact Feedback",
-  },
-  {
-    src: "/images/golf-screen-3.webp",
-    isEdge: false,
-    videoUrl: "/videos/golf-screen-00003.mp4",
-    title: "Session Overview",
-  },
-  {
-    src: "/images/golf-screen-4.webp",
-    isEdge: false,
-    videoUrl: "/videos/golf-screen-00004.mp4",
-    title: "Coaching Plan",
-  },
-  {
-    src: "/images/golf-screen-5.webp",
-    isEdge: false,
-    videoUrl: "/videos/golf-screen-00005.mp4",
-    title: "Progress Tracking",
-  },
-  {
-    src: "/images/golf-screen-6.webp",
-    isEdge: false,
-    videoUrl: "/videos/golf-screen-00006.mp4",
-    title: "Simulation Mode",
-  },
-  {
-    src: "/images/golf-screen-7.webp",
-    isEdge: true,
-    videoUrl: "/videos/golf-screen-00007.mp4",
-    title: "Divot Analysis",
-  },
+  { src: "/images/golf-screen-1.webp", isEdge: true,  videoUrl: "/videos/golf-screen-00001.mp4", title: "Swing Analysis" },
+  { src: "/images/golf-screen-2.webp", isEdge: false, videoUrl: "/videos/golf-screen-00002.mp4", title: "Impact Feedback" },
+  { src: "/images/golf-screen-3.webp", isEdge: false, videoUrl: "/videos/golf-screen-00003.mp4", title: "Session Overview" },
+  { src: "/images/golf-screen-4.webp", isEdge: false, videoUrl: "/videos/golf-screen-00004.mp4", title: "Coaching Plan" },
+  { src: "/images/golf-screen-5.webp", isEdge: false, videoUrl: "/videos/golf-screen-00005.mp4", title: "Progress Tracking" },
+  { src: "/images/golf-screen-6.webp", isEdge: false, videoUrl: "/videos/golf-screen-00006.mp4", title: "Simulation Mode" },
+  { src: "/images/golf-screen-7.webp", isEdge: true,  videoUrl: "/videos/golf-screen-00007.mp4", title: "Divot Analysis" },
 ];
 
 // ─── Fullscreen Video Modal ──────────────────────────────────────────────────
@@ -209,7 +174,6 @@ function VideoModal({ screens, initialIndex, onClose }) {
                 loading="lazy"
                 decoding="async"
               />
-              {/* Play overlay for when no video URL is set */}
               <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                 <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
@@ -220,10 +184,7 @@ function VideoModal({ screens, initialIndex, onClose }) {
             </>
           )}
         </div>
-        {/* Title */}
         <p className="text-white font-bold text-lg text-center">{current.title}</p>
-
-        {/* Dot indicators */}
         <div className="flex gap-2 items-center">
           {screens.map((_, i) => (
             <button
@@ -254,10 +215,7 @@ function VideoModal({ screens, initialIndex, onClose }) {
       </button>
 
       {/* Background click to close */}
-      <div
-        className="absolute inset-0 -z-10"
-        onClick={onClose}
-      />
+      <div className="absolute inset-0 -z-10" onClick={onClose} />
     </div>,
     document.body
   );
@@ -280,18 +238,11 @@ function PhoneScreen({ src, isEdge = false, onClick }) {
           decoding="async"
         />
       )}
-      {/* Hover overlay */}
       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
         <div className="w-14 h-14 rounded-full bg-white/0 group-hover:bg-white/20 backdrop-blur-sm transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100">
-          {isEdge ? (
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          ) : (
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          )}
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+            <path d="M8 5v14l11-7z" />
+          </svg>
         </div>
       </div>
     </div>
@@ -319,67 +270,63 @@ export default function GolfPage() {
 
         {/* Hero */}
         <div className="relative overflow-hidden" style={{ flex: 1 }}>
-        <img
-          src="/images/golf-hero-bg.webp"
-          alt="Benchmark Golf"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5))",
-          }}
-        />
-        <Header />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-4 lg:px-6">
-          <div className="max-w-[860px] flex flex-col gap-4 items-center">
-            <h1 className="text-white font-extrabold text-[36px] leading-[44px] lg:text-[64px] lg:leading-[80px] uppercase">
-              Golf Daddy By Benchmark Golf
-            </h1>
-            <p className="text-white text-[16px] leading-[24px] font-normal">
-              AI-powered simulation &amp; swing feedback. No sensors. No guesswork.
-            </p>
-            <div className="mt-4">
-              <a
-                href="https://golfdaddy.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white text-black font-bold px-8 lg:px-10 py-4 lg:py-5 rounded text-base hover:bg-gray-100 transition-colors inline-block"
-              >
-                Visit Golf Daddy
-              </a>
+          <img
+            src="/images/golf-hero-bg.webp"
+            alt="Benchmark Golf"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5))" }}
+          />
+          <Header />
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-4 lg:px-6">
+            <div className="max-w-[860px] flex flex-col gap-4 items-center">
+              <h1 className="text-white font-extrabold text-[36px] leading-[44px] lg:text-[64px] lg:leading-[80px] uppercase">
+                Golf Daddy By Benchmark Golf
+              </h1>
+              <p className="text-white text-[16px] leading-[24px] font-normal">
+                AI-powered simulation &amp; swing feedback. No sensors. No guesswork.
+              </p>
+              <div className="mt-4">
+                <a
+                  href="https://golfdaddy.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white text-black font-bold px-8 lg:px-10 py-4 lg:py-5 rounded text-base hover:bg-gray-100 transition-colors inline-block"
+                >
+                  Visit Golf Daddy
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
 
       {/* Dark section */}
       <div className="bg-[#171a1c]">
 
-        {/* Feature Tags with Icons */}
+        {/* Feature Tags */}
         <section className="py-12 lg:py-16 px-4 lg:px-6">
           <div className="max-w-[1200px] mx-auto grid grid-cols-2 lg:flex gap-6 lg:items-start lg:justify-between">
-            {featureTags.map((tag) => (
-              <div
-                key={tag.label}
-                className="flex flex-col gap-4 items-center text-center"
-              >
-                <div
-                  className="flex items-center justify-center p-4 rounded-[45px]"
-                  style={{
-                    background: "rgba(255,255,255,0.08)",
-                    backdropFilter: "blur(32px)",
-                    border: "1px solid rgba(255,255,255,0.24)",
-                  }}
-                >
-                  <img src={tag.icon} alt="" className="w-8 h-8" loading="lazy" decoding="async" />
+            {featureTags.map((tag, i) => (
+              <FadeIn key={tag.label} delay={i * 0.08}>
+                <div className="flex flex-col gap-4 items-center text-center">
+                  <div
+                    className="flex items-center justify-center p-4 rounded-[45px]"
+                    style={{
+                      background: "rgba(255,255,255,0.08)",
+                      backdropFilter: "blur(32px)",
+                      border: "1px solid rgba(255,255,255,0.24)",
+                    }}
+                  >
+                    <img src={tag.icon} alt="" className="w-8 h-8" loading="lazy" decoding="async" />
+                  </div>
+                  <p className="font-semibold text-[15px] lg:text-[18px] text-white leading-[22px] lg:leading-[26px]">
+                    {tag.label}
+                  </p>
                 </div>
-                <p className="font-semibold text-[15px] lg:text-[18px] text-white leading-[22px] lg:leading-[26px]">
-                  {tag.label}
-                </p>
-              </div>
+              </FadeIn>
             ))}
           </div>
         </section>
@@ -392,131 +339,117 @@ export default function GolfPage() {
         {/* System Section */}
         <section className="py-12 lg:py-20 px-4 lg:px-6">
           <div className="max-w-[1200px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
-            {/* Image */}
-            <div className="w-full lg:flex-1 h-[280px] lg:h-[538px] rounded-[8px] overflow-hidden">
-              <img
-                src="/images/golf-coaching.webp"
-                alt="Benchmark Golf Analysis"
-                className="w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            {/* Content */}
-            <div className="w-full lg:w-[570px] lg:flex-shrink-0 flex flex-col gap-6">
-              <div className="flex flex-col gap-6">
-                <h2 className="font-bold text-[32px] lg:text-[48px] text-white leading-[40px] lg:leading-[62px] capitalize">
-                  Benchmark Golf System
-                </h2>
-                <p className="font-bold text-[18px] text-white leading-[20px]">
-                  Hardware + App. Built to train anywhere.
-                </p>
-                <p className="font-normal text-[16px] text-white/80 leading-[24px]">
-                  Benchmark Golf combines a smart training mat and AI-powered app
-                  into one seamless system. Record real swings, simulate rounds,
-                  analyze impact, and track progress — all with just your phone.
-                </p>
-              </div>
-              <div className="flex flex-col gap-6">
-                <CheckItem
-                  title="Swing Recording"
-                  desc="Capture unlimited real swings indoors or outdoors."
-                />
-                <CheckItem
-                  title="Simulation"
-                  desc="Play realistic scenarios and test decision-making under pressure."
-                />
-                <CheckItem
-                  title="Divot Analysis"
-                  desc="Understand ground interaction and strike quality across sessions."
-                />
-                <CheckItem
-                  title="Coaching (Premium)"
-                  desc="Adaptive improvement plan built from your movement patterns."
+            <FadeIn className="w-full lg:flex-1">
+              <div className="h-[280px] lg:h-[538px] rounded-[8px] overflow-hidden">
+                <img
+                  src="/images/golf-coaching.webp"
+                  alt="Benchmark Golf Analysis"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
-            </div>
+            </FadeIn>
+            <FadeIn delay={0.15} className="w-full lg:w-[570px] lg:flex-shrink-0">
+              <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-6">
+                  <h2 className="font-bold text-[32px] lg:text-[48px] text-white leading-[40px] lg:leading-[62px] capitalize">
+                    Benchmark Golf System
+                  </h2>
+                  <p className="font-bold text-[18px] text-white leading-[20px]">
+                    Hardware + App. Built to train anywhere.
+                  </p>
+                  <p className="font-normal text-[16px] text-white/80 leading-[24px]">
+                    Benchmark Golf combines a smart training mat and AI-powered app
+                    into one seamless system. Record real swings, simulate rounds,
+                    analyze impact, and track progress — all with just your phone.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-6">
+                  <CheckItem title="Swing Recording" desc="Capture unlimited real swings indoors or outdoors." />
+                  <CheckItem title="Simulation" desc="Play realistic scenarios and test decision-making under pressure." />
+                  <CheckItem title="Divot Analysis" desc="Understand ground interaction and strike quality across sessions." />
+                  <CheckItem title="Coaching (Premium)" desc="Adaptive improvement plan built from your movement patterns." />
+                </div>
+              </div>
+            </FadeIn>
           </div>
         </section>
 
         {/* Adaptive Coaching */}
         <section className="px-4 lg:px-6 pb-12 lg:pb-20">
           <div className="max-w-[1200px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
-            {/* Text */}
-            <div className="w-full lg:flex-1 flex flex-col gap-8 lg:gap-10">
-              <div className="flex flex-col gap-6 text-white">
-                <h2 className="font-bold text-[32px] lg:text-[48px] text-white leading-[40px] lg:leading-[62px] capitalize">
-                  Adaptive Coaching. Built From Real Swings.
-                </h2>
-                <p className="font-semibold text-[16px] text-white leading-[22px]">
-                  Record your swing with just your phone. Benchmark analyzes
-                  full-body movement and builds a step-by-step improvement plan
-                  based on your actual patterns — not generic drills.
-                </p>
+            <FadeIn className="w-full lg:flex-1">
+              <div className="flex flex-col gap-8 lg:gap-10">
+                <div className="flex flex-col gap-6 text-white">
+                  <h2 className="font-bold text-[32px] lg:text-[48px] text-white leading-[40px] lg:leading-[62px] capitalize">
+                    Adaptive Coaching. Built From Real Swings.
+                  </h2>
+                  <p className="font-semibold text-[16px] text-white leading-[22px]">
+                    Record your swing with just your phone. Benchmark analyzes
+                    full-body movement and builds a step-by-step improvement plan
+                    based on your actual patterns — not generic drills.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-6">
+                  <CheckItem title="Unlimited swing recording" desc="Record every swing - on the range, at home, or indoors. No limits." />
+                  <CheckItem title="Pattern detection across sessions" desc="We don't analyze one swing at a time. We identify patterns across your last sessions." />
+                  <CheckItem title="Adaptive coaching plan" desc="Your plan updates as you improve - or regress. No static plans. Your coaching adapts as you do." />
+                </div>
               </div>
-              <div className="flex flex-col gap-6">
-                <CheckItem
-                  title="Unlimited swing recording"
-                  desc="Record every swing - on the range, at home, or indoors. No limits."
-                />
-                <CheckItem
-                  title="Pattern detection across sessions"
-                  desc="We don't analyze one swing at a time. We identify patterns across your last sessions."
-                />
-                <CheckItem
-                  title="Adaptive coaching plan"
-                  desc="Your plan updates as you improve - or regress. No static plans. Your coaching adapts as you do."
-                />
-              </div>
-            </div>
-            {/* Image */}
-            <div className="w-full lg:flex-1 h-[280px] lg:h-[538px] rounded-[8px] overflow-hidden relative">
-              <img
-                src="/images/golf-system.webp"
-                alt="Adaptive Coaching"
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: "rgba(0,0,0,0.2)",
-                  backdropFilter: "blur(12px)",
-                }}
-              />
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            </FadeIn>
+            <FadeIn delay={0.15} className="w-full lg:flex-1">
+              <div className="h-[280px] lg:h-[538px] rounded-[8px] overflow-hidden relative">
                 <img
-                  src="/images/golf-coaching-overlay.webp"
-                  alt=""
-                  className="absolute max-w-none"
-                  style={{ height: "114.98%", left: "-41.56%", top: "-13.01%", width: "193.56%" }}
+                  src="/images/golf-system.webp"
+                  alt="Adaptive Coaching"
+                  className="absolute inset-0 w-full h-full object-cover"
                   loading="lazy"
                   decoding="async"
                 />
+                <div
+                  className="absolute inset-0"
+                  style={{ background: "rgba(0,0,0,0.2)", backdropFilter: "blur(12px)" }}
+                />
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                  <img
+                    src="/images/golf-coaching-overlay.webp"
+                    alt=""
+                    className="absolute max-w-none"
+                    style={{ height: "114.98%", left: "-41.56%", top: "-13.01%", width: "193.56%" }}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
               </div>
-            </div>
+            </FadeIn>
           </div>
         </section>
 
         {/* Built For Every Golfer */}
         <section className="px-4 lg:px-6 pb-12 lg:pb-20">
           <div className="max-w-[1200px] mx-auto flex flex-col gap-8 lg:gap-12">
-            <h2 className="font-bold text-[32px] lg:text-[52px] text-white text-center leading-[40px] lg:leading-[62px]">
-              Built For Every Golfer
-            </h2>
+            <FadeIn>
+              <h2 className="font-bold text-[32px] lg:text-[52px] text-white text-center leading-[40px] lg:leading-[62px]">
+                Built For Every Golfer
+              </h2>
+            </FadeIn>
             {/* Mobile: stacked */}
             <div className="flex flex-col gap-6 lg:hidden">
-              {golfCards.map((card) => (
-                <div key={card.title} className="relative rounded-[8px] overflow-hidden h-[400px]">
-                  <CollectionCard image={card.image} title={card.title} desc={card.desc} />
-                </div>
+              {golfCards.map((card, i) => (
+                <FadeIn key={card.title} delay={i * 0.08}>
+                  <div className="relative rounded-[8px] overflow-hidden h-[400px]">
+                    <CollectionCard image={card.image} title={card.title} desc={card.desc} />
+                  </div>
+                </FadeIn>
               ))}
             </div>
             {/* Desktop: row */}
             <div className="hidden lg:flex gap-6 h-[480px]">
-              {golfCards.map((card) => (
-                <CollectionCard key={card.title} image={card.image} title={card.title} desc={card.desc} />
+              {golfCards.map((card, i) => (
+                <FadeIn key={card.title} delay={i * 0.1} className="flex-1 h-full">
+                  <CollectionCard image={card.image} title={card.title} desc={card.desc} />
+                </FadeIn>
               ))}
             </div>
           </div>
@@ -526,13 +459,15 @@ export default function GolfPage() {
       {/* White section — Become the best player + Stats */}
       <section className="bg-white py-12 lg:py-20">
         <div className="max-w-[1280px] mx-auto px-4 lg:px-6 flex flex-col items-center gap-8 lg:gap-12">
-          <h2 className="font-bold text-[28px] lg:text-[48px] text-black text-center leading-[36px] lg:leading-[62px] max-w-[832px]">
-            Become the best player in your sport without leaving home
-          </h2>
+          <FadeIn>
+            <h2 className="font-bold text-[28px] lg:text-[48px] text-black text-center leading-[36px] lg:leading-[62px] max-w-[832px]">
+              Become the best player in your sport without leaving home
+            </h2>
+          </FadeIn>
         </div>
 
         {/* Phone screens gallery — clickable, opens video modal */}
-        <div className="overflow-x-auto mt-8 lg:mt-12">
+        <FadeIn delay={0.1} className="overflow-x-auto mt-8 lg:mt-12">
           <div className="flex gap-4 lg:gap-6 justify-start lg:justify-center px-4 lg:px-0" style={{ minWidth: "max-content" }}>
             {phoneScreens.map((screen, i) => (
               <PhoneScreen
@@ -543,30 +478,29 @@ export default function GolfPage() {
               />
             ))}
           </div>
-        </div>
+        </FadeIn>
 
         {/* Stats */}
         <div className="max-w-[1200px] mx-auto px-4 lg:px-6 mt-8 lg:mt-12">
           <div className="grid grid-cols-2 lg:flex gap-8 lg:gap-10 lg:items-center lg:justify-between">
-            {stats.map((s) => (
-              <div
-                key={s.label}
-                className="flex flex-col gap-3 items-center text-center lg:w-[260px]"
-              >
-                <div className="flex gap-3 items-center justify-center">
-                  {s.isStar && (
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffc32c">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                    </svg>
-                  )}
-                  <p className="font-bold text-[24px] lg:text-[32px] text-black leading-[32px] lg:leading-[40px]">
-                    {s.value}
+            {stats.map((s, i) => (
+              <FadeIn key={s.label} delay={i * 0.08}>
+                <div className="flex flex-col gap-3 items-center text-center lg:w-[260px]">
+                  <div className="flex gap-3 items-center justify-center">
+                    {s.isStar && (
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffc32c">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                      </svg>
+                    )}
+                    <p className="font-bold text-[24px] lg:text-[32px] text-black leading-[32px] lg:leading-[40px]">
+                      {s.value}
+                    </p>
+                  </div>
+                  <p className="font-semibold text-[14px] lg:text-[18px] text-black leading-[20px] lg:leading-[26px]">
+                    {s.label}
                   </p>
                 </div>
-                <p className="font-semibold text-[14px] lg:text-[18px] text-black leading-[20px] lg:leading-[26px]">
-                  {s.label}
-                </p>
-              </div>
+              </FadeIn>
             ))}
           </div>
         </div>

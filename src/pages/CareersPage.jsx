@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
+import { FadeIn } from "../components/FadeIn";
 
 function toSlug(title) {
   return title
@@ -92,40 +93,44 @@ export default function CareersPage() {
       {/* Main content */}
       <div className="flex flex-col items-center px-4 lg:px-6 pt-[40px] lg:pt-[60px] pb-24">
         {/* Title */}
-        <div className="text-center mb-10 lg:mb-16 w-full max-w-[1135px]">
+        <FadeIn className="text-center mb-10 lg:mb-16 w-full max-w-[1135px]">
           <h1 className="text-white font-bold text-[32px] lg:text-[48px] leading-[40px] lg:leading-[62px] capitalize mb-4">
             Careers
           </h1>
           <p className="text-white text-base leading-6 font-normal">
             Join us in building next-generation athlete technology
           </p>
-        </div>
+        </FadeIn>
 
         {/* Job listings */}
         <div className="w-full max-w-[640px] flex flex-col gap-6">
           {/* Content section */}
-          <div>
-            <p className="font-bold text-base text-[#818181] leading-6 mb-2">
-              CONTENT
-            </p>
-            <div className="flex flex-col gap-3">
-              {contentJobs.map((job) => (
-                <JobCard key={job.title} {...job} />
-              ))}
+          <FadeIn delay={0.1}>
+            <div>
+              <p className="font-bold text-base text-[#818181] leading-6 mb-2">
+                CONTENT
+              </p>
+              <div className="flex flex-col gap-3">
+                {contentJobs.map((job) => (
+                  <JobCard key={job.title} {...job} />
+                ))}
+              </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* Engineering section */}
-          <div>
-            <p className="font-bold text-base text-[#818181] leading-6 mb-2">
-              ENGINEERING
-            </p>
-            <div className="flex flex-col gap-3">
-              {engineeringJobs.map((job) => (
-                <JobCard key={job.title} {...job} />
-              ))}
+          <FadeIn delay={0.2}>
+            <div>
+              <p className="font-bold text-base text-[#818181] leading-6 mb-2">
+                ENGINEERING
+              </p>
+              <div className="flex flex-col gap-3">
+                {engineeringJobs.map((job) => (
+                  <JobCard key={job.title} {...job} />
+                ))}
+              </div>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </div>
 
