@@ -100,7 +100,7 @@ function MobileFeatureSection() {
 }
 
 // ─── Stats Section ────────────────────────────────────────────────────────────
-function useCountUp(target, duration = 1800, started = false) {
+function useCountUp(target, duration = 600, started = false) {
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (!started) return;
@@ -123,7 +123,7 @@ function useCountUp(target, duration = 1800, started = false) {
 }
 
 function StatItem({ target, suffix, label, started }) {
-  const count = useCountUp(target, 1800, started);
+  const count = useCountUp(target, 600, started);
   return (
     <div className="flex-1 text-center w-full">
       <p className="font-bold text-[#0f1010] text-[32px] leading-[40px] lg:text-[48px] lg:leading-[62px] capitalize mb-3">
@@ -256,7 +256,7 @@ function SportCard({ img, badge, sport, desc, to }) {
       <img
         src={img}
         alt={sport}
-        className={`absolute inset-0 w-full h-full object-cover transition-[filter] duration-300${isComingSoon ? " group-hover:grayscale" : ""}`}
+        className={`absolute inset-0 w-full h-full object-cover transition-[filter] duration-300${isComingSoon ? " group-hover:[filter:grayscale(0.5)]" : ""}`}
         loading="lazy"
         decoding="async"
       />
@@ -288,7 +288,7 @@ function SportCardMobile({ img, badge, sport, desc, to }) {
       <img
         src={img}
         alt={sport}
-        className={`absolute inset-0 w-full h-full object-cover transition-[filter] duration-300${isComingSoon ? " group-hover:grayscale" : ""}`}
+        className={`absolute inset-0 w-full h-full object-cover transition-[filter] duration-300${isComingSoon ? " group-hover:[filter:grayscale(0.5)]" : ""}`}
         loading="lazy"
         decoding="async"
       />
@@ -452,7 +452,7 @@ function ComparisonSection() {
             {columnHeaders.map((col, i) => (
               <div
                 key={i}
-                className="bg-[#1f2225] rounded-t-[4px] flex flex-col gap-[12px] items-center px-[16px] pt-[24px] pb-[16px]"
+                className={`flex flex-col gap-[12px] items-center px-[16px] pt-[24px] pb-[16px] ${i === 0 ? "bg-[#1f2225] rounded-t-[4px]" : ""}`}
               >
                 <div className="h-[48px] flex items-center justify-center w-full">
                   {col.logo ? (
@@ -465,10 +465,10 @@ function ComparisonSection() {
                       decoding="async"
                     />
                   ) : (
-                    <p className="font-bold text-white text-[16px] leading-[22px] text-center">{col.title}</p>
+                    <p className="font-bold text-white text-[24px] leading-[28px] text-center">{col.title}</p>
                   )}
                 </div>
-                <p className="font-normal text-[#818181] text-[16px] leading-[24px] text-center">{col.subtitle}</p>
+                <p className="font-normal text-[#717171] text-[16px] leading-[24px] text-center">{col.subtitle}</p>
               </div>
             ))}
 
@@ -477,8 +477,9 @@ function ComparisonSection() {
               row.map((cell, colIdx) => (
                 <div
                   key={`${rowIdx}-${colIdx}`}
-                  className={`bg-[#1f2225] flex gap-[16px] items-center px-[12px] py-[16px] w-full
-                    ${rowIdx < tableRows.length - 1 ? "border-b border-[#2d2f31]" : "rounded-b-[4px]"}`}
+                  className={`flex gap-[16px] items-center px-[12px] py-[16px] w-full
+                    ${colIdx === 0 ? "bg-[#1f2225]" : ""}
+                    ${rowIdx < tableRows.length - 1 ? "border-b border-[#2d2f31]" : colIdx === 0 ? "rounded-b-[4px]" : ""}`}
                 >
                   {cell.check ? (
                     <>
