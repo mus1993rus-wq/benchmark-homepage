@@ -85,16 +85,31 @@ function HeroSection() {
       >
         <div className="flex flex-col items-center w-full">
           <div className="w-full lg:w-[840px] flex flex-col gap-4 mb-0 lg:mb-[57px]">
-            <h1 className="text-white font-bold text-[30px] leading-normal uppercase lg:font-extrabold lg:text-[64px] lg:leading-[80px]">
+            <motion.h1
+              className="text-white font-bold text-[30px] leading-normal uppercase lg:font-extrabold lg:text-[64px] lg:leading-[80px]"
+              initial={isDesktop ? { opacity: 0, y: 28 } : false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, ease: [0.25, 0.1, 0.25, 1], delay: 0.15 }}
+            >
               Scaling the teaching of sports
-            </h1>
-            <p className="text-white font-bold text-[16px] lg:font-semibold lg:text-[18px] capitalize">
+            </motion.h1>
+            <motion.p
+              className="text-white font-bold text-[16px] lg:font-semibold lg:text-[18px] capitalize"
+              initial={isDesktop ? { opacity: 0, y: 20 } : false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay: 0.35 }}
+            >
               Consumer applications that can teach hundreds of millions of people
-            </p>
+            </motion.p>
           </div>
 
           {/* Desktop feature icons */}
-          <div className="hidden lg:flex items-start gap-6">
+          <motion.div
+            className="hidden lg:flex items-start gap-6"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, ease: [0.25, 0.1, 0.25, 1], delay: 0.55 }}
+          >
             <FeatureIcon
               icon={<img src="/images/icon-wearable.svg" alt="" className="w-8 h-8" loading="lazy" decoding="async" />}
               label="No wearables"
@@ -110,7 +125,7 @@ function HeroSection() {
               label="No sensors"
               dark
             />
-          </div>
+          </motion.div>
         </div>
       </motion.div>
     </section>
