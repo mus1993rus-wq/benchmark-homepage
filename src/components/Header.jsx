@@ -121,25 +121,27 @@ export function Header() {
         <div
           className="fixed top-0 left-0 right-0 z-50"
           style={{
-            background: sportsOpen ? "#ffffff" : "rgba(10,10,10,0.72)",
-            backdropFilter: sportsOpen ? "none" : "blur(20px)",
-            WebkitBackdropFilter: sportsOpen ? "none" : "blur(20px)",
-            borderBottom: sportsOpen ? "none" : "1px solid rgba(255,255,255,0.08)",
             transform: stickyVisible ? "translateY(0)" : "translateY(-100%)",
-            transition: "transform 0.3s cubic-bezier(0.4,0,0.2,1), background 0.35s cubic-bezier(0.4,0,0.2,1)",
+            transition: "transform 0.3s cubic-bezier(0.4,0,0.2,1)",
           }}
         >
-          {/* Mobile sticky header */}
-          <div className="lg:hidden flex items-center justify-between px-4 h-[78px] relative">
+          {/* Mobile sticky header — always white, matching the regular mobile header */}
+          <div
+            className="lg:hidden flex items-center justify-between px-4 h-[64px] relative"
+            style={{
+              background: "white",
+              borderBottom: "1px solid rgba(0,0,0,0.08)",
+            }}
+          >
             <button
               onClick={() => setMobileMenuOpen(true)}
               className="w-10 h-10 flex items-center justify-center"
               aria-label="Відкрити меню"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <rect x="2" y="5" width="20" height="2" rx="1" fill={sportsOpen ? "black" : "white"} />
-                <rect x="2" y="11" width="20" height="2" rx="1" fill={sportsOpen ? "black" : "white"} />
-                <rect x="2" y="17" width="20" height="2" rx="1" fill={sportsOpen ? "black" : "white"} />
+                <rect x="2" y="5" width="20" height="2" rx="1" fill="black" />
+                <rect x="2" y="11" width="20" height="2" rx="1" fill="black" />
+                <rect x="2" y="17" width="20" height="2" rx="1" fill="black" />
               </svg>
             </button>
             <Link to="/" className="absolute left-1/2 -translate-x-1/2">
@@ -149,8 +151,7 @@ export function Header() {
                 style={{
                   height: "40px",
                   width: "157.5px",
-                  filter: sportsOpen ? "brightness(0)" : "none",
-                  transition: "filter 0.3s",
+                  filter: "brightness(0)",
                 }}
                 loading="lazy"
                 decoding="async"
@@ -159,8 +160,17 @@ export function Header() {
             <div className="w-10" />
           </div>
 
-          {/* Desktop sticky header */}
-          <div className="hidden lg:block">
+          {/* Desktop sticky header — dark glass background */}
+          <div
+            className="hidden lg:block"
+            style={{
+              background: sportsOpen ? "#ffffff" : "rgba(10,10,10,0.72)",
+              backdropFilter: sportsOpen ? "none" : "blur(20px)",
+              WebkitBackdropFilter: sportsOpen ? "none" : "blur(20px)",
+              borderBottom: sportsOpen ? "none" : "1px solid rgba(255,255,255,0.08)",
+              transition: "background 0.35s cubic-bezier(0.4,0,0.2,1)",
+            }}
+          >
             <div className="flex items-center justify-between px-[240px] py-[28px] gap-[80px]">
               {/* Left nav */}
               <nav className="flex items-center gap-16 justify-end flex-1">
