@@ -10,7 +10,7 @@ export default function CricketPage() {
         {/* Hero */}
         <div className="relative overflow-hidden" style={{ flex: 1 }}>
         <img
-          src="/images/cricket-hero.png"
+          src="/images/cricket-hero.webp"
           alt="Benchmark Cricket"
           className="absolute inset-0 w-full h-full object-cover"
         />

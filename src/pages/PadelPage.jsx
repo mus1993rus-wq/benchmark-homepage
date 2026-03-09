@@ -10,7 +10,7 @@ export default function PadelPage() {
         {/* Hero */}
         <div className="relative overflow-hidden" style={{ flex: 1 }}>
         <img
-          src="/images/padel-hero.png"
+          src="/images/padel-hero.webp"
           alt="Benchmark Padel"
           className="absolute inset-0 w-full h-full object-cover"
         />

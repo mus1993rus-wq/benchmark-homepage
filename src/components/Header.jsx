@@ -3,10 +3,10 @@ import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 
 const sportsItems = [
-  { to: "/golf", label: "Benchmark Golf", desc: "Golf-at-home simulator + coaching", image: "/images/sports-golf.png", comingSoon: false },
-  { to: "/tennis", label: "Benchmark Tennis", desc: "Racket technique analysis + drills", image: "/images/sports-tennis.png", comingSoon: true },
-  { to: "/padel", label: "Benchmark Padel", desc: "Real-time swing & positioning feedback", image: "/images/sports-padel.png", comingSoon: true },
-  { to: "/cricket", label: "Benchmark Cricket", desc: "Batting motion & timing analysis", image: "/images/sports-cricket.png", comingSoon: true },
+  { to: "/golf", label: "Benchmark Golf", desc: "Golf-at-home simulator + coaching", image: "/images/sports-golf.webp", comingSoon: false },
+  { to: "/tennis", label: "Benchmark Tennis", desc: "Racket technique analysis + drills", image: "/images/sports-tennis.webp", comingSoon: true },
+  { to: "/padel", label: "Benchmark Padel", desc: "Real-time swing & positioning feedback", image: "/images/sports-padel.webp", comingSoon: true },
+  { to: "/cricket", label: "Benchmark Cricket", desc: "Batting motion & timing analysis", image: "/images/sports-cricket.webp", comingSoon: true },
 ];
 
 const mobileSportsItems = [
@@ -127,6 +127,8 @@ export function Header() {
                   filter: sportsOpen ? "brightness(0)" : "none",
                   transition: "filter 0.3s",
                 }}
+                loading="lazy"
+                decoding="async"
               />
             </Link>
             <div className="w-10" />
@@ -174,6 +176,8 @@ export function Header() {
                     filter: sportsOpen ? "brightness(0)" : "none",
                     transition: "filter 0.3s",
                   }}
+                  loading="lazy"
+                  decoding="async"
                 />
               </Link>
 
@@ -220,7 +224,7 @@ export function Header() {
                           transition: `opacity 0.4s cubic-bezier(0.4,0,0.2,1) ${i * 60}ms, transform 0.4s cubic-bezier(0.4,0,0.2,1) ${i * 60}ms`,
                         }}
                       >
-                        <img src={sport.image} alt={sport.label} className="absolute inset-0 w-full h-full object-cover" />
+                        <img src={sport.image} alt={sport.label} className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
                         <div className="absolute inset-0 rounded-[8px] bg-gradient-to-b from-transparent to-[rgba(35,35,35,0.6)]" />
                         {sport.comingSoon && (
                           <div className="absolute top-3 left-3 bg-[#30393e] backdrop-blur-[24px] px-3 py-1.5 rounded">
@@ -258,7 +262,7 @@ export function Header() {
           </svg>
         </button>
         <Link to="/" className="absolute left-1/2 -translate-x-1/2">
-          <img src="/images/logo.svg" alt="benchmark SPORTS" className="brightness-0" style={{ height: '40px', width: '157.5px' }} />
+          <img src="/images/logo.svg" alt="benchmark SPORTS" className="brightness-0" style={{ height: '40px', width: '157.5px' }} loading="lazy" decoding="async" />
         </Link>
         <div className="w-10" />
       </div>
@@ -295,7 +299,7 @@ export function Header() {
                 className="absolute left-1/2 -translate-x-1/2"
                 onClick={() => { setMobileMenuOpen(false); setMobileSportsExpanded(false); }}
               >
-                <img src="/images/logo.svg" alt="benchmark SPORTS" className="brightness-0" style={{ height: '40px', width: '157.5px' }} />
+                <img src="/images/logo.svg" alt="benchmark SPORTS" className="brightness-0" style={{ height: '40px', width: '157.5px' }} loading="lazy" decoding="async" />
               </Link>
               <div className="w-10" />
             </div>
@@ -437,6 +441,8 @@ export function Header() {
                   filter: sportsOpen ? "brightness(0)" : "none",
                   transition: "filter 0.3s cubic-bezier(0.4,0,0.2,1)",
                 }}
+                loading="lazy"
+                decoding="async"
               />
             </Link>
 
@@ -484,7 +490,7 @@ export function Header() {
                       transition: `opacity 0.4s cubic-bezier(0.4,0,0.2,1) ${i * 60}ms, transform 0.4s cubic-bezier(0.4,0,0.2,1) ${i * 60}ms`,
                     }}
                   >
-                    <img src={sport.image} alt={sport.label} className="absolute inset-0 w-full h-full object-cover" />
+                    <img src={sport.image} alt={sport.label} className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
                     <div className="absolute inset-0 rounded-[8px] bg-gradient-to-b from-transparent to-[rgba(35,35,35,0.6)]" />
                     {sport.comingSoon && (
                       <div className="absolute top-3 left-3 bg-[#30393e] backdrop-blur-[24px] px-3 py-1.5 rounded">

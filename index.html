@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Benchmark Sports</title>
+
+    <!-- Preload critical hero images for instant first paint -->
+    <link rel="preload" as="image" href="/images/hero-bg.webp" />
+    <link rel="preload" as="image" href="/images/golf-hero-bg.webp" />
+
+    <!-- DNS prefetch for external domains -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://golfdaddy.com" />
   </head>
   <body>
     <div id="root"></div>

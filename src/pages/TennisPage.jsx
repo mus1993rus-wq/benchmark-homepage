@@ -10,7 +10,7 @@ export default function TennisPage() {
         {/* Hero */}
         <div className="relative overflow-hidden" style={{ flex: 1 }}>
         <img
-          src="/images/tennis-hero.png"
+          src="/images/tennis-hero.webp"
           alt="Benchmark Tennis"
           className="absolute inset-0 w-full h-full object-cover"
         />

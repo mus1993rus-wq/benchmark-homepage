@@ -28,6 +28,8 @@ export function Footer({ onHeightChange }) {
             src="/images/logo-footer.svg"
             alt="benchmark SPORTS"
             style={{ height: "20px", width: "263px" }}
+            loading="lazy"
+            decoding="async"
           />
           <p className="text-[#818181] text-base leading-6 font-normal">
             Benchmark Sports is a multi-sport simulation platform for technique and performance.

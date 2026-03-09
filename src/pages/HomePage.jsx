@@ -8,7 +8,7 @@ function HeroSection() {
   return (
     <section className="relative w-full h-[443px] lg:h-[880px] overflow-hidden bg-gray-900">
       <img
-        src="/images/hero-bg.png"
+        src="/images/hero-bg.webp"
         alt="Athletes in motion"
         className="absolute inset-0 w-full h-full object-cover"
       />
@@ -29,17 +29,17 @@ function HeroSection() {
         {/* Desktop feature icons (inside hero, white text) */}
         <div className="hidden lg:flex items-start gap-6">
           <FeatureIcon
-            icon={<img src="/images/icon-wearable.svg" alt="" className="w-8 h-8" />}
+            icon={<img src="/images/icon-wearable.svg" alt="" className="w-8 h-8" loading="lazy" decoding="async" />}
             label="No wearables"
             dark
           />
           <FeatureIcon
-            icon={<img src="/images/icon-camera.svg" alt="" className="w-8 h-8" />}
+            icon={<img src="/images/icon-camera.svg" alt="" className="w-8 h-8" loading="lazy" decoding="async" />}
             label={<>Just your camera<br />and real swings.</>}
             dark
           />
           <FeatureIcon
-            icon={<img src="/images/icon-sensor.svg" alt="" className="w-8 h-8" />}
+            icon={<img src="/images/icon-sensor.svg" alt="" className="w-8 h-8" loading="lazy" decoding="async" />}
             label="No sensors"
             dark
           />
@@ -87,7 +87,7 @@ function MobileFeatureSection() {
               borderColor: "rgba(255,255,255,0.24)",
             }}
           >
-            <img src={f.icon} alt="" className="w-6 h-6" />
+            <img src={f.icon} alt="" className="w-6 h-6" loading="lazy" decoding="async" />
           </div>
           <p className="font-semibold text-[18px] text-white leading-[26px]">
             {f.label}
@@ -136,21 +136,21 @@ function CollectionSection() {
       title: "One platform. Many sports",
       desc: "Same training experience across golf, tennis, padel, cricket and more.",
       image: (
-        <img src="/images/home-card-1.png" alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <img src="/images/home-card-1.webp" alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
       ),
     },
     {
       title: "Train anywhere. Learn from every rep",
       desc: "Use your phone to capture motion, find patterns, and get clear next steps.",
       image: (
-        <img src="/images/home-card-2.png" alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <img src="/images/home-card-2.webp" alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
       ),
     },
     {
       title: 'Built to scale, not to \u201ccoach harder\u201d',
       desc: "Coaching becomes a product: consistent, measurable, always improving.",
       image: (
-        <img src="/images/home-card-3.png" alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <img src="/images/home-card-3.webp" alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
       ),
     },
   ];
@@ -194,16 +194,16 @@ function CollectionSection() {
 
 // ─── Sports Products Section ──────────────────────────────────────────────────
 const sports = [
-  { img: "/images/sports-golf.png", badge: null, sport: "Benchmark Golf", desc: "Golf-at-home simulator + coaching", to: "/golf" },
-  { img: "/images/sports-tennis.png", badge: "Coming soon", sport: "Benchmark Tennis", desc: "Racket technique analysis + drills", to: "/tennis" },
-  { img: "/images/sports-padel.png", badge: "Coming soon", sport: "Benchmark Padel", desc: "Real-time swing & positioning feedback", to: "/padel" },
-  { img: "/images/sports-cricket.png", badge: "Coming soon", sport: "Benchmark Cricket", desc: "Batting motion & timing analysis", to: "/cricket" },
+  { img: "/images/sports-golf.webp", badge: null, sport: "Benchmark Golf", desc: "Golf-at-home simulator + coaching", to: "/golf" },
+  { img: "/images/sports-tennis.webp", badge: "Coming soon", sport: "Benchmark Tennis", desc: "Racket technique analysis + drills", to: "/tennis" },
+  { img: "/images/sports-padel.webp", badge: "Coming soon", sport: "Benchmark Padel", desc: "Real-time swing & positioning feedback", to: "/padel" },
+  { img: "/images/sports-cricket.webp", badge: "Coming soon", sport: "Benchmark Cricket", desc: "Batting motion & timing analysis", to: "/cricket" },
 ];
 
 function SportCard({ img, badge, sport, desc, to }) {
   return (
     <div className="flex-1 rounded-[8px] overflow-hidden relative img-zoom">
-      <img src={img} alt={sport} className="absolute inset-0 w-full h-full object-cover" />
+      <img src={img} alt={sport} className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
       {badge && (
         <div className="absolute top-6 left-6 flex items-center justify-center px-3 py-1.5 rounded" style={{ background: "#30393e", backdropFilter: "blur(24px)" }}>
           <span className="font-bold text-[#ffc32c] text-[16px] leading-[20px] whitespace-nowrap">{badge}</span>
@@ -228,7 +228,7 @@ function SportCard({ img, badge, sport, desc, to }) {
 function SportCardMobile({ img, badge, sport, desc, to }) {
   return (
     <div className="rounded-[8px] overflow-hidden relative h-[400px] img-zoom">
-      <img src={img} alt={sport} className="absolute inset-0 w-full h-full object-cover" />
+      <img src={img} alt={sport} className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />
       {badge && (
         <div className="absolute top-6 left-6 flex items-center justify-center px-3 py-1.5 rounded" style={{ background: "#30393e", backdropFilter: "blur(24px)" }}>
           <span className="font-bold text-[#ffc32c] text-[16px] leading-[20px] whitespace-nowrap">{badge}</span>
@@ -380,6 +380,8 @@ function ComparisonSection() {
                     alt="benchmark SPORTS"
                     className="brightness-0 invert"
                     style={{ height: '32px', width: 'auto' }}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <p className="font-normal text-[#818181] text-[16px] leading-[24px] text-center">
@@ -418,17 +420,17 @@ function ProcessSection() {
     {
       title: "Record real reps",
       body: "Any range. Any court. Indoors or outdoors.\nSet up your phone and capture real movement in real conditions — not a studio simulation. Train where you actually play and build technique that transfers to the game.",
-      image: { src: "/images/process-image.png", bg: "/images/process-bg.png", offset: { width: "115.44%", height: "115.44%", left: "-13.76%", top: "-13.93%" } },
+      image: { src: "/images/process-image.webp", bg: "/images/process-bg.webp", offset: { width: "115.44%", height: "115.44%", left: "-13.76%", top: "-13.93%" } },
     },
     {
       title: "Understand what's actually happening",
       body: "The platform breaks down your movement frame by frame, identifies technique issues, and explains the mechanics behind them in plain language.",
-      image: { src: "/images/process-step2.png", bg: null, offset: null },
+      image: { src: "/images/process-step2.webp", bg: null, offset: null },
     },
     {
       title: "Fix with a plan",
       body: "Get a personalised training plan with specific drills tailored to your movement. Every session updates the plan based on your progress.",
-      image: { src: "/images/process-step3.png", bg: null, offset: { width: "114.77%", height: "114.77%", left: "-11.83%", top: "-7.38%" } },
+      image: { src: "/images/process-step3.webp", bg: null, offset: { width: "114.77%", height: "114.77%", left: "-11.83%", top: "-7.38%" } },
     },
   ];
 
@@ -438,7 +440,7 @@ function ProcessSection() {
     <div className={`rounded-[8px] overflow-hidden relative ${className}`}>
       <div className="absolute inset-0 bg-[#515151] rounded-[8px]" />
       {activeImage.bg && (
-        <img src={activeImage.bg} alt="" className="absolute inset-0 w-full h-full object-cover rounded-[8px]" />
+        <img src={activeImage.bg} alt="" className="absolute inset-0 w-full h-full object-cover rounded-[8px]" loading="lazy" decoding="async" />
       )}
       <div className="absolute inset-0 overflow-hidden rounded-[8px]">
         {activeImage.offset ? (
@@ -448,6 +450,8 @@ function ProcessSection() {
             alt="Training"
             className="absolute transition-opacity duration-300"
             style={{ width: activeImage.offset.width, height: activeImage.offset.height, left: activeImage.offset.left, top: activeImage.offset.top, maxWidth: "none", objectFit: "cover" }}
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <img
@@ -455,6 +459,8 @@ function ProcessSection() {
             src={activeImage.src}
             alt="Training"
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+            loading="lazy"
+            decoding="async"
           />
         )}
       </div>

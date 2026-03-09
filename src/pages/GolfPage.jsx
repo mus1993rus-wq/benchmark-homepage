@@ -52,17 +52,17 @@ const golfCards = [
   {
     title: "For beginners",
     desc: "Start with correct fundamentals. Avoid bad habits.",
-    image: <img src="/images/golf-card1.png" alt="" className="absolute inset-0 w-full h-full object-cover" />,
+    image: <img src="/images/golf-card1.webp" alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />,
   },
   {
     title: "For golfers who feel stuck",
     desc: "Stop guessing. Fix what's holding you back.",
-    image: <img src="/images/golf-card2.png" alt="" className="absolute inset-0 w-full h-full object-cover" />,
+    image: <img src="/images/golf-card2.webp" alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />,
   },
   {
     title: "For performance players",
     desc: "Dial in details. Track measurable improvement.",
-    image: <img src="/images/golf-card3.png" alt="" className="absolute inset-0 w-full h-full object-cover" />,
+    image: <img src="/images/golf-card3.webp" alt="" className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" />,
   },
 ];
 
@@ -83,43 +83,43 @@ const stats = [
 // Phone screen data with locally hosted video files (downloaded from Instagram)
 const phoneScreens = [
   {
-    src: "/images/golf-screen-1.jpg",
+    src: "/images/golf-screen-1.webp",
     isEdge: true,
     videoUrl: "/videos/golf-screen-00001.mp4",
     title: "Swing Analysis",
   },
   {
-    src: "/images/golf-screen-2.jpg",
+    src: "/images/golf-screen-2.webp",
     isEdge: false,
     videoUrl: "/videos/golf-screen-00002.mp4",
     title: "Impact Feedback",
   },
   {
-    src: "/images/golf-screen-3.jpg",
+    src: "/images/golf-screen-3.webp",
     isEdge: false,
     videoUrl: "/videos/golf-screen-00003.mp4",
     title: "Session Overview",
   },
   {
-    src: "/images/golf-screen-4.jpg",
+    src: "/images/golf-screen-4.webp",
     isEdge: false,
     videoUrl: "/videos/golf-screen-00004.mp4",
     title: "Coaching Plan",
   },
   {
-    src: "/images/golf-screen-5.jpg",
+    src: "/images/golf-screen-5.webp",
     isEdge: false,
     videoUrl: "/videos/golf-screen-00005.mp4",
     title: "Progress Tracking",
   },
   {
-    src: "/images/golf-screen-6.jpg",
+    src: "/images/golf-screen-6.webp",
     isEdge: false,
     videoUrl: "/videos/golf-screen-00006.mp4",
     title: "Simulation Mode",
   },
   {
-    src: "/images/golf-screen-7.jpg",
+    src: "/images/golf-screen-7.webp",
     isEdge: true,
     videoUrl: "/videos/golf-screen-00007.mp4",
     title: "Divot Analysis",
@@ -206,6 +206,8 @@ function VideoModal({ screens, initialIndex, onClose }) {
                 src={current.src}
                 alt={current.title}
                 className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
               />
               {/* Play overlay for when no video URL is set */}
               <div className="absolute inset-0 flex items-center justify-center bg-black/30">
@@ -274,6 +276,8 @@ function PhoneScreen({ src, isEdge = false, onClick }) {
           src={src}
           alt=""
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
         />
       )}
       {/* Hover overlay */}
@@ -316,7 +320,7 @@ export default function GolfPage() {
         {/* Hero */}
         <div className="relative overflow-hidden" style={{ flex: 1 }}>
         <img
-          src="/images/golf-hero-bg.png"
+          src="/images/golf-hero-bg.webp"
           alt="Benchmark Golf"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -370,7 +374,7 @@ export default function GolfPage() {
                     border: "1px solid rgba(255,255,255,0.24)",
                   }}
                 >
-                  <img src={tag.icon} alt="" className="w-8 h-8" />
+                  <img src={tag.icon} alt="" className="w-8 h-8" loading="lazy" decoding="async" />
                 </div>
                 <p className="font-semibold text-[15px] lg:text-[18px] text-white leading-[22px] lg:leading-[26px]">
                   {tag.label}
@@ -391,9 +395,11 @@ export default function GolfPage() {
             {/* Image */}
             <div className="w-full lg:flex-1 h-[280px] lg:h-[538px] rounded-[8px] overflow-hidden">
               <img
-                src="/images/golf-coaching.png"
+                src="/images/golf-coaching.webp"
                 alt="Benchmark Golf Analysis"
                 className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             {/* Content */}
@@ -466,9 +472,11 @@ export default function GolfPage() {
             {/* Image */}
             <div className="w-full lg:flex-1 h-[280px] lg:h-[538px] rounded-[8px] overflow-hidden relative">
               <img
-                src="/images/golf-system.png"
+                src="/images/golf-system.webp"
                 alt="Adaptive Coaching"
                 className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
               />
               <div
                 className="absolute inset-0"
@@ -479,10 +487,12 @@ export default function GolfPage() {
               />
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <img
-                  src="/images/golf-coaching-overlay.png"
+                  src="/images/golf-coaching-overlay.webp"
                   alt=""
                   className="absolute max-w-none"
                   style={{ height: "114.98%", left: "-41.56%", top: "-13.01%", width: "193.56%" }}
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>

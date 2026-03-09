@@ -45,6 +45,8 @@ function CollectionCard({ img, imgStyle, img2, img2Style, title, desc }) {
             alt={title}
             className="absolute max-w-none"
             style={imgStyle}
+            loading="lazy"
+            decoding="async"
           />
         </div>
       ) : (
@@ -52,6 +54,8 @@ function CollectionCard({ img, imgStyle, img2, img2Style, title, desc }) {
           src={img}
           alt={title}
           className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
         />
       )}
       {img2 && (
@@ -61,6 +65,8 @@ function CollectionCard({ img, imgStyle, img2, img2Style, title, desc }) {
             alt=""
             className="absolute max-w-none"
             style={img2Style}
+            loading="lazy"
+            decoding="async"
           />
         </div>
       )}
@@ -86,9 +92,11 @@ function ProblemDiagram() {
   return (
     <div className="flex-shrink-0 rounded-[8px] overflow-hidden" style={{ width: "568px", height: "538px" }}>
       <img
-        src="/images/about-problem-lines.png"
+        src="/images/about-problem-lines.webp"
         alt="Scalable Movement Intelligence Platform diagram"
         className="w-full h-full object-cover"
+        loading="lazy"
+        decoding="async"
       />
     </div>
   );
@@ -102,7 +110,7 @@ export default function AboutPage() {
       {/* Hero */}
       <div className="relative min-h-[480px] lg:h-[880px] overflow-hidden">
         <img
-          src="/images/about-hero-bg.png"
+          src="/images/about-hero-bg.webp"
           alt="About Benchmark Sports"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -187,21 +195,21 @@ export default function AboutPage() {
           <div className="flex flex-col lg:flex-row gap-6 lg:h-[480px]">
             <div className="h-[400px] lg:h-full lg:flex-1">
               <CollectionCard
-                img="/images/about-approach-1.png"
+                img="/images/about-approach-1.webp"
                 title="Movement First"
                 desc="We measure how you move — not just where the ball goes."
               />
             </div>
             <div className="h-[400px] lg:h-full lg:flex-1">
               <CollectionCard
-                img="/images/about-approach-2.png"
+                img="/images/about-approach-2.webp"
                 title="Structured Progression"
                 desc="Every session builds on the last. No random drills."
               />
             </div>
             <div className="h-[400px] lg:h-full lg:flex-1">
               <CollectionCard
-                img="/images/about-approach-3.png"
+                img="/images/about-approach-3.webp"
                 title="Platform, Not Product"
                 desc="One core engine. Multiple sports. Consistent experience."
               />
@@ -216,9 +224,11 @@ export default function AboutPage() {
           {/* Image */}
           <div className="w-full lg:flex-1 h-[300px] lg:h-[538px] rounded-[4px] overflow-hidden">
             <img
-              src="/images/about-analyze.png"
+              src="/images/about-analyze.webp"
               alt="The Benchmark Engine"
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           </div>
           {/* Content */}
@@ -274,25 +284,25 @@ export default function AboutPage() {
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-[24px] items-stretch">
             {[
               {
-                img: "/images/team-daniel.png",
+                img: "/images/team-daniel.webp",
                 name: "Daniel Puumalainen",
                 role: "CEO",
                 desc: "Technical product vision, consumer obsession, deep regional roots + global ambition",
               },
               {
-                img: "/images/team-paul.png",
+                img: "/images/team-paul.webp",
                 name: "Paul Boranian",
                 role: "CMO",
                 desc: "Brand + distribution engine; turning product into demand",
               },
               {
-                img: "/images/team-arne.png",
+                img: "/images/team-arne.webp",
                 name: "Arne Noori",
                 role: "Head of Engineering",
                 desc: "Execution, platform reliability, engineering culture",
               },
               {
-                img: "/images/team-bernard.png",
+                img: "/images/team-bernard.webp",
                 name: "Bernard Kim",
                 role: "Chief of Staff",
                 desc: "Priorities, execution rhythm, and org-wide coordination",
@@ -308,6 +318,8 @@ export default function AboutPage() {
                     src={member.img}
                     alt={member.name}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div className="px-[20px] py-[24px] flex flex-col gap-4 w-full">
@@ -358,7 +370,7 @@ export default function AboutPage() {
                   className="w-16 h-16 rounded-[45px] border border-white/24 backdrop-blur-[32px] flex items-center justify-center overflow-hidden"
                   style={{ background: "rgba(255,255,255,0.08)" }}
                 >
-                  <img src={item.icon} alt="" className="w-8 h-8" />
+                  <img src={item.icon} alt="" className="w-8 h-8" loading="lazy" decoding="async" />
                 </div>
                 <p className="font-semibold text-[16px] lg:text-[18px] text-white text-center leading-[22px] lg:leading-[26px]">
                   {item.label}
