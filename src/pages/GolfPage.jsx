@@ -73,11 +73,78 @@ const featureTags = [
 ];
 
 const stats = [
-  { value: "500,000+", label: "Happy Golfers" },
-  { value: "500,000,000+", label: "Golf Shots Recorded" },
-  { value: "4.8", label: "Apple Store Rating", isStar: true },
-  { value: "91%", label: "of Golfers see improvement within 14 days" },
+  { target: 500000,     suffix: "+", label: "Happy Golfers" },
+  { target: 500000000,  suffix: "+", label: "Golf Shots Recorded" },
+  { target: 4.8,        suffix: "",  label: "Apple Store Rating", isStar: true, decimals: 1 },
+  { target: 91,         suffix: "%", label: "of Golfers see improvement within 14 days" },
 ];
+
+function useCountUp(target, duration = 800, started = false, decimals = 0) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!started) return;
+    let raf;
+    const startTime = performance.now();
+    const step = (now) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = eased * target;
+      setCount(decimals > 0 ? parseFloat(value.toFixed(decimals)) : Math.floor(value));
+      if (progress < 1) raf = requestAnimationFrame(step);
+      else setCount(target);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [started, target, duration, decimals]);
+  return count;
+}
+
+function GolfStatItem({ target, suffix, label, isStar, started, decimals = 0 }) {
+  const count = useCountUp(target, 800, started, decimals);
+  return (
+    <div className="flex flex-col gap-3 items-center text-center lg:w-[260px]">
+      <div className="flex gap-3 items-center justify-center">
+        {isStar && (
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffc32c">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+        )}
+        <p className="font-bold text-[24px] lg:text-[32px] text-black leading-[32px] lg:leading-[40px]">
+          {decimals > 0 ? count.toFixed(decimals) : count.toLocaleString()}{suffix}
+        </p>
+      </div>
+      <p className="font-semibold text-[14px] lg:text-[18px] text-black leading-[20px] lg:leading-[26px]">
+        {label}
+      </p>
+    </div>
+  );
+}
+
+function GolfStatsBlock() {
+  const [started, setStarted] = useState(false);
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setStarted(true); observer.disconnect(); } },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className="max-w-[1200px] mx-auto px-4 lg:px-6 mt-8 lg:mt-12">
+      <div className="grid grid-cols-2 lg:flex gap-8 lg:gap-10 lg:items-center lg:justify-between">
+        {stats.map((s, i) => (
+          <FadeIn key={s.label} delay={i * 0.08}>
+            <GolfStatItem {...s} started={started} />
+          </FadeIn>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 // Phone screen data with locally hosted video files (downloaded from Instagram)
 const phoneScreens = [
@@ -337,9 +404,19 @@ export default function GolfPage() {
                   href="https://golfdaddy.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white text-black font-bold px-8 lg:px-10 py-4 lg:py-5 rounded text-base hover:bg-gray-100 transition-colors inline-block"
+                  className="group bg-white text-black font-bold px-8 lg:px-10 py-4 lg:py-5 rounded text-base inline-flex items-center gap-2 transition-[background-color,transform,box-shadow] duration-300 hover:bg-gray-50 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.18)]"
                 >
                   Visit Golf Daddy
+                  <span className="overflow-hidden w-[14px] h-[14px] flex-shrink-0 inline-flex items-center justify-start">
+                    <span className="flex transition-transform duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-translate-x-[14px]">
+                      <svg className="w-[14px] h-[14px] flex-shrink-0" viewBox="0 0 14 14" fill="none">
+                        <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <svg className="w-[14px] h-[14px] flex-shrink-0" viewBox="0 0 14 14" fill="none">
+                        <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
+                  </span>
                 </a>
               </div>
             </motion.div>
@@ -525,29 +602,7 @@ export default function GolfPage() {
         </FadeIn>
 
         {/* Stats */}
-        <div className="max-w-[1200px] mx-auto px-4 lg:px-6 mt-8 lg:mt-12">
-          <div className="grid grid-cols-2 lg:flex gap-8 lg:gap-10 lg:items-center lg:justify-between">
-            {stats.map((s, i) => (
-              <FadeIn key={s.label} delay={i * 0.08}>
-                <div className="flex flex-col gap-3 items-center text-center lg:w-[260px]">
-                  <div className="flex gap-3 items-center justify-center">
-                    {s.isStar && (
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffc32c">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                      </svg>
-                    )}
-                    <p className="font-bold text-[24px] lg:text-[32px] text-black leading-[32px] lg:leading-[40px]">
-                      {s.value}
-                    </p>
-                  </div>
-                  <p className="font-semibold text-[14px] lg:text-[18px] text-black leading-[20px] lg:leading-[26px]">
-                    {s.label}
-                  </p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
+        <GolfStatsBlock />
       </section>
 
     </div>
