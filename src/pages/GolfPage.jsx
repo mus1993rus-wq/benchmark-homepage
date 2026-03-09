@@ -80,48 +80,48 @@ const stats = [
   { value: "91%", label: "of Golfers see improvement within 14 days" },
 ];
 
-// Phone screen data with video URLs (update with real video links from Figma comments)
+// Phone screen data with locally hosted video files (downloaded from Instagram)
 const phoneScreens = [
   {
-    src: "/images/golf-screen-1.png",
+    src: "/images/golf-screen-1.jpg",
     isEdge: true,
-    videoUrl: null,
+    videoUrl: "/videos/golf-screen-00001.mp4",
     title: "Swing Analysis",
   },
   {
-    src: "/images/golf-screen-2.png",
+    src: "/images/golf-screen-2.jpg",
     isEdge: false,
-    videoUrl: null,
+    videoUrl: "/videos/golf-screen-00002.mp4",
     title: "Impact Feedback",
   },
   {
-    src: "/images/golf-screen-3.png",
+    src: "/images/golf-screen-3.jpg",
     isEdge: false,
-    videoUrl: null,
+    videoUrl: "/videos/golf-screen-00003.mp4",
     title: "Session Overview",
   },
   {
-    src: "/images/golf-screen-4.png",
+    src: "/images/golf-screen-4.jpg",
     isEdge: false,
-    videoUrl: null,
+    videoUrl: "/videos/golf-screen-00004.mp4",
     title: "Coaching Plan",
   },
   {
-    src: "/images/golf-screen-5.png",
+    src: "/images/golf-screen-5.jpg",
     isEdge: false,
-    videoUrl: null,
+    videoUrl: "/videos/golf-screen-00005.mp4",
     title: "Progress Tracking",
   },
   {
-    src: "/images/golf-screen-6.png",
+    src: "/images/golf-screen-6.jpg",
     isEdge: false,
-    videoUrl: null,
+    videoUrl: "/videos/golf-screen-00006.mp4",
     title: "Simulation Mode",
   },
   {
-    src: "/images/golf-screen-7.png",
+    src: "/images/golf-screen-7.jpg",
     isEdge: true,
-    videoUrl: null,
+    videoUrl: "/videos/golf-screen-00007.mp4",
     title: "Divot Analysis",
   },
 ];
