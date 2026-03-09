@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
 import { FadeIn } from "../components/FadeIn";
@@ -248,11 +248,36 @@ function PhoneScreen({ src, isEdge = false, onClick }) {
   );
 }
 
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(
+    () => typeof window !== "undefined" && window.innerWidth >= 1024
+  );
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 1024px)");
+    setIsDesktop(mql.matches);
+    const handler = (e) => setIsDesktop(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+  return isDesktop;
+}
+
 export default function GolfPage() {
   const [videoModal, setVideoModal] = useState({ open: false, index: 0 });
 
   const openModal = (index) => setVideoModal({ open: true, index });
   const closeModal = () => setVideoModal({ open: false, index: 0 });
+
+  const heroRef = useRef(null);
+  const isDesktop = useIsDesktop();
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.7], [0, 0.45]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.25, 0.55], [1, 1, 0]);
 
   return (
     <div className="min-h-screen font-sans antialiased">
@@ -268,24 +293,39 @@ export default function GolfPage() {
         <AnnouncementBar />
 
         {/* Hero */}
-        <div className="relative overflow-hidden" style={{ flex: 1 }}>
-          <img
-            src="/images/golf-hero-bg.webp"
-            alt="Benchmark Golf"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+        <div ref={heroRef} className="relative overflow-hidden" style={{ flex: 1 }}>
+          {/* Parallax image wrapper */}
+          <motion.div
+            className="absolute"
+            style={{ top: "-4%", left: 0, right: 0, height: "108%", y: isDesktop ? imageY : 0 }}
+          >
+            <img
+              src="/images/golf-hero-bg.webp"
+              alt="Benchmark Golf"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
           <div
             className="absolute inset-0"
             style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5))" }}
           />
-          <Header />
+          {/* Scroll-driven darkening — desktop only */}
           <motion.div
-            className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4 lg:px-6"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
+            className="absolute inset-0 z-10 bg-black"
+            style={{ opacity: isDesktop ? overlayOpacity : 0 }}
+          />
+          <Header />
+          {/* Text — scroll-driven on desktop, static on mobile */}
+          <motion.div
+            className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 lg:px-6"
+            style={{ y: isDesktop ? textY : 0, opacity: isDesktop ? textOpacity : 1 }}
           >
-            <div className="max-w-[860px] flex flex-col gap-4 items-center">
+            <motion.div
+              className="max-w-[860px] flex flex-col gap-4 items-center"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
+            >
               <h1 className="text-white font-extrabold text-[36px] leading-[44px] lg:text-[64px] lg:leading-[80px] uppercase">
                 Golf Daddy By Benchmark Golf
               </h1>
@@ -302,7 +342,7 @@ export default function GolfPage() {
                   Visit Golf Daddy
                 </a>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

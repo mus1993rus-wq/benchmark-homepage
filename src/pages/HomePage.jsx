@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
@@ -26,23 +26,63 @@ function ArrowLabel({ children, className = "" }) {
   );
 }
 
+// ─── Desktop-only media hook ──────────────────────────────────────────────────
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(
+    () => typeof window !== "undefined" && window.innerWidth >= 1024
+  );
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 1024px)");
+    setIsDesktop(mql.matches);
+    const handler = (e) => setIsDesktop(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+  return isDesktop;
+}
+
 // ─── Hero Section ─────────────────────────────────────────────────────────────
 function HeroSection() {
+  const sectionRef = useRef(null);
+  const isDesktop = useIsDesktop();
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.25, 0.55], [1, 1, 0]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.7], [0, 0.45]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
+
   return (
-    <section className="absolute inset-0 overflow-hidden bg-gray-900">
-      <img
-        src="/images/hero-bg.webp"
-        alt="Athletes in motion"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+    <section ref={sectionRef} className="absolute inset-0 overflow-hidden bg-gray-900">
+      {/* Parallax image wrapper — 108% tall for minimal zoom */}
+      <motion.div
+        className="absolute"
+        style={{ top: "-4%", left: 0, right: 0, height: "108%", y: isDesktop ? imageY : 0 }}
+      >
+        <img
+          src="/images/hero-bg.webp"
+          alt="Athletes in motion"
+          className="w-full h-full object-cover"
+        />
+      </motion.div>
       {/* Static gradient */}
       <div
         className="absolute inset-0 z-10"
         style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.7) 100%)" }}
       />
+      {/* Scroll-driven darkening — desktop only */}
+      <motion.div
+        className="absolute inset-0 z-10 bg-black"
+        style={{ opacity: isDesktop ? overlayOpacity : 0 }}
+      />
 
-      {/* Hero text — bottom-aligned */}
-      <div className="absolute inset-0 z-20 flex flex-col items-center justify-end text-center px-4 lg:px-6 pb-10 lg:pb-16">
+      {/* Hero text — scroll-driven on desktop, static on mobile */}
+      <motion.div
+        className="absolute inset-0 z-20 flex flex-col items-center justify-end text-center px-4 lg:px-6 pb-10 lg:pb-16"
+        style={{ y: isDesktop ? textY : 0, opacity: isDesktop ? textOpacity : 1 }}
+      >
         <motion.div
           className="flex flex-col items-center w-full"
           initial={{ opacity: 0, y: 24 }}
@@ -77,7 +117,7 @@ function HeroSection() {
             />
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

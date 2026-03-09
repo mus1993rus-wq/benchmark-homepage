@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { AnnouncementBar } from "../components/AnnouncementBar";
 import { Header } from "../components/Header";
 import { FadeIn } from "../components/FadeIn";
@@ -102,19 +103,50 @@ function ProblemDiagram() {
   );
 }
 
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(
+    () => typeof window !== "undefined" && window.innerWidth >= 1024
+  );
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 1024px)");
+    setIsDesktop(mql.matches);
+    const handler = (e) => setIsDesktop(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+  return isDesktop;
+}
+
 export default function AboutPage() {
+  const heroRef = useRef(null);
+  const isDesktop = useIsDesktop();
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.7], [0, 0.45]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.25, 0.55], [1, 1, 0]);
+
   return (
     <div className="min-h-screen font-sans antialiased">
       {/* 100vh hero block */}
       <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
         <AnnouncementBar />
         {/* Hero */}
-        <div className="relative overflow-hidden" style={{ flex: 1 }}>
-          <img
-            src="/images/about-hero-bg.webp"
-            alt="About Benchmark Sports"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+        <div ref={heroRef} className="relative overflow-hidden" style={{ flex: 1 }}>
+          {/* Parallax image wrapper */}
+          <motion.div
+            className="absolute"
+            style={{ top: "-4%", left: 0, right: 0, height: "108%", y: isDesktop ? imageY : 0 }}
+          >
+            <img
+              src="/images/about-hero-bg.webp"
+              alt="About Benchmark Sports"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
           {/* Static gradient */}
           <div
             className="absolute inset-0 z-10"
@@ -122,9 +154,17 @@ export default function AboutPage() {
               background: "linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%)",
             }}
           />
+          {/* Scroll-driven darkening — desktop only */}
+          <motion.div
+            className="absolute inset-0 z-10 bg-black"
+            style={{ opacity: isDesktop ? overlayOpacity : 0 }}
+          />
           <Header />
-          {/* Text */}
-          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 lg:px-6">
+          {/* Text — scroll-driven on desktop, static on mobile */}
+          <motion.div
+            className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 lg:px-6"
+            style={{ y: isDesktop ? textY : 0, opacity: isDesktop ? textOpacity : 1 }}
+          >
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -139,7 +179,7 @@ export default function AboutPage() {
                 </p>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
