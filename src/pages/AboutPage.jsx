@@ -10,7 +10,7 @@ function CheckItemDark({ title, desc }) {
     <div className="flex gap-3 items-start">
       <div className="w-6 h-6 rounded-full bg-[#62d947] flex items-center justify-center flex-shrink-0 mt-0.5">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <polyline points="3,8 6,11 13,4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <polyline points="3,8 6,11 13,4" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
       <div>
@@ -27,7 +27,7 @@ function CheckItem({ title, desc }) {
     <div className="flex gap-3 items-start">
       <div className="w-6 h-6 rounded-full bg-[#62d947] flex items-center justify-center flex-shrink-0 mt-0.5">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <polyline points="3,8 6,11 13,4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <polyline points="3,8 6,11 13,4" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
       <div>

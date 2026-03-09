@@ -15,7 +15,7 @@ function CheckItem({ title, desc }) {
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <polyline
             points="3,8 6,11 13,4"
-            stroke="white"
+            stroke="black"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"

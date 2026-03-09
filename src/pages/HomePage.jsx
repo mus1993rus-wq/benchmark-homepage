@@ -412,7 +412,7 @@ function ComparisonSection() {
   const CheckGreen = () => (
     <div className="flex-shrink-0 w-[24px] h-[24px] rounded-full bg-[#62d947] flex items-center justify-center">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <polyline points="3,8 6,11 13,4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <polyline points="3,8 6,11 13,4" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </div>
   );
