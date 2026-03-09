@@ -652,28 +652,37 @@ function ProcessSection() {
                   <motion.p
                     className="font-bold text-[24px] leading-[28px] text-white"
                     animate={{ opacity: isActive || isHovered ? 1 : 0.4 }}
-                    transition={{ duration: 0.25 }}
+                    transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
                   >
                     {step.title}
                   </motion.p>
                   <AnimatePresence initial={false}>
                     {isActive && (
+                      // Outer: clips height — "wipe open" effect
                       <motion.div
                         key="body"
-                        initial={{ opacity: 0, height: 0, y: -6 }}
-                        animate={{ opacity: 1, height: "auto", y: 0 }}
-                        exit={{ opacity: 0, height: 0, y: -6 }}
-                        transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+                        initial={{ height: 0 }}
+                        animate={{ height: "auto" }}
+                        exit={{ height: 0 }}
+                        transition={{ duration: 0.42, ease: [0.4, 0, 0.2, 1] }}
                         style={{ overflow: "hidden" }}
                       >
-                        {showImage && (
-                          <div className="mt-4 mb-4">
-                            <ProcessImage className="w-full h-[260px]" />
-                          </div>
-                        )}
-                        <p className="font-normal text-[16px] leading-[24px] text-white whitespace-pre-line mt-4">
-                          {step.body}
-                        </p>
+                        {/* Inner: content fades + slides up, slightly delayed */}
+                        <motion.div
+                          initial={{ opacity: 0, y: 14 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 6 }}
+                          transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1], delay: 0.06 }}
+                        >
+                          {showImage && (
+                            <div className="mt-4 mb-4">
+                              <ProcessImage className="w-full h-[260px]" />
+                            </div>
+                          )}
+                          <p className="font-normal text-[16px] leading-[24px] text-white whitespace-pre-line mt-4">
+                            {step.body}
+                          </p>
+                        </motion.div>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -686,7 +695,7 @@ function ProcessSection() {
                   <motion.svg
                     width="24" height="24" viewBox="0 0 24 24" fill="none"
                     animate={{ rotate: isActive ? 45 : 0 }}
-                    transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+                    transition={{ duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
                   >
                     <line x1="12" y1="5" x2="12" y2="19" stroke="white" strokeWidth="2" strokeLinecap="round" />
                     <line x1="5" y1="12" x2="19" y2="12" stroke="white" strokeWidth="2" strokeLinecap="round" />
