@@ -299,7 +299,7 @@ const sports = [
 function SportCard({ img, badge, sport, desc, to }) {
   const isComingSoon = !!badge;
   return (
-    <Link to={to} className="flex-1 rounded-[8px] overflow-hidden relative img-zoom group block">
+    <Link to={to} className="h-full w-full rounded-[8px] overflow-hidden relative img-zoom group block">
       <img
         src={img}
         alt={sport}
@@ -386,14 +386,14 @@ function SportsProductsSection() {
         <div className="hidden lg:flex flex-col gap-6">
           <div className="flex gap-6 h-[420px]">
             {sports.slice(0, 2).map((c, i) => (
-              <FadeIn key={c.sport} delay={i * 0.1} className="flex-1">
+              <FadeIn key={c.sport} delay={i * 0.1} className="flex-1 h-full">
                 <SportCard {...c} />
               </FadeIn>
             ))}
           </div>
           <div className="flex gap-6 h-[420px]">
             {sports.slice(2, 4).map((c, i) => (
-              <FadeIn key={c.sport} delay={i * 0.1} className="flex-1">
+              <FadeIn key={c.sport} delay={i * 0.1} className="flex-1 h-full">
                 <SportCard {...c} />
               </FadeIn>
             ))}
