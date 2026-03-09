@@ -651,6 +651,7 @@ function ProcessSection() {
                 <div className="flex-1">
                   <motion.p
                     className="font-bold text-[24px] leading-[28px] text-white"
+                    initial={{ opacity: isActive ? 1 : 0.4 }}
                     animate={{ opacity: isActive || isHovered ? 1 : 0.4 }}
                     transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
                   >
@@ -689,6 +690,7 @@ function ProcessSection() {
                 </div>
                 <motion.div
                   className="flex-shrink-0 w-[24px] h-[24px] flex items-center justify-center mt-0.5"
+                  initial={{ opacity: isActive ? 1 : 0.3 }}
                   animate={{ opacity: isActive || isHovered ? 1 : 0.3 }}
                   transition={{ duration: 0.2 }}
                 >
