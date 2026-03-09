@@ -6,7 +6,7 @@ export function AnnouncementBar() {
         href="https://golfdaddy.com"
         target="_blank"
         rel="noopener noreferrer"
-        className="ml-2 font-bold text-base leading-5 px-3 py-1 rounded transition-colors hover:bg-white hover:text-black"
+        className="ml-2 font-bold text-base leading-5 no-underline transition-opacity hover:opacity-60"
       >
         Learn More
       </a>
