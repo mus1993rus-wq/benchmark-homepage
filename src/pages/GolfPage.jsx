@@ -331,7 +331,7 @@ export default function GolfPage() {
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-4 lg:px-6">
           <div className="max-w-[860px] flex flex-col gap-4 items-center">
             <h1 className="text-white font-extrabold text-[36px] leading-[44px] lg:text-[64px] lg:leading-[80px] uppercase">
-              Benchmark Golf
+              Golf Daddy By Benchmark Golf
             </h1>
             <p className="text-white text-[16px] leading-[24px] font-normal">
               AI-powered simulation &amp; swing feedback. No sensors. No guesswork.

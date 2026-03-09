@@ -37,7 +37,7 @@ function CheckItem({ title, desc }) {
 
 function CollectionCard({ img, imgStyle, img2, img2Style, title, desc }) {
   return (
-    <div className="flex-1 relative rounded-[8px] overflow-hidden h-full">
+    <div className="w-full h-full relative rounded-[8px] overflow-hidden">
       {imgStyle ? (
         <div className="absolute inset-0 overflow-hidden">
           <img
@@ -185,21 +185,21 @@ export default function AboutPage() {
             Our Approach
           </h2>
           <div className="flex flex-col lg:flex-row gap-6 lg:h-[480px]">
-            <div className="h-[400px] lg:h-full">
+            <div className="h-[400px] lg:h-full lg:flex-1">
               <CollectionCard
                 img="/images/about-approach-1.png"
                 title="Movement First"
                 desc="We measure how you move — not just where the ball goes."
               />
             </div>
-            <div className="h-[400px] lg:h-full">
+            <div className="h-[400px] lg:h-full lg:flex-1">
               <CollectionCard
                 img="/images/about-approach-2.png"
                 title="Structured Progression"
                 desc="Every session builds on the last. No random drills."
               />
             </div>
-            <div className="h-[400px] lg:h-full">
+            <div className="h-[400px] lg:h-full lg:flex-1">
               <CollectionCard
                 img="/images/about-approach-3.png"
                 title="Platform, Not Product"
